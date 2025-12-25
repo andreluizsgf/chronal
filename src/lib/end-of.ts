@@ -1,4 +1,6 @@
-export function endOf(date: Date, unit: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second'): Date {
+import type { Unit } from "../types/unit.ts";
+
+export function endOf(date: Date, unit: Unit): Date {
   const time = new Date(date.getTime());
 
   switch (unit) {
@@ -12,6 +14,13 @@ export function endOf(date: Date, unit: 'year' | 'month' | 'day' | 'hour' | 'min
       const month = time.getUTCMonth();
       const lastDay = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
       time.setUTCDate(lastDay);
+      time.setUTCHours(23, 59, 59, 999);
+      break;
+    }
+    case 'week': {
+      const day = time.getUTCDay();
+      const diff = (day === 0 ? 0 : 7) - day; // Adjust when day is Sunday
+      time.setUTCDate(time.getUTCDate() + diff);
       time.setUTCHours(23, 59, 59, 999);
       break;
     }

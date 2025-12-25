@@ -1,4 +1,6 @@
-export function startOf(date: Date, unit: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second'): Date {
+import type { Unit } from "../types/unit.ts";
+
+export function startOf(date: Date, unit: Unit): Date {
   const time = new Date(date.getTime());
 
   switch (unit) {
@@ -9,6 +11,13 @@ export function startOf(date: Date, unit: 'year' | 'month' | 'day' | 'hour' | 'm
     }
     case 'month': {
       time.setUTCDate(1);
+      time.setUTCHours(0, 0, 0, 0);
+      break;
+    }
+    case 'week': {
+      const day = time.getUTCDay();
+      const diff = (day === 0 ? -6 : 1) - day; // Adjust when day is Sunday
+      time.setUTCDate(time.getUTCDate() + diff);
       time.setUTCHours(0, 0, 0, 0);
       break;
     }

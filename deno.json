@@ -1,12 +1,11 @@
 {
-  "name": "chrona",
+  "name": "chronal",
   "version": "0.1.0",
-  "description": "A date utility library made with Deno",
+  "description": "A tiny and fast date utility library for modern JavaScript runtimes.",
   "license": "MIT",
   "exports": "./src/mod.ts",
   "imports": {
-    "@deno/dnt": "jsr:@deno/dnt@^0.42.3",
-    "@std/assert": "jsr:@std/assert@1",
-    "dayjs": "npm:dayjs@^1.11.19"
+    "@deno/dnt": "jsr:@deno/dnt@0.42.3",
+    "@std/assert": "jsr:@std/assert@1"
   }
 }

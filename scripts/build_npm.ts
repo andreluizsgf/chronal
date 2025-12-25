@@ -12,16 +12,16 @@ await build({
   test: false,
   typeCheck: false,
   package: {
-    name: "chrona",
+    name: "chronal",
     version: Deno.args[0],
-    description: "A date utility library made with Deno",
+    description: "A tiny and fast date utility library for modern JavaScript runtimes.",
     license: "MIT",
     repository: {
       type: "git",
-      url: "git+https://github.com/username/repo.git",
+      url: "https://github.com/andreluizsgf/chronal",
     },
     bugs: {
-      url: "https://github.com/username/repo/issues",
+      url: "https://github.com/andreluizsgf/chronal/issues",
     },
   },
   postBuild() {

@@ -5,3 +5,7 @@ export * from "./lib/start-of.ts";
 export * from "./lib/end-of.ts";
 export * from "./lib/format.ts";
 export * from "./lib/weekdays.ts";
+export * from "./lib/is-after.ts";
+export * from "./lib/is-before.ts";
+export * from "./lib/difference.ts";
+export * from "./types/unit.ts";

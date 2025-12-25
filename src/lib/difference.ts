@@ -1,4 +1,6 @@
-export function difference(dateLeft: Date, dateRight: Date, unit: 'years' | 'months' | 'weeks' | 'days' | 'hours' | 'minutes' | 'seconds'): number {
+import type { PluralUnit } from "../types/unit.ts";
+
+export function difference(dateLeft: Date, dateRight: Date, unit: PluralUnit): number {
   const delta = dateLeft.getTime() - dateRight.getTime();
 
   switch (unit) {
