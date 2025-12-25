@@ -1,14 +1,19 @@
 import type { Unit } from "../types/unit.ts";
 
 /**
- * Compares two dates to see if they are the same in the given unit.
+ * Checks if two dates are in the same time unit (year, month, day, etc.).
  * 
- * @param dateLeft 
- * @param dateRight 
- * @param unit 
- * 
- * @returns boolean indicating whether the two dates are the same in the given unit
+ * @param dateLeft - The first date to compare.
+ * @param dateRight - The second date to compare.
+ * @param unit - The unit to compare ('year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second').
+ * @returns True if both dates are in the same unit, false otherwise.
+ * @example
+ * const date1 = new Date('2024-06-15T14:30:00Z');
+ * const date2 = new Date('2024-06-15T18:45:00Z');
+ * console.log(isSame(date1, date2, 'day')); // true (same day)
+ * console.log(isSame(date1, date2, 'hour')); // false (different hours)
  */
+
 export function isSame(dateLeft: Date, dateRight: Date, unit: Unit): boolean {
   switch (unit) {
     case 'year':

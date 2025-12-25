@@ -1,5 +1,17 @@
 const monthsCache = new Map<string, string[]>();
 
+/**
+ * Returns an array of month names for the specified locale and format.
+ * 
+ * @param locale - The locale to use (default: 'en-US').
+ * @param format - The format of month names: 'long', 'short', or 'narrow' (default: 'long').
+ * @returns An array of 12 month names starting from January.
+ * @example
+ * console.log(months('en-US', 'long')); // ['January', 'February', 'March', ...]
+ * console.log(months('en-US', 'short')); // ['Jan', 'Feb', 'Mar', ...]
+ * console.log(months('pt-BR', 'long')); // ['janeiro', 'fevereiro', 'março', ...]
+ */
+
 export function months(
   locale = "en-US",
   format: "long" | "short" | "narrow" = "long"

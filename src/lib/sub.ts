@@ -12,14 +12,15 @@ type SubOptions = {
 };
 
 /**
+ * Subtracts specified time units from the given date.
  * 
- * @param date 
+ * @param date - The original date.
  * @param opt - The time units to subtract.
  * @returns A new Date object with the specified time units subtracted.
  * @example
- * const date = new Date('2024-01-31T12:00:00Z');
- * const newDate = sub(date, { years: 1, months: 2, days: 3 });
- * console.log(newDate.toISOString()); // '2023-11-28T12:00:00.000Z'
+ * const date = new Date('2024-03-31T12:00:00Z');
+ * const newDate = sub(date, { years: 1, months: 1 });
+ * console.log(newDate.toISOString()); // '2023-02-28T12:00:00.000Z'
  */
 
 export function sub(date: Date, opt: SubOptions): Date {

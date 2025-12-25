@@ -1,5 +1,17 @@
 import type { Unit } from "../types/unit.ts";
 
+/**
+ * Returns the start of the specified time unit for the given date.
+ * 
+ * @param date - The original date.
+ * @param unit - The time unit to get the start of ('year' | 'month' | 'day' | 'hour' | 'minute' | 'second').
+ * @returns A new Date object set to the start of the specified unit.
+ * @example
+ * const date = new Date('2024-06-15T14:35:22.500Z');
+ * const startOfDay = startOf(date, 'day');
+ * console.log(startOfDay.toISOString()); // '2024-06-15T00:00:00.000Z'
+ */
+
 export function startOf(date: Date, unit: Unit): Date {
   const time = new Date(date.getTime());
 

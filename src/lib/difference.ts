@@ -1,5 +1,18 @@
 import type { PluralUnit } from "../types/unit.ts";
 
+/**
+ * Calculates the difference between two dates in the specified unit.
+ * 
+ * @param dateLeft - The first date.
+ * @param dateRight - The second date to subtract from the first.
+ * @param unit - The unit to express the difference in ('years' | 'months' | 'weeks' | 'days' | 'hours' | 'minutes' | 'seconds').
+ * @returns The difference as a number (can be negative if dateLeft is before dateRight).
+ * @example
+ * const date1 = new Date('2024-01-20T12:00:00Z');
+ * const date2 = new Date('2024-01-15T12:00:00Z');
+ * console.log(difference(date1, date2, 'days')); // 5
+ */
+
 export function difference(dateLeft: Date, dateRight: Date, unit: PluralUnit): number {
   const delta = dateLeft.getTime() - dateRight.getTime();
 

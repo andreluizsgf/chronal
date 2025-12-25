@@ -182,6 +182,21 @@ function getPartsWithTZ(date: Date, locale: string, tz: string): Parts {
   return p;
 }
 
+/**
+ * Formats a date into a string using the specified format pattern.
+ * 
+ * @param date - The date to format.
+ * @param fmt - The format string with tokens (YYYY, MM, DD, HH, mm, ss, etc.).
+ * @param options - Optional formatting options (locale and timezone).
+ * @returns The formatted date string.
+ * @example
+ * const date = new Date('2024-06-15T14:35:22Z');
+ * console.log(format(date, 'YYYY-MM-DD')); // '2024-06-15'
+ * console.log(format(date, 'YYYY-MM-DD HH:mm:ss')); // '2024-06-15 14:35:22'
+ * console.log(format(date, 'DD/MM/YYYY [at] HH:mm')); // '15/06/2024 at 14:35'
+ * console.log(format(date, 'MMMM D, YYYY', { locale: 'en-US' })); // 'June 15, 2024'
+ */
+
 export function format(
   date: Date,
   fmt: string,
