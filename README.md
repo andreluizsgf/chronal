@@ -1,4 +1,4 @@
-# Chrona
+# Chronal
 
 A tiny, fast, and modern date utility library for JavaScript/TypeScript with zero dependencies.
 
@@ -19,23 +19,23 @@ A tiny, fast, and modern date utility library for JavaScript/TypeScript with zer
 ### Deno
 
 ```typescript
-import { format, add, sub } from "jsr:@your-scope/chrona";
+import { format, add, sub } from "jsr:@your-scope/chronal";
 ```
 
 ### Node.js / npm
 
 ```bash
-npm install chrona
+npm install chronal
 ```
 
 ```javascript
-import { format, add, sub } from "chrona";
+import { format, add, sub } from "chronal";
 ```
 
 ## Quick Start
 
 ```typescript
-import { format, add, sub, startOf, endOf } from "chrona";
+import { format, add, sub, startOf, endOf } from "chronal";
 
 const date = new Date("2024-06-15T14:35:22Z");
 
@@ -306,17 +306,7 @@ Returns an array of weekday names (Monday to Sunday) for the specified locale.
 weekdays("en-US", "long"); // ['Monday', 'Tuesday', ...]
 weekdays("en-US", "short"); // ['Mon', 'Tue', ...]
 weekdays("pt-BR", "long"); // ['segunda-feira', 'terça-feira', ...]
-```
 
-## Performance
-
-Chrona is optimized for performance, especially in formatting operations:
-
-```
-Benchmark: 1,000,000 iterations of format(date, 'YYYY-MM-DD HH:mm:ss')
-
-chrona:  254ms
-dayjs:   1540ms  (6x slower)
 ```
 
 Key optimizations:
@@ -325,25 +315,17 @@ Key optimizations:
 - Optimized padding functions
 - Direct string concatenation
 
-## Why Chrona?
+## Why Chronal?
 
-### vs Day.js
-- **6x faster** for formatting operations
-- Zero dependencies (Day.js requires plugins for many features)
-- UTC-first design prevents timezone bugs
-- Modern ES modules
+Chronal offers a modern approach to date manipulation with a focus on simplicity and performance:
 
-### vs date-fns
-- Simpler API (functional vs modular)
-- Better performance for common operations
-- Smaller bundle size
-- Built-in formatting and localization
+- **Performance-focused** - Optimized for common operations like formatting
+- **Zero dependencies** - Built on native JavaScript APIs
+- **UTC-first** - Reduces timezone-related bugs by defaulting to UTC
+- **Lightweight** - Small bundle size, fully tree-shakeable
+- **Modern** - ES modules, TypeScript support, immutable operations
 
-### vs Moment.js
-- **Much smaller** (Moment.js is no longer maintained)
-- Immutable by default (no mutation footguns)
-- Tree-shakeable
-- Modern codebase
+Chronal works well alongside other date libraries. Choose the tool that best fits your project's needs.
 
 ## Design Principles
 
@@ -356,7 +338,7 @@ Key optimizations:
 
 ## Browser Support
 
-Chrona works in all modern browsers and JavaScript runtimes that support:
+Chronal works in all modern browsers and JavaScript runtimes that support:
 - ES6+ features
 - `Intl.DateTimeFormat` API
 - Native Date object
@@ -367,10 +349,9 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT © [Your Name]
+MIT © André Luiz Gomes Filho
 
 ## Links
 
-- [Documentation](#api-reference)
-- [GitHub Repository](https://github.com/your-username/chrona)
-- [Report Issues](https://github.com/your-username/chrona/issues)
+- [GitHub Repository](https://github.com/andreluizsgf/chronal)
+- [Report Issues](https://github.com/andreluizsgf/chronal/issues)

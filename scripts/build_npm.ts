@@ -26,7 +26,7 @@ await build({
   },
   postBuild() {
     // steps to run after building and before running the tests
-    // Deno.copyFileSync("LICENSE", "npm/LICENSE");
-    // Deno.copyFileSync("README.md", "npm/README.md");
+    Deno.copyFileSync("LICENSE", "npm/LICENSE");
+    Deno.copyFileSync("README.md", "npm/README.md");
   },
 });
