@@ -1,4 +1,5 @@
 import { getDTF } from "../core/dtf.ts";
+import { DEFAULT_LOCALE } from "./set-default-locale.ts";
 import { months } from "./months.ts";
 
 type FormatOptions = {
@@ -26,8 +27,8 @@ const tokenMap: Record<string, TokenResolver> = {
 
   M: p => String(p.month),
   MM: p => pad2(p.month),
-  MMM: (p, l) => months(l, 'short')[p.month - 1],
-  MMMM: (p, l) => months(l, 'long')[p.month - 1],
+  MMM: (p, l) => months('short', { locale: l })[p.month - 1],
+  MMMM: (p, l) => months('long', { locale: l })[p.month - 1],
 
   D: p => String(p.day),
   DD: p => pad2(p.day),
@@ -202,7 +203,7 @@ export function format(
   fmt: string,
   options: FormatOptions = {}
 ): string {
-  const locale = options.locale ?? "en-US";
+  const locale = options.locale ?? DEFAULT_LOCALE;
   const tz = options.tz ?? "UTC";
 
   // Get compiled format (cached)

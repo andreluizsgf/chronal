@@ -55,6 +55,32 @@ startOf(date, "month"); // 2024-06-01T00:00:00.000Z
 endOf(date, "day"); // 2024-06-15T23:59:59.999Z
 ```
 
+## Configuration
+
+### `setDefaultLocale(locale)`
+
+Set the default locale for all date formatting operations.
+
+**Parameters:**
+- `locale` (string) - The locale code (e.g., 'en-US', 'pt-BR', 'fr-FR')
+
+**Example:**
+
+```typescript
+import { setDefaultLocale, format, months } from "chronal";
+
+// Default is 'en-US'
+format(new Date("2024-06-15"), "MMMM"); // 'June'
+
+// Change default locale
+setDefaultLocale("pt-BR");
+format(new Date("2024-06-15"), "MMMM"); // 'junho'
+months(); // ['janeiro', 'fevereiro', 'março', ...]
+
+// You can still override per call
+format(new Date("2024-06-15"), "MMMM", { locale: "fr-FR" }); // 'juin'
+```
+
 ## API Reference
 
 ### Formatting

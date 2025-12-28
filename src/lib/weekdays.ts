@@ -1,3 +1,9 @@
+import { DEFAULT_LOCALE } from "./set-default-locale.ts";
+
+type WeekdaysOptions = {
+  locale?: string;
+};
+
 const daysCache = new Map<string, string[]>();
 
 /**
@@ -13,9 +19,10 @@ const daysCache = new Map<string, string[]>();
  */
 
 export function weekdays(
-  locale = "en-US",
-  format: "long" | "short" | "narrow" = "long"
+  format: "long" | "short" | "narrow" = "long",
+  opt: WeekdaysOptions = {}
 ): string[] {
+  const locale = opt.locale ?? DEFAULT_LOCALE;
   const key = `${locale}|${format}`;
 
   const cached = daysCache.get(key);

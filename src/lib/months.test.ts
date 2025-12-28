@@ -2,7 +2,7 @@ import { assertEquals } from "@std/assert";
 import { months } from "./months.ts";
 
 Deno.test("months function - English long format", () => {
-  const monthNames = months('en-US', 'long');
+  const monthNames = months('long', { locale: 'en-US', });
   
   assertEquals(monthNames.length, 12);
   assertEquals(monthNames[0], 'January');
@@ -12,7 +12,7 @@ Deno.test("months function - English long format", () => {
 });
 
 Deno.test("months function - English short format", () => {
-  const monthNames = months('en-US', 'short');
+  const monthNames = months('short', { locale: 'en-US', });
   
   assertEquals(monthNames.length, 12);
   // Short names may include periods depending on locale implementation
@@ -22,7 +22,7 @@ Deno.test("months function - English short format", () => {
 });
 
 Deno.test("months function - English narrow format", () => {
-  const monthNames = months('en-US', 'narrow');
+  const monthNames = months('narrow', { locale: 'en-US', });
   
   assertEquals(monthNames.length, 12);
   assertEquals(monthNames[0], 'J');
@@ -31,7 +31,7 @@ Deno.test("months function - English narrow format", () => {
 });
 
 Deno.test("months function - Portuguese long format", () => {
-  const monthNames = months('pt-BR', 'long');
+  const monthNames = months('long', { locale: 'pt-BR', });
   
   assertEquals(monthNames.length, 12);
   assertEquals(monthNames[0], 'janeiro');
@@ -47,8 +47,8 @@ Deno.test("months function - default parameters", () => {
 });
 
 Deno.test("months function - caching works", () => {
-  const monthNames1 = months('en-US', 'long');
-  const monthNames2 = months('en-US', 'long');
+  const monthNames1 = months('long', { locale: 'en-US', });
+  const monthNames2 = months('long', { locale: 'en-US', });
   
   // Should return the same cached array
   assertEquals(monthNames1, monthNames2);

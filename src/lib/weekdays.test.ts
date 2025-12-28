@@ -2,8 +2,8 @@ import { assertEquals } from "@std/assert";
 import { weekdays } from "./weekdays.ts";
 
 Deno.test("weekdays function - English long format", () => {
-  const days = weekdays('en-US', 'long');
-  
+  const days = weekdays('long', { locale: 'en-US', });
+
   assertEquals(days.length, 7);
   assertEquals(days[0], 'Monday');
   assertEquals(days[1], 'Tuesday');
@@ -15,8 +15,8 @@ Deno.test("weekdays function - English long format", () => {
 });
 
 Deno.test("weekdays function - English short format", () => {
-  const days = weekdays('en-US', 'short');
-  
+  const days = weekdays('short', { locale: 'en-US', });
+
   assertEquals(days.length, 7);
   // Short names may vary by implementation
   assertEquals(days[0].toLowerCase().startsWith('mon'), true);
@@ -25,8 +25,8 @@ Deno.test("weekdays function - English short format", () => {
 });
 
 Deno.test("weekdays function - English narrow format", () => {
-  const days = weekdays('en-US', 'narrow');
-  
+  const days = weekdays('narrow', { locale: 'en-US', });
+
   assertEquals(days.length, 7);
   assertEquals(days[0], 'M');
   assertEquals(days[1], 'T');
@@ -34,8 +34,8 @@ Deno.test("weekdays function - English narrow format", () => {
 });
 
 Deno.test("weekdays function - Portuguese long format", () => {
-  const days = weekdays('pt-BR', 'long');
-  
+  const days = weekdays('long', { locale: 'pt-BR', });
+
   assertEquals(days.length, 7);
   assertEquals(days[0], 'segunda-feira');
   assertEquals(days[1], 'terça-feira');
@@ -44,15 +44,15 @@ Deno.test("weekdays function - Portuguese long format", () => {
 
 Deno.test("weekdays function - default parameters", () => {
   const days = weekdays();
-  
+
   assertEquals(days.length, 7);
   assertEquals(days[0], 'Monday');
 });
 
 Deno.test("weekdays function - caching works", () => {
-  const days1 = weekdays('en-US', 'long');
-  const days2 = weekdays('en-US', 'long');
-  
+  const days1 = weekdays('long', { locale: 'en-US', });
+  const days2 = weekdays('long', { locale: 'en-US', });
+
   // Should return the same cached array
   assertEquals(days1, days2);
 });

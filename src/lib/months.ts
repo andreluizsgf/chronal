@@ -1,3 +1,10 @@
+import { DEFAULT_LOCALE } from "./set-default-locale.ts";
+
+type MonthsOptions = {
+  tz?: string;
+  locale?: string;
+};
+
 const monthsCache = new Map<string, string[]>();
 
 /**
@@ -13,9 +20,10 @@ const monthsCache = new Map<string, string[]>();
  */
 
 export function months(
-  locale = "en-US",
-  format: "long" | "short" | "narrow" = "long"
+  format: "long" | "short" | "narrow" = "long",
+  opt: MonthsOptions = {}
 ): string[] {
+  const locale = opt.locale ?? DEFAULT_LOCALE;
   const key = `${locale}|${format}`;
 
   const cached = monthsCache.get(key);
