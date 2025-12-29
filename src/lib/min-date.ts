@@ -8,13 +8,13 @@
  * const date1 = new Date('2024-01-15T12:00:00Z');
  * const date2 = new Date('2024-01-20T12:00:00Z');
  * const date3 = new Date('2024-01-10T12:00:00Z');
- * const earliest = min(date1, date2, date3);
+ * const earliest = minDate(date1, date2, date3);
  * console.log(earliest.toISOString()); // '2024-01-10T12:00:00.000Z'
  */
 
-export function min(...dates: Date[]): Date {
+export function minDate(...dates: Date[]): Date {
   if (dates.length === 0) {
-    throw new Error("min requires at least one date");
+    throw new Error("minDate requires at least one date");
   }
 
   let minDate = dates[0];

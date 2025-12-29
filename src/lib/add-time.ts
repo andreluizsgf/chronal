@@ -17,11 +17,11 @@ type AddOptions = {
  * @returns A new Date object with the specified time units added.
  * @example
  * const date = new Date('2024-01-31T12:00:00Z');
- * const newDate = add(date, { years: 1, months: 2, days: 3 });
+ * const newDate = addTime(date, { years: 1, months: 2, days: 3 });
  * console.log(newDate.toISOString()); // '2025-04-03T12:00:00.000Z'
  */
 
-export function add(date: Date, opt: AddOptions): Date {
+export function addTime(date: Date, opt: AddOptions): Date {
   let d = new Date(date.getTime());
 
   // ===== calendar-based (UTC-safe) =====

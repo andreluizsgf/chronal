@@ -29,26 +29,26 @@ npm install chronal
 ```
 
 ```javascript
-import { format, add, sub } from "chronal";
+import { formatDate, addTime, subDate } from "chronal";
 ```
 
 ## Quick Start
 
 ```typescript
-import { format, add, sub, startOf, endOf } from "chronal";
+import { formatDate, addTime, subDate, startOf, endOf } from "chronal";
 
 const date = new Date("2024-06-15T14:35:22Z");
 
 // Format dates
-format(date, "YYYY-MM-DD"); // '2024-06-15'
-format(date, "YYYY-MM-DD HH:mm:ss"); // '2024-06-15 14:35:22'
-format(date, "DD/MM/YYYY [at] HH:mm"); // '15/06/2024 at 14:35'
+formatDate(date, "YYYY-MM-DD"); // '2024-06-15'
+formatDate(date, "YYYY-MM-DD HH:mm:ss"); // '2024-06-15 14:35:22'
+formatDate(date, "DD/MM/YYYY [at] HH:mm"); // '15/06/2024 at 14:35'
 
 // Add time
-add(date, { days: 5, hours: 2 }); // 2024-06-20T16:35:22Z
+addTime(date, { days: 5, hours: 2 }); // 2024-06-20T16:35:22Z
 
 // Subtract time
-sub(date, { months: 1, days: 10 }); // 2024-05-05T14:35:22Z
+subDate(date, { months: 1, days: 10 }); // 2024-05-05T14:35:22Z
 
 // Start/End of period
 startOf(date, "month"); // 2024-06-01T00:00:00.000Z
@@ -67,25 +67,25 @@ Set the default locale for all date formatting operations.
 **Example:**
 
 ```typescript
-import { setDefaultLocale, format, months } from "chronal";
+import { setDefaultLocale, formatDate, months } from "chronal";
 
 // Default is 'en-US'
-format(new Date("2024-06-15"), "MMMM"); // 'June'
+formatDate(new Date("2024-06-15"), "MMMM"); // 'June'
 
 // Change default locale
 setDefaultLocale("pt-BR");
-format(new Date("2024-06-15"), "MMMM"); // 'junho'
+formatDate(new Date("2024-06-15"), "MMMM"); // 'junho'
 months(); // ['janeiro', 'fevereiro', 'março', ...]
 
 // You can still override per call
-format(new Date("2024-06-15"), "MMMM", { locale: "fr-FR" }); // 'juin'
+formatDate(new Date("2024-06-15"), "MMMM", { locale: "fr-FR" }); // 'juin'
 ```
 
 ## API Reference
 
 ### Formatting
 
-#### `format(date, formatString, options?)`
+#### `formatDate(date, formatString, options?)`
 
 Formats a date into a string using the specified format pattern.
 
@@ -129,12 +129,12 @@ format(date, "MMMM D, YYYY"); // 'June 15, 2024'
 format(date, "YYYY-MM-DD [at] HH:mm"); // '2024-06-15 at 14:35'
 
 // With locale
-format(date, "MMMM D, YYYY", { locale: "pt-BR" }); // 'junho 15, 2024'
+formatDate(date, "MMMM D, YYYY", { locale: "pt-BR" }); // 'junho 15, 2024'
 ```
 
 ### Date Manipulation
 
-#### `add(date, options)`
+#### `addTime(date, options)`
 
 Adds specified time units to a date.
 
@@ -157,24 +157,24 @@ Adds specified time units to a date.
 ```typescript
 const date = new Date("2024-01-31T12:00:00Z");
 
-add(date, { days: 5 }); // 2024-02-05T12:00:00.000Z
-add(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles leap year)
-add(date, { years: 1, months: 2, days: 3 }); // 2025-04-03T12:00:00.000Z
+addTime(date, { days: 5 }); // 2024-02-05T12:00:00.000Z
+addTime(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles leap year)
+addTime(date, { years: 1, months: 2, days: 3 }); // 2025-04-03T12:00:00.000Z
 ```
 
-#### `sub(date, options)`
+#### `subDate(date, options)`
 
 Subtracts specified time units from a date.
 
-**Parameters:** Same as `add()`
+**Parameters:** Same as `addTime()`
 
 **Examples:**
 
 ```typescript
 const date = new Date("2024-03-31T12:00:00Z");
 
-sub(date, { days: 5 }); // 2024-03-26T12:00:00.000Z
-sub(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles month overflow)
+subDate(date, { days: 5 }); // 2024-03-26T12:00:00.000Z
+subDate(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles month overflow)
 ```
 
 ### Start/End of Period
@@ -264,7 +264,7 @@ isSame(date1, date2, "hour"); // false (different hours)
 
 ### Min/Max
 
-#### `max(...dates)`
+#### `maxDate(...dates)`
 
 Returns the latest date from the given dates.
 
@@ -273,20 +273,20 @@ const date1 = new Date("2024-01-15T12:00:00Z");
 const date2 = new Date("2024-01-20T12:00:00Z");
 const date3 = new Date("2024-01-10T12:00:00Z");
 
-max(date1, date2, date3); // 2024-01-20T12:00:00.000Z
+maxDate(date1, date2, date3); // 2024-01-20T12:00:00.000Z
 ```
 
-#### `min(...dates)`
+#### `minDate(...dates)`
 
 Returns the earliest date from the given dates.
 
 ```typescript
-min(date1, date2, date3); // 2024-01-10T12:00:00.000Z
+minDate(date1, date2, date3); // 2024-01-10T12:00:00.000Z
 ```
 
 ### Date Difference
 
-#### `difference(dateLeft, dateRight, unit)`
+#### `dateDiff(dateLeft, dateRight, unit)`
 
 Calculates the difference between two dates in the specified unit.
 
@@ -301,9 +301,9 @@ Calculates the difference between two dates in the specified unit.
 const date1 = new Date("2024-01-20T12:00:00Z");
 const date2 = new Date("2024-01-15T12:00:00Z");
 
-difference(date1, date2, "days"); // 5
-difference(date2, date1, "days"); // -5
-difference(date1, date2, "hours"); // 120
+dateDiff(date1, date2, "days"); // 5
+dateDiff(date2, date1, "days"); // -5
+dateDiff(date1, date2, "hours"); // 120
 ```
 
 ### Localization

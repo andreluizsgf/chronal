@@ -1,48 +1,48 @@
 import { assertEquals, assertThrows } from "@std/assert";
-import { min } from "./min.ts";
+import { minDate } from "./min-date.ts";
 
-Deno.test("min function - finds minimum date", () => {
+Deno.test("minDate function - finds minimum date", () => {
   const date1 = new Date('2024-01-15T12:00:00Z');
   const date2 = new Date('2024-01-20T12:00:00Z');
   const date3 = new Date('2024-01-10T12:00:00Z');
 
-  const result = min(date1, date2, date3);
+  const result = minDate(date1, date2, date3);
   assertEquals(result.toISOString(), '2024-01-10T12:00:00.000Z');
 });
 
-Deno.test("min function - single date", () => {
+Deno.test("minDate function - single date", () => {
   const date = new Date('2024-01-15T12:00:00Z');
-  const result = min(date);
+  const result = minDate(date);
   assertEquals(result.toISOString(), '2024-01-15T12:00:00.000Z');
 });
 
-Deno.test("min function - two dates", () => {
+Deno.test("minDate function - two dates", () => {
   const date1 = new Date('2024-01-15T12:00:00Z');
   const date2 = new Date('2024-01-20T12:00:00Z');
 
-  const result = min(date1, date2);
+  const result = minDate(date1, date2);
   assertEquals(result.toISOString(), '2024-01-15T12:00:00.000Z');
 });
 
-Deno.test("min function - all same dates", () => {
+Deno.test("minDate function - all same dates", () => {
   const date = new Date('2024-01-15T12:00:00Z');
-  const result = min(date, date, date);
+  const result = minDate(date, date, date);
   assertEquals(result.toISOString(), '2024-01-15T12:00:00.000Z');
 });
 
-Deno.test("min function - millisecond precision", () => {
+Deno.test("minDate function - millisecond precision", () => {
   const date1 = new Date('2024-01-15T12:00:00.002Z');
   const date2 = new Date('2024-01-15T12:00:00.001Z');
   const date3 = new Date('2024-01-15T12:00:00.000Z');
 
-  const result = min(date1, date2, date3);
+  const result = minDate(date1, date2, date3);
   assertEquals(result.toISOString(), '2024-01-15T12:00:00.000Z');
 });
 
-Deno.test("min function - throws on empty array", () => {
+Deno.test("minDate function - throws on empty array", () => {
   assertThrows(
-    () => min(),
+    () => minDate(),
     Error,
-    "min requires at least one date"
+    "minDate requires at least one date"
   );
 });

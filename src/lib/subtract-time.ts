@@ -1,4 +1,4 @@
-import { add } from "./add.ts";
+import { addTime } from "./add-time.ts";
 
 type SubOptions = {
   years?: number;
@@ -19,11 +19,11 @@ type SubOptions = {
  * @returns A new Date object with the specified time units subtracted.
  * @example
  * const date = new Date('2024-03-31T12:00:00Z');
- * const newDate = sub(date, { years: 1, months: 1 });
+ * const newDate = subDate(date, { years: 1, months: 1 });
  * console.log(newDate.toISOString()); // '2023-02-28T12:00:00.000Z'
  */
 
-export function sub(date: Date, opt: SubOptions): Date {
+export function subDate(date: Date, opt: SubOptions): Date {
   const out: SubOptions = {};
 
   if (opt.years)        out.years        = -opt.years;
@@ -35,5 +35,5 @@ export function sub(date: Date, opt: SubOptions): Date {
   if (opt.seconds)     out.seconds     = -opt.seconds;
   if (opt.milliseconds)out.milliseconds= -opt.milliseconds;
 
-  return add(date, out);
+  return addTime(date, out);
 }

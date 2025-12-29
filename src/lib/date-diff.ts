@@ -10,10 +10,10 @@ import type { PluralUnit } from "../types/unit.ts";
  * @example
  * const date1 = new Date('2024-01-20T12:00:00Z');
  * const date2 = new Date('2024-01-15T12:00:00Z');
- * console.log(difference(date1, date2, 'days')); // 5
+ * console.log(dateDiff(date1, date2, 'days')); // 5
  */
 
-export function difference(dateLeft: Date, dateRight: Date, unit: PluralUnit): number {
+export function dateDiff(dateLeft: Date, dateRight: Date, unit: PluralUnit): number {
   const delta = dateLeft.getTime() - dateRight.getTime();
 
   switch (unit) {

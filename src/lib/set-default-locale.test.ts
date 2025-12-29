@@ -1,6 +1,6 @@
 import { assertEquals } from "@std/assert";
 import { setDefaultLocale, DEFAULT_LOCALE } from "./set-default-locale.ts";
-import { format } from "./format.ts";
+import { formatDate } from "./format-date.ts";
 import { months } from "./months.ts";
 import { weekdays } from "./weekdays.ts";
 
@@ -11,7 +11,7 @@ Deno.test("setDefaultLocale", async (t) => {
   await t.step("should change the default locale", () => {
     setDefaultLocale("pt-BR");
     const date = new Date("2024-06-15T12:00:00Z");
-    const result = format(date, "MMMM");
+    const result = formatDate(date, "MMMM");
     assertEquals(result, "junho");
   });
 
@@ -33,7 +33,7 @@ Deno.test("setDefaultLocale", async (t) => {
   await t.step("should work with different locales", () => {
     setDefaultLocale("fr-FR");
     const date = new Date("2024-06-15T12:00:00Z");
-    const result = format(date, "MMMM");
+    const result = formatDate(date, "MMMM");
     assertEquals(result, "juin");
   });
 
@@ -42,29 +42,29 @@ Deno.test("setDefaultLocale", async (t) => {
     const date = new Date("2024-06-15T12:00:00Z");
     
     // Default should be pt-BR
-    assertEquals(format(date, "MMMM"), "junho");
+    assertEquals(formatDate(date, "MMMM"), "junho");
     
     // But can override
-    assertEquals(format(date, "MMMM", { locale: "fr-FR" }), "juin");
-    assertEquals(format(date, "MMMM", { locale: "en-US" }), "June");
+    assertEquals(formatDate(date, "MMMM", { locale: "fr-FR" }), "juin");
+    assertEquals(formatDate(date, "MMMM", { locale: "en-US" }), "June");
   });
 
   await t.step("should work with Spanish locale", () => {
     setDefaultLocale("es-ES");
     const date = new Date("2024-06-15T12:00:00Z");
-    assertEquals(format(date, "MMMM"), "junio");
+    assertEquals(formatDate(date, "MMMM"), "junio");
   });
 
   await t.step("should work with German locale", () => {
     setDefaultLocale("de-DE");
     const date = new Date("2024-06-15T12:00:00Z");
-    assertEquals(format(date, "MMMM"), "Juni");
+    assertEquals(formatDate(date, "MMMM"), "Juni");
   });
 
   await t.step("should work with Japanese locale", () => {
     setDefaultLocale("ja-JP");
     const date = new Date("2024-06-15T12:00:00Z");
-    assertEquals(format(date, "MMMM"), "6月");
+    assertEquals(formatDate(date, "MMMM"), "6月");
   });
 
   await t.step("should affect weekday names via weekdays()", () => {
@@ -78,7 +78,7 @@ Deno.test("setDefaultLocale", async (t) => {
   await t.step("should affect short month names", () => {
     setDefaultLocale("es-ES");
     const date = new Date("2024-06-15T12:00:00Z");
-    assertEquals(format(date, "MMM"), "jun");
+    assertEquals(formatDate(date, "MMM"), "jun");
   });
 
   // Restore original locale
