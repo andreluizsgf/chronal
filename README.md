@@ -641,11 +641,6 @@ Key optimizations:
 - Short-circuit comparisons in isSame
 - Efficient week and quarter calculations
 
-**Benchmark Results:**
-
-```
-formatDate: 6x faster than dayjs (254ms vs 1540ms for 100,000 operations)
-```
 
 ## Why Chronal?
 

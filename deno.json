@@ -1,6 +1,6 @@
 {
-  "name": "chronal",
-  "version": "0.1.0",
+  "name": "@chronal/core",
+  "version": "0.0.1-4",
   "description": "A tiny and fast date utility library for modern JavaScript runtimes.",
   "license": "MIT",
   "exports": "./src/mod.ts",
