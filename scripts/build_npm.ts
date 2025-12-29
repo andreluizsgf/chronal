@@ -23,6 +23,24 @@ await build({
     bugs: {
       url: "https://github.com/andreluizsgf/chronal/issues",
     },
+    keywords: [
+      "date",
+      "time",
+      "datetime",
+      "date-utils",
+      "format",
+      "diff",
+      "add",
+      "subtract",
+      "utc",
+      "immutable",
+      "lightweight",
+      "fast",
+      "esm",
+      "deno",
+      "bun",
+      "node"
+    ],
   },
   postBuild() {
     // steps to run after building and before running the tests

@@ -43,7 +43,7 @@ A tiny, fast, and modern date utility library for JavaScript/TypeScript with zer
 ### Deno
 
 ```typescript
-import { format, add, sub } from "jsr:@your-scope/chronal";
+import { format, add, sub } from "jsr:@chronal/core";
 ```
 
 ### Node.js / npm
