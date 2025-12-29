@@ -22,11 +22,11 @@ export function endOf(date: Date, unit: Unit): Date {
       break;
     }
     case 'month': {
-      const year = time.getUTCFullYear();
+      // Set to next month's first day, then subtract 1 millisecond
       const month = time.getUTCMonth();
-      const lastDay = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
-      time.setUTCDate(lastDay);
-      time.setUTCHours(23, 59, 59, 999);
+      time.setUTCMonth(month + 1, 1);
+      time.setUTCHours(0, 0, 0, 0);
+      time.setTime(time.getTime() - 1);
       break;
     }
     case 'week': {
