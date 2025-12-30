@@ -17,13 +17,13 @@
  * ```
  */
 type SetUnitOptions = {
-  years?: number;
-  months?: number;
-  days?: number;
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
-  milliseconds?: number;
+  year?: number;
+  month?: number;
+  day?: number;
+  hour?: number;
+  minute?: number;
+  second?: number;
+  millisecond?: number;
 };
 
 
@@ -33,13 +33,13 @@ export function setUnit(
 ): Date {
   const result = new Date(date.getTime());
   
-  if (opt.years !== undefined) result.setUTCFullYear(opt.years);
-  if (opt.months !== undefined) result.setUTCMonth(opt.months);
-  if (opt.days !== undefined) result.setUTCDate(opt.days);
-  if (opt.hours !== undefined) result.setUTCHours(opt.hours);
-  if (opt.minutes !== undefined) result.setUTCMinutes(opt.minutes);
-  if (opt.seconds !== undefined) result.setUTCSeconds(opt.seconds);
-  if (opt.milliseconds !== undefined) result.setUTCMilliseconds(opt.milliseconds);
+  if (opt.year !== undefined) result.setUTCFullYear(opt.year);
+  if (opt.month !== undefined) result.setUTCMonth(opt.month - 1);
+  if (opt.day !== undefined) result.setUTCDate(opt.day);
+  if (opt.hour !== undefined) result.setUTCHours(opt.hour);
+  if (opt.minute !== undefined) result.setUTCMinutes(opt.minute);
+  if (opt.second !== undefined) result.setUTCSeconds(opt.second);
+  if (opt.millisecond !== undefined) result.setUTCMilliseconds(opt.millisecond);
   
   return result;
 }
