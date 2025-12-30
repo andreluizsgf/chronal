@@ -11,11 +11,11 @@ const daysCache = new Map<string, string[]>();
  * 
  * @param locale - The locale to use (default: 'en-US').
  * @param format - The format of weekday names: 'long', 'short', or 'narrow' (default: 'long').
- * @returns An array of 7 weekday names starting from Monday.
+ * @returns An array of 7 weekday names starting from Sunday.
  * @example
- * console.log(weekdays('en-US', 'long')); // ['Monday', 'Tuesday', 'Wednesday', ...]
- * console.log(weekdays('en-US', 'short')); // ['Mon', 'Tue', 'Wed', ...]
- * console.log(weekdays('pt-BR', 'long')); // ['segunda-feira', 'terça-feira', ...]
+ * console.log(weekdays('en-US', 'long')); // ['Sunday', 'Monday', 'Tuesday', ...]
+ * console.log(weekdays('en-US', 'short')); // ['Sun', 'Mon', 'Tue', ...]
+ * console.log(weekdays('pt-BR', 'long')); // ['domingo', 'segunda-feira', 'terça-feira', ...]
  */
 
 export function weekdays(
@@ -34,7 +34,7 @@ export function weekdays(
   });
 
   const result = Array.from({ length: 7 }, (_, i) =>
-    fmt.format(new Date(Date.UTC(2024, 0, i + 1)))
+    fmt.format(new Date(Date.UTC(2017, 0, i + 1)))
   );
 
   daysCache.set(key, result);

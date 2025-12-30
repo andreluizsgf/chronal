@@ -25,9 +25,9 @@ Deno.test("setDefaultLocale", async (t) => {
   await t.step("should affect weekdays() output", () => {
     setDefaultLocale("pt-BR");
     const result = weekdays();
-    // weekdays() starts from Monday (index 0)
-    assertEquals(result[0], "segunda-feira");
-    assertEquals(result[1], "terça-feira");
+    // weekdays() starts from Sunday (index 0)
+    assertEquals(result[0], "domingo");
+    assertEquals(result[1], "segunda-feira");
   });
 
   await t.step("should work with different locales", () => {
@@ -70,9 +70,9 @@ Deno.test("setDefaultLocale", async (t) => {
   await t.step("should affect weekday names via weekdays()", () => {
     setDefaultLocale("fr-FR");
     const result = weekdays();
-    // Monday in French
-    assertEquals(result[0], "lundi");
-    assertEquals(result[5], "samedi");
+    // Sunday in French
+    assertEquals(result[0], "dimanche");
+    assertEquals(result[6], "samedi");
   });
 
   await t.step("should affect short month names", () => {

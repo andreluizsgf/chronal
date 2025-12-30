@@ -53,7 +53,7 @@ npm install chronal
 ```
 
 ```javascript
-import { formatDate, addTime, subDate } from "chronal";
+import { formatDate, addTime, subTime } from "chronal";
 ```
 
 ## Quick Start
@@ -63,7 +63,7 @@ import {
   formatDate, 
   parseDate, 
   addTime, 
-  subDate, 
+  subTime, 
   startOf, 
   endOf,
   isToday,
@@ -82,7 +82,7 @@ parseDate("15/06/2024", "DD/MM/YYYY"); // Date object for June 15, 2024
 
 // Add/subtract time
 addTime(date, { days: 5, hours: 2 }); // 2024-06-20T16:35:22Z
-subDate(date, { months: 1, days: 10 }); // 2024-05-05T14:35:22Z
+subTime(date, { months: 1, days: 10 }); // 2024-05-05T14:35:22Z
 
 // Start/End of period
 startOf(date, "month"); // 2024-06-01T00:00:00.000Z
@@ -234,7 +234,7 @@ addTime(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles leap year)
 addTime(date, { years: 1, months: 2, days: 3 }); // 2025-04-03T12:00:00.000Z
 ```
 
-#### `subDate(date, options)`
+#### `subTime(date, options)`
 
 Subtracts specified time units from a date.
 
@@ -245,8 +245,8 @@ Subtracts specified time units from a date.
 ```typescript
 const date = new Date("2024-03-31T12:00:00Z");
 
-subDate(date, { days: 5 }); // 2024-03-26T12:00:00.000Z
-subDate(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles month overflow)
+subTime(date, { days: 5 }); // 2024-03-26T12:00:00.000Z
+subTime(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles month overflow)
 ```
 
 #### `getUnit(date, unit)`
@@ -620,14 +620,14 @@ months("pt-BR", "long"); // ['janeiro', 'fevereiro', ...]
 
 #### `weekdays(locale?, format?)`
 
-Returns an array of weekday names (Monday to Sunday) for the specified locale.
+Returns an array of weekday names (Sunday to Saturday) for the specified locale.
 
 **Parameters:** Same as `months()`
 
 ```typescript
-weekdays("en-US", "long"); // ['Monday', 'Tuesday', ...]
-weekdays("en-US", "short"); // ['Mon', 'Tue', ...]
-weekdays("pt-BR", "long"); // ['segunda-feira', 'terça-feira', ...]
+weekdays("en-US", "long"); // ['Sunday', 'Monday', 'Tuesday', ...]
+weekdays("en-US", "short"); // ['Sun', 'Mon', 'Tue', ...]
+weekdays("pt-BR", "long"); // ['domingo', 'segunda-feira', 'terça-feira', ...]
 ```
 
 ## Performance

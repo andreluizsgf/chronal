@@ -5,13 +5,13 @@ Deno.test("weekdays function - English long format", () => {
   const days = weekdays('long', { locale: 'en-US', });
 
   assertEquals(days.length, 7);
-  assertEquals(days[0], 'Monday');
-  assertEquals(days[1], 'Tuesday');
-  assertEquals(days[2], 'Wednesday');
-  assertEquals(days[3], 'Thursday');
-  assertEquals(days[4], 'Friday');
-  assertEquals(days[5], 'Saturday');
-  assertEquals(days[6], 'Sunday');
+  assertEquals(days[0], 'Sunday');
+  assertEquals(days[1], 'Monday');
+  assertEquals(days[2], 'Tuesday');
+  assertEquals(days[3], 'Wednesday');
+  assertEquals(days[4], 'Thursday');
+  assertEquals(days[5], 'Friday');
+  assertEquals(days[6], 'Saturday');
 });
 
 Deno.test("weekdays function - English short format", () => {
@@ -19,34 +19,34 @@ Deno.test("weekdays function - English short format", () => {
 
   assertEquals(days.length, 7);
   // Short names may vary by implementation
-  assertEquals(days[0].toLowerCase().startsWith('mon'), true);
-  assertEquals(days[1].toLowerCase().startsWith('tue'), true);
-  assertEquals(days[6].toLowerCase().startsWith('sun'), true);
+  assertEquals(days[0].toLowerCase().startsWith('sun'), true);
+  assertEquals(days[1].toLowerCase().startsWith('mon'), true);
+  assertEquals(days[6].toLowerCase().startsWith('sat'), true);
 });
 
 Deno.test("weekdays function - English narrow format", () => {
   const days = weekdays('narrow', { locale: 'en-US', });
 
   assertEquals(days.length, 7);
-  assertEquals(days[0], 'M');
-  assertEquals(days[1], 'T');
-  assertEquals(days[2], 'W');
+  assertEquals(days[0], 'S');
+  assertEquals(days[1], 'M');
+  assertEquals(days[2], 'T');
 });
 
 Deno.test("weekdays function - Portuguese long format", () => {
   const days = weekdays('long', { locale: 'pt-BR', });
 
   assertEquals(days.length, 7);
-  assertEquals(days[0], 'segunda-feira');
-  assertEquals(days[1], 'terça-feira');
-  assertEquals(days[6], 'domingo');
+  assertEquals(days[0], 'domingo');
+  assertEquals(days[1], 'segunda-feira');
+  assertEquals(days[6], 'sábado');
 });
 
 Deno.test("weekdays function - default parameters", () => {
   const days = weekdays();
 
   assertEquals(days.length, 7);
-  assertEquals(days[0], 'Monday');
+  assertEquals(days[0], 'Sunday');
 });
 
 Deno.test("weekdays function - caching works", () => {

@@ -1,5 +1,5 @@
 export { addTime } from "./lib/add-time.ts";
-export { subDate } from "./lib/subtract-time.ts";
+export { subTime } from "./lib/sub-time.ts";
 export { getUnit } from "./lib/get-unit.ts";
 export { setUnit } from "./lib/set-unit.ts";
 export { months } from "./lib/months.ts";
