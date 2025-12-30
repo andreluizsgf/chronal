@@ -34,7 +34,7 @@ export function setUnit(
   const result = new Date(date.getTime());
   
   if (opt.year !== undefined) result.setUTCFullYear(opt.year);
-  if (opt.month !== undefined) result.setUTCMonth(opt.month - 1);
+  if (opt.month !== undefined) result.setUTCMonth(opt.month);
   if (opt.day !== undefined) result.setUTCDate(opt.day);
   if (opt.hour !== undefined) result.setUTCHours(opt.hour);
   if (opt.minute !== undefined) result.setUTCMinutes(opt.minute);

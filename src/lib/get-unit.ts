@@ -10,7 +10,7 @@ import type { Unit } from "../types/unit.ts";
  * @example
  * const date = new Date('2024-03-15T12:34:56Z');
  * console.log(getUnit(date, 'year'));   // 2024
- * console.log(getUnit(date, 'month'));  // 3
+ * console.log(getUnit(date, 'month'));  // 2 (0-indexed, March)
  * console.log(getUnit(date, 'day'));    // 15
  */
 
@@ -19,7 +19,7 @@ export function getUnit(date: Date, unit: Omit<Unit, 'week'>): number {
     case 'year':
       return date.getUTCFullYear();
     case 'month':
-      return date.getUTCMonth() + 1;
+      return date.getUTCMonth();
     case 'day':
       return date.getUTCDate();
     case 'hour':
