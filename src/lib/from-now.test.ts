@@ -3,7 +3,7 @@ import { fromNow } from "./from-now.ts";
 
 Deno.test("fromNow function - just now (under 1 minute)", () => {
   const date = new Date(Date.now() - 30000); // 30 seconds ago
-  assertEquals(fromNow(date), "just now");
+  assertEquals(fromNow(date), "now");
 });
 
 Deno.test("fromNow function - 1 minute ago", () => {
@@ -28,7 +28,7 @@ Deno.test("fromNow function - 3 hours ago", () => {
 
 Deno.test("fromNow function - 1 day ago", () => {
   const date = new Date(Date.now() - 86400000); // 1 day ago
-  assertEquals(fromNow(date), "1 day ago");
+  assertEquals(fromNow(date), "yesterday");
 });
 
 Deno.test("fromNow function - 5 days ago", () => {
@@ -38,7 +38,7 @@ Deno.test("fromNow function - 5 days ago", () => {
 
 Deno.test("fromNow function - 1 month ago", () => {
   const date = new Date(Date.now() - 2592000000); // ~30 days ago
-  assertEquals(fromNow(date), "1 month ago");
+  assertEquals(fromNow(date), "last month");
 });
 
 Deno.test("fromNow function - 3 months ago", () => {
@@ -48,7 +48,7 @@ Deno.test("fromNow function - 3 months ago", () => {
 
 Deno.test("fromNow function - 1 year ago", () => {
   const date = new Date(Date.now() - 31536000000); // 365 days ago
-  assertEquals(fromNow(date), "1 year ago");
+  assertEquals(fromNow(date), "last year");
 });
 
 Deno.test("fromNow function - 2 years ago", () => {
@@ -73,15 +73,29 @@ Deno.test("fromNow function - in 1 hour", () => {
 
 Deno.test("fromNow function - in 1 day", () => {
   const date = new Date(Date.now() + 86400000); // 1 day from now
-  assertEquals(fromNow(date), "in 1 day");
+  assertEquals(fromNow(date), "tomorrow");
 });
 
 Deno.test("fromNow function - in 1 month", () => {
   const date = new Date(Date.now() + 2592000000); // ~30 days from now
-  assertEquals(fromNow(date), "in 1 month");
+  assertEquals(fromNow(date), "next month");
 });
 
 Deno.test("fromNow function - in 1 year", () => {
   const date = new Date(Date.now() + 31536000000); // 365 days from now
-  assertEquals(fromNow(date), "in 1 year");
+  assertEquals(fromNow(date), "next year");
+});
+
+Deno.test("fromNow function - locale support (Portuguese)", () => {
+  const yesterday = new Date(Date.now() - 86400000);
+  const tomorrow = new Date(Date.now() + 86400000);
+  
+  assertEquals(fromNow(yesterday, "pt-BR"), "ontem");
+  assertEquals(fromNow(tomorrow, "pt-BR"), "amanh\u00e3");
+});
+
+Deno.test("fromNow function - locale support (Spanish)", () => {
+  const yesterday = new Date(Date.now() - 86400000);
+  
+  assertEquals(fromNow(yesterday, "es-ES"), "ayer");
 });

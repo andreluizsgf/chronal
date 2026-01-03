@@ -9,7 +9,7 @@ A tiny, fast, and modern date utility library for JavaScript/TypeScript with zer
 - 🪶 **Lightweight** - Zero dependencies, minimal bundle size
 - 🌍 **i18n Support** - Locale-aware formatting with `Intl` API
 - ⏰ **UTC First** - All operations work in UTC by default, avoiding timezone pitfalls
-- 🔧 **Modern API** - Simple, intuitive function-based API
+- 🎯 **Two APIs** - Choose between tree-shakeable functions or chainable object API
 - 📦 **Tree-shakeable** - Import only what you need
 - 🦕 **Deno Native** - Built for Deno, works everywhere
 - ✅ **Fully Tested** - Comprehensive test coverage
@@ -19,8 +19,11 @@ A tiny, fast, and modern date utility library for JavaScript/TypeScript with zer
 - [Features](#features)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
+  - [Functional API](#1-functional-api-tree-shakeable)
+  - [Chainable API](#2-chainable-api)
 - [Configuration](#configuration)
 - [API Reference](#api-reference)
+  - [Chainable Object API](#chainable-object-api)
   - [Formatting](#formatting)
   - [Parsing](#parsing)
   - [Manipulation](#manipulation)
@@ -57,6 +60,12 @@ import { formatDate, addTime, subTime } from "chronal";
 ```
 
 ## Quick Start
+
+Chronal offers **two ways** to work with dates:
+
+### 1. Functional API (Tree-shakeable)
+
+Perfect for minimal bundle size - import only what you need:
 
 ```typescript
 import { 
@@ -95,6 +104,43 @@ fromNow(new Date(Date.now() - 300000)); // "5 minutes ago"
 isToday(new Date()); // true
 ```
 
+### 2. Chainable API
+
+Perfect for developer experience with convenient method chaining:
+
+```typescript
+import { chronal } from "chronal";
+
+// Create and chain operations
+const date = chronal("2024-06-15T14:35:22Z")
+  .add({ months: 1, days: 5 })
+  .startOf("month")
+  .format("YYYY-MM-DD");
+
+console.log(date); // "2024-07-01"
+
+// All methods available
+const result = chronal("2024-01-15")
+  .add({ days: 10 })
+  .sub({ hours: 2 })
+  .format("MMMM DD, YYYY"); // "January 25, 2024"
+
+// Query methods
+chronal("2024-06-15").isLeapYear(); // true
+chronal().isToday(); // true
+chronal("2024-01-01").fromNow(); // "last year"
+
+// Get values
+chronal("2024-06-15").get("month"); // 5 (0-indexed)
+chronal("2024-06-15").quarter(); // 2
+chronal("2024-06-15").daysInMonth(); // 30
+```
+
+**Choose what fits your needs:**
+- Use **functional API** for maximum tree-shaking (smaller bundles)
+- Use **chainable API** for better DX and readable code
+- Mix both styles in the same project!
+
 ## Configuration
 
 ### `setDefaultLocale(locale)`
@@ -122,6 +168,86 @@ formatDate(new Date("2024-06-15"), "MMMM", { locale: "fr-FR" }); // 'juin'
 ```
 
 ## API Reference
+
+### Chainable Object API
+
+The `chronal` object provides a chainable API for convenient date manipulation.
+
+#### `chronal(date?)`
+
+Creates a Chronal instance with chainable methods.
+
+**Parameters:**
+- `date` (Date | string | number, optional) - Initial date (defaults to current date)
+
+**Returns:** Chronal instance
+
+**Available Methods:**
+
+**Manipulation:**
+- `.add(options)` - Add time units
+- `.sub(options)` - Subtract time units
+- `.startOf(unit)` - Start of time unit
+- `.endOf(unit)` - End of time unit
+- `.set(options)` - Set specific units
+- `.clamp(min, max)` - Clamp between dates
+
+**Display:**
+- `.format(pattern, options?)` - Format date
+- `.fromNow(locale?)` - Relative time from now
+- `.toNow(locale?)` - Relative time to now
+- `.toISOString()` - ISO string representation
+- `.toDate()` - Native Date object
+- `.unix()` - Unix timestamp (seconds)
+- `.valueOf()` - Milliseconds timestamp
+
+**Query:**
+- `.diff(date, unit)` - Difference between dates
+- `.isAfter(date)` - Is after date
+- `.isBefore(date)` - Is before date
+- `.isBetween(start, end, inclusivity?)` - Is between dates
+- `.isEqual(date)` - Is equal to date
+- `.isSame(date, unit)` - Is same time unit
+- `.isToday()` - Is today
+- `.isTomorrow()` - Is tomorrow
+- `.isYesterday()` - Is yesterday
+- `.isLeapYear()` - Is leap year
+- `.isValid()` - Is valid date
+
+**Get:**
+- `.get(unit)` - Get specific unit value
+- `.quarter()` - Get quarter (1-4)
+- `.daysInMonth()` - Days in month
+- `.week()` - Week of year
+
+**Example:**
+
+```typescript
+import { chronal } from "chronal";
+
+// Create instance
+const date = chronal("2024-06-15");
+
+// Chain operations
+const result = chronal("2024-01-15")
+  .add({ months: 6, days: 10 })
+  .startOf("month")
+  .add({ days: 5 })
+  .format("YYYY-MM-DD");
+
+console.log(result); // "2024-07-06"
+
+// Query methods
+chronal("2024-06-15").isLeapYear(); // true
+chronal().isToday(); // true
+chronal("2024-06-15").diff(chronal("2024-07-15"), "days"); // -30
+
+// All methods return new instances (immutable)
+const original = chronal("2024-01-01");
+const modified = original.add({ months: 1 });
+console.log(original.format("MM")); // "01"
+console.log(modified.format("MM")); // "02"
+```
 
 ### Formatting
 
@@ -646,11 +772,28 @@ Key optimizations:
 
 Chronal offers a modern approach to date manipulation with a focus on simplicity and performance:
 
+- **Two APIs in one** - Choose functional for tree-shaking or chainable for convenience
 - **Performance-focused** - Optimized for common operations like formatting
 - **Zero dependencies** - Built on native JavaScript APIs
 - **UTC-first** - Reduces timezone-related bugs by defaulting to UTC
 - **Lightweight** - Small bundle size, fully tree-shakeable
 - **Modern** - ES modules, TypeScript support, immutable operations
+
+### Bundle Size Comparison
+
+**Functional API (tree-shakeable):**
+```typescript
+import { formatDate, addTime } from "chronal";
+// Bundle: ~2-3KB (only imported functions)
+```
+
+**Chainable API:**
+```typescript
+import { chronal } from "chronal";
+// Bundle: ~25-30KB (all methods included)
+```
+
+**Recommendation:** Use functional API for libraries and performance-critical apps, chainable API for application code where DX matters more.
 
 Chronal works well alongside other date libraries. Choose the tool that best fits your project's needs.
 

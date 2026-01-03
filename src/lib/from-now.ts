@@ -1,19 +1,24 @@
+import { DEFAULT_LOCALE } from "./set-default-locale.ts";
+
 /**
  * Returns a string representing how long ago the date was from now.
  * 
  * @param date - The date to compare with now
+ * @param locale - The locale to use for formatting (default: DEFAULT_LOCALE)
  * @returns A human-readable relative time string
  * 
  * @example
  * ```typescript
  * const fiveMinutesAgo = new Date(Date.now() - 300000);
  * fromNow(fiveMinutesAgo); // "5 minutes ago"
+ * fromNow(fiveMinutesAgo, "pt-BR"); // "há 5 minutos"
  * 
  * const inTwoHours = new Date(Date.now() + 7200000);
  * fromNow(inTwoHours); // "in 2 hours"
+ * fromNow(inTwoHours, "es-ES"); // "dentro de 2 horas"
  * ```
  */
-export function fromNow(date: Date): string {
+export function fromNow(date: Date, locale: string = DEFAULT_LOCALE): string {
   const now = Date.now();
   const diff = now - date.getTime();
   const absDiff = Math.abs(diff);
@@ -25,32 +30,27 @@ export function fromNow(date: Date): string {
   const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
   
-  const isFuture = diff < 0;
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
   
   if (seconds < 60) {
-    return "just now";
+    return rtf.format(0, "second");
   }
   
   if (minutes < 60) {
-    const unit = minutes === 1 ? "minute" : "minutes";
-    return isFuture ? `in ${minutes} ${unit}` : `${minutes} ${unit} ago`;
+    return rtf.format(diff < 0 ? minutes : -minutes, "minute");
   }
   
   if (hours < 24) {
-    const unit = hours === 1 ? "hour" : "hours";
-    return isFuture ? `in ${hours} ${unit}` : `${hours} ${unit} ago`;
+    return rtf.format(diff < 0 ? hours : -hours, "hour");
   }
   
   if (days < 30) {
-    const unit = days === 1 ? "day" : "days";
-    return isFuture ? `in ${days} ${unit}` : `${days} ${unit} ago`;
+    return rtf.format(diff < 0 ? days : -days, "day");
   }
   
   if (months < 12) {
-    const unit = months === 1 ? "month" : "months";
-    return isFuture ? `in ${months} ${unit}` : `${months} ${unit} ago`;
+    return rtf.format(diff < 0 ? months : -months, "month");
   }
   
-  const unit = years === 1 ? "year" : "years";
-  return isFuture ? `in ${years} ${unit}` : `${years} ${unit} ago`;
+  return rtf.format(diff < 0 ? years : -years, "year");
 }
