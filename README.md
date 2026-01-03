@@ -182,43 +182,36 @@ Creates a Chronal instance with chainable methods.
 
 **Returns:** Chronal instance
 
-**Available Methods:**
+**API Reference:**
 
-**Manipulation:**
-- `.add(options)` - Add time units
-- `.sub(options)` - Subtract time units
-- `.startOf(unit)` - Start of time unit
-- `.endOf(unit)` - End of time unit
-- `.set(options)` - Set specific units
-- `.clamp(min, max)` - Clamp between dates
+All chainable methods correspond to functional API functions:
 
-**Display:**
-- `.format(pattern, options?)` - Format date
-- `.fromNow(locale?)` - Relative time from now
-- `.toNow(locale?)` - Relative time to now
-- `.toISOString()` - ISO string representation
-- `.toDate()` - Native Date object
-- `.unix()` - Unix timestamp (seconds)
-- `.valueOf()` - Milliseconds timestamp
-
-**Query:**
-- `.diff(date, unit)` - Difference between dates
-- `.isAfter(date)` - Is after date
-- `.isBefore(date)` - Is before date
-- `.isBetween(start, end, inclusivity?)` - Is between dates
-- `.isEqual(date)` - Is equal to date
-- `.isSame(date, unit)` - Is same time unit
-- `.isToday()` - Is today
-- `.isTomorrow()` - Is tomorrow
-- `.isYesterday()` - Is yesterday
-- `.isLeapYear()` - Is leap year
-- `.isValid()` - Is valid date
-
-**Get:**
-- `.get(unit)` - Get specific unit value
-- `.quarter()` - Get quarter (1-4)
-- `.daysInMonth()` - Days in month
-- `.week()` - Week of year
+| Chainable Method | Functional API | Description |
+|-----------------|----------------|-------------|
+| `.add(options)` | `addTime(date, options)` | Add time units |
+| `.subtract(options)` | `subTime(date, options)` | Subtract time units |
+| `.startOf(unit)` | `startOf(date, unit)` | Start of time unit |
+| `.endOf(unit)` | `endOf(date, unit)` | End of time unit |
+| `.set(options)` | `setUnit(date, options)` | Set specific units |
+| `.clamp(min, max)` | `clampDate(date, min, max)` | Clamp between dates |
+| `.format(pattern, opts?)` | `formatDate(date, pattern, opts?)` | Format date |
+| `.fromNow(locale?)` | `fromNow(date, locale?)` | Relative time from now |
+| `.toNow(locale?)` | `toNow(date, locale?)` | Relative time to now |
+| `.diff(date, unit)` | `dateDiff(dateLeft, dateRight, unit)` | Difference between dates |
+| `.isAfter(date)` | `isAfter(date1, date2)` | Is after date |
+| `.isBefore(date)` | `isBefore(date1, date2)` | Is before date |
+| `.isBetween(start, end)` | `isBetween(date, start, end)` | Is between dates |
+| `.isEqual(date)` | `isEqual(date1, date2)` | Is equal to date |
+| `.isSame(date, unit)` | `isSame(date1, date2, unit)` | Is same time unit |
+| `.isToday()` | `isToday(date)` | Is today |
+| `.isTomorrow()` | `isTomorrow(date)` | Is tomorrow |
+| `.isYesterday()` | `isYesterday(date)` | Is yesterday |
+| `.isLeapYear()` | `isLeapYear(date)` | Is leap year |
+| `.isValid()` | `isValidDate(date)` | Is valid date |
+| `.get(unit)` | `getUnit(date, unit)` | Get specific unit value |
+| `.quarter()` | `getQuarter(date)` | Get quarter (1-4) |
+| `.daysInMonth()` | `daysInMonth(date)` | Days in month |
+| `.week()` | `weekOfYear(date)` | Week of year |
 
 **Example:**
 

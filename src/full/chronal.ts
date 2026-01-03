@@ -22,10 +22,6 @@ import { getQuarter } from "./get-quarter.ts";
 import { daysInMonth } from "./days-in-month.ts";
 import { weekOfYear } from "./week-of-year.ts";
 import { clamp } from "./clamp.ts";
-import { toISOString } from "./to-iso-string.ts";
-import { toDate } from "./to-date.ts";
-import { unix } from "./unix.ts";
-import { valueOf } from "./value-of.ts";
 
 export type Chronal = {
   date: Date;
@@ -40,10 +36,6 @@ export type Chronal = {
   format: typeof format;
   fromNow: typeof fromNow;
   toNow: typeof toNow;
-  toISOString: typeof toISOString;
-  toDate: typeof toDate;
-  unix: typeof unix;
-  valueOf: typeof valueOf;
   // Query
   diff: typeof diff;
   isAfter: typeof isAfter;
@@ -96,18 +88,6 @@ export const chronal = (date?: Date | string | number): Chronal => {
     },
     toNow: function(locale) {
       return toNow.call(this, locale);
-    },
-    toISOString: function() {
-      return toISOString.call(this);
-    },
-    toDate: function() {
-      return toDate.call(this);
-    },
-    unix: function() {
-      return unix.call(this);
-    },
-    valueOf: function() {
-      return valueOf.call(this);
     },
     // Query
     diff: function(date, unit) {

@@ -1,17 +1,6 @@
 import { addTime as _addTime } from "../lib/add-time.ts";
 import { chronal, type Chronal } from "./chronal.ts";
 
-type AddOptions = {
-  years?: number;
-  months?: number;
-  weeks?: number;
-  days?: number;
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
-  milliseconds?: number;
-};
-
 /**
  * Adds specified time units to the given date.
  * 
@@ -23,7 +12,7 @@ type AddOptions = {
  * console.log(newDate.date.toISOString()); // '2025-04-03T12:00:00.000Z'
  */
 
-export function add(this: Chronal, opt: AddOptions): Chronal {
+export function add(this: Chronal, opt: Parameters<typeof _addTime>[1]): Chronal {
   const newDate = _addTime(this.date, opt);
   return chronal(newDate);
 }

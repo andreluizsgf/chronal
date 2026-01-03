@@ -14,7 +14,7 @@ import type { Unit } from "../types/unit.ts";
  * console.log(getUnit(date, 'day'));    // 15
  */
 
-export function getUnit(date: Date, unit: Omit<Unit, 'week'>): number {
+export function getUnit(date: Date, unit: Exclude<Unit, 'week'>): number {
   switch (unit) {
     case 'year':
       return date.getUTCFullYear();
