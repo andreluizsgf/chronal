@@ -31,6 +31,6 @@ export { toNow } from "./lib/to-now.ts";
 export { dateRange } from "./lib/date-range.ts";
 export type { PluralUnit, Unit } from "./types/unit.ts";
 export { setDefaultLocale } from "./lib/set-default-locale.ts";
-export { chronal } from "./full/chronal.ts";
-export type { Chronal } from "./full/chronal.ts";
+export { chronal } from "./chainable/chronal.ts";
+export type { Chronal } from "./chainable/chronal.ts";
 

@@ -5,6 +5,7 @@
   "license": "MIT",
   "exports": "./src/mod.ts",
   "tasks": {
+    "test": "deno test --allow-read --allow-net --allow-env --unstable",
     "publish": "deno run --allow-read --allow-write --allow-run scripts/publish.ts"
   },
   "imports": {
