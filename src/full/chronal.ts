@@ -22,6 +22,7 @@ import { getQuarter } from "./get-quarter.ts";
 import { daysInMonth } from "./days-in-month.ts";
 import { weekOfYear } from "./week-of-year.ts";
 import { clamp } from "./clamp.ts";
+import { dateRange } from "./date-range.ts";
 
 /**
  * Chronal object that wraps a Date and provides chainable date manipulation methods.
@@ -86,6 +87,10 @@ export type Chronal = {
   daysInMonth: typeof daysInMonth;
   /** Gets the week number of the year */
   week: typeof weekOfYear;
+  
+  // Utilities
+  /** Generates an array of dates between this date and end date */
+  range: typeof dateRange;
 };
 
 /**
@@ -193,6 +198,10 @@ export const chronal = (date?: Date | string | number): Chronal => {
     },
     week: function() {
       return weekOfYear.call(this);
+    },
+    // Utilities
+    range: function(end, step) {
+      return dateRange.call(this, end, step);
     }
   };
 };

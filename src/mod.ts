@@ -28,6 +28,7 @@ export { closestTo } from "./lib/closest-to.ts";
 export { clampDate } from "./lib/clamp-date.ts";
 export { fromNow } from "./lib/from-now.ts";
 export { toNow } from "./lib/to-now.ts";
+export { dateRange } from "./lib/date-range.ts";
 export type { PluralUnit, Unit } from "./types/unit.ts";
 export { setDefaultLocale } from "./lib/set-default-locale.ts";
 export { chronal } from "./full/chronal.ts";

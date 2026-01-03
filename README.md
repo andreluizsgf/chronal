@@ -102,6 +102,10 @@ fromNow(new Date(Date.now() - 300000)); // "5 minutes ago"
 
 // Date checks
 isToday(new Date()); // true
+
+// Generate date ranges
+dateRange(new Date("2024-01-01"), new Date("2024-01-05"));
+// [2024-01-01, 2024-01-02, 2024-01-03, 2024-01-04, 2024-01-05]
 ```
 
 ### 2. Chainable API
@@ -134,6 +138,12 @@ chronal("2024-01-01").fromNow(); // "last year"
 chronal("2024-06-15").get("month"); // 5 (0-indexed)
 chronal("2024-06-15").quarter(); // 2
 chronal("2024-06-15").daysInMonth(); // 30
+
+// Generate date ranges
+chronal("2024-01-01")
+  .range(new Date("2024-01-31"), { weeks: 1 })
+  .map(c => c.format("YYYY-MM-DD"));
+// ["2024-01-01", "2024-01-08", "2024-01-15", "2024-01-22", "2024-01-29"]
 ```
 
 **Choose what fits your needs:**
@@ -212,6 +222,7 @@ All chainable methods correspond to functional API functions:
 | `.quarter()` | `getQuarter(date)` | Get quarter (1-4) |
 | `.daysInMonth()` | `daysInMonth(date)` | Days in month |
 | `.week()` | `weekOfYear(date)` | Week of year |
+| `.range(end, step?)` | `dateRange(start, end, step?)` | Generate date array |
 
 **Example:**
 
@@ -646,6 +657,65 @@ clampDate(new Date("2024-06-15"), min, max); // June 15 (within bounds)
 clampDate(new Date("2024-05-15"), min, max); // June 1 (clamped to min)
 clampDate(new Date("2024-07-15"), min, max); // June 30 (clamped to max)
 ```
+
+#### `dateRange(start, end, step?)`
+
+Generates an array of dates between start and end dates with a specified step.
+
+**Parameters:**
+- `start` (Date) - The start date (inclusive)
+- `end` (Date) - The end date (inclusive)
+- `step` (object, optional) - Step increment (default: `{ days: 1 }`)
+  - `years` (number)
+  - `months` (number)
+  - `weeks` (number)
+  - `days` (number)
+  - `hours` (number)
+  - `minutes` (number)
+  - `seconds` (number)
+  - `milliseconds` (number)
+
+**Returns:** Date[] - Array of Date objects
+
+**Examples:**
+
+```typescript
+const start = new Date("2024-01-01");
+const end = new Date("2024-01-05");
+
+// Daily range (default)
+dateRange(start, end);
+// [2024-01-01, 2024-01-02, 2024-01-03, 2024-01-04, 2024-01-05]
+
+// Chainable: chronal("2024-01-01").range(new Date("2024-01-05"))
+
+// Weekly range
+const weekEnd = new Date("2024-01-31");
+dateRange(start, weekEnd, { weeks: 1 });
+// [2024-01-01, 2024-01-08, 2024-01-15, 2024-01-22, 2024-01-29]
+
+// Chainable: chronal(start).range(weekEnd, { weeks: 1 })
+
+// Monthly range
+const monthEnd = new Date("2024-06-15");
+dateRange(new Date("2024-01-15"), monthEnd, { months: 1 });
+// [2024-01-15, 2024-02-15, 2024-03-15, 2024-04-15, 2024-05-15, 2024-06-15]
+
+// Every 3 days
+dateRange(start, new Date("2024-01-10"), { days: 3 });
+// [2024-01-01, 2024-01-04, 2024-01-07, 2024-01-10]
+
+// Hourly range
+dateRange(
+  new Date("2024-01-01T09:00:00Z"),
+  new Date("2024-01-01T17:00:00Z"),
+  { hours: 2 }
+);
+// [09:00, 11:00, 13:00, 15:00, 17:00]
+
+```
+
+**Note:** Month boundaries are handled intelligently. For example, starting on Jan 31 with monthly steps will yield Feb 29 (leap year), Mar 31, Apr 30, etc.
 
 ### Date Difference
 

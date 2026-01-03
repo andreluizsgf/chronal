@@ -309,3 +309,50 @@ Deno.test("chronal - edge cases", async (t) => {
     assertEquals(result.format("YYYY-MM-DD"), "2024-06-16");
   });
 });
+
+Deno.test("chronal - range method", async (t) => {
+  await t.step("generates daily range", () => {
+    const start = chronal("2024-01-01T00:00:00Z");
+    const end = new Date("2024-01-05T00:00:00Z");
+    
+    const result = start.range(end);
+    
+    assertEquals(result.length, 5);
+    assertEquals(result[0].date.toISOString(), "2024-01-01T00:00:00.000Z");
+    assertEquals(result[4].date.toISOString(), "2024-01-05T00:00:00.000Z");
+  });
+
+  await t.step("generates range with custom step", () => {
+    const start = chronal("2024-01-01");
+    const end = chronal("2024-01-31");
+    
+    const result = start.range(end, { weeks: 1 });
+    
+    assertEquals(result.length, 5);
+    assertEquals(result[0].date.toISOString(), "2024-01-01T00:00:00.000Z");
+    assertEquals(result[1].date.toISOString(), "2024-01-08T00:00:00.000Z");
+  });
+
+  await t.step("works with Chronal end date", () => {
+    const start = chronal("2024-01-01");
+    const end = chronal("2024-01-10");
+    
+    const result = start.range(end, { days: 3 });
+    
+    assertEquals(result.length, 4);
+    assertEquals(result[0].date.toISOString(), "2024-01-01T00:00:00.000Z");
+    assertEquals(result[3].date.toISOString(), "2024-01-10T00:00:00.000Z");
+  });
+
+  await t.step("returns array of Chronal instances", () => {
+    const start = chronal("2024-01-01");
+    const end = new Date("2024-01-03");
+    
+    const result = start.range(end);
+    
+    // All items should have Chronal methods
+    assertEquals(typeof result[0].format, "function");
+    assertEquals(typeof result[0].add, "function");
+    assertEquals(result[0].format("YYYY-MM-DD"), "2024-01-01");
+  });
+});
