@@ -1,11 +1,11 @@
 /**
  * Parses a date string into a Date object using an optional format pattern.
- * 
+ *
  * @param dateString - The date string to parse
  * @param format - Optional format pattern (e.g., "YYYY-MM-DD", "DD/MM/YYYY")
  * @returns A Date object
  * @throws Error if the date string is invalid or doesn't match the format
- * 
+ *
  * @example
  * ```typescript
  * parseDate("2024-06-15"); // Uses native Date parser
@@ -21,12 +21,12 @@ export function parseDate(dateString: string, format?: string): Date {
     }
     return date;
   }
-  
+
   // Build regex by finding and replacing tokens in order
   const tokenOrder: string[] = [];
   let pattern = "";
   let i = 0;
-  
+
   while (i < format.length) {
     if (format.startsWith("YYYY", i)) {
       pattern += "(\\d{4})";
@@ -63,20 +63,20 @@ export function parseDate(dateString: string, format?: string): Date {
       i++;
     }
   }
-  
+
   const regex = new RegExp(`^${pattern}$`);
   const match = dateString.match(regex);
-  
+
   if (!match) {
     throw new Error("Invalid date");
   }
-  
+
   // Extract values in order
   const getValue = (token: string): number => {
     const index = tokenOrder.indexOf(token);
     return index !== -1 ? parseInt(match[index + 1], 10) : 0;
   };
-  
+
   // Create date (months are 0-indexed)
   const date = new Date(Date.UTC(
     getValue("YYYY") || 1970,
@@ -84,12 +84,12 @@ export function parseDate(dateString: string, format?: string): Date {
     getValue("DD") || 1,
     getValue("HH"),
     getValue("mm"),
-    getValue("ss")
+    getValue("ss"),
   ));
-  
+
   if (isNaN(date.getTime())) {
     throw new Error("Invalid date");
   }
-  
+
   return date;
 }

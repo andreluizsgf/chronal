@@ -9,8 +9,6 @@ export function bench(name: string, fn: () => void) {
   const end = performance.now();
 
   console.log(
-    `${name.padEnd(15)} ${(end - start).toFixed(2)} ms`
+    `${name.padEnd(15)} ${(end - start).toFixed(2)} ms`,
   );
 }
-
-

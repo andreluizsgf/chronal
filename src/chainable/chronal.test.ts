@@ -30,7 +30,7 @@ Deno.test("chronal - manipulation methods", async (t) => {
   await t.step("add() adds time units", () => {
     const c = chronal("2024-06-15T12:00:00Z");
     const result = c.add({ days: 5, hours: 3 });
-    
+
     assertEquals(result.date.toISOString(), "2024-06-20T15:00:00.000Z");
     // Original should not be mutated
     assertEquals(c.date.toISOString(), "2024-06-15T12:00:00.000Z");
@@ -39,33 +39,62 @@ Deno.test("chronal - manipulation methods", async (t) => {
   await t.step("sub() subtracts time units", () => {
     const c = chronal("2024-06-15T12:00:00Z");
     const result = c.sub({ months: 1, days: 5 });
-    
+
     assertEquals(result.date.toISOString(), "2024-05-10T12:00:00.000Z");
     assertEquals(c.date.toISOString(), "2024-06-15T12:00:00.000Z");
   });
 
   await t.step("startOf() returns start of time unit", () => {
     const c = chronal("2024-06-15T12:30:45Z");
-    
-    assertEquals(c.startOf("year").date.toISOString(), "2024-01-01T00:00:00.000Z");
-    assertEquals(c.startOf("month").date.toISOString(), "2024-06-01T00:00:00.000Z");
-    assertEquals(c.startOf("day").date.toISOString(), "2024-06-15T00:00:00.000Z");
-    assertEquals(c.startOf("hour").date.toISOString(), "2024-06-15T12:00:00.000Z");
+
+    assertEquals(
+      c.startOf("year").date.toISOString(),
+      "2024-01-01T00:00:00.000Z",
+    );
+    assertEquals(
+      c.startOf("month").date.toISOString(),
+      "2024-06-01T00:00:00.000Z",
+    );
+    assertEquals(
+      c.startOf("day").date.toISOString(),
+      "2024-06-15T00:00:00.000Z",
+    );
+    assertEquals(
+      c.startOf("hour").date.toISOString(),
+      "2024-06-15T12:00:00.000Z",
+    );
   });
 
   await t.step("endOf() returns end of time unit", () => {
     const c = chronal("2024-06-15T12:30:45Z");
-    
-    assertEquals(c.endOf("year").date.toISOString(), "2024-12-31T23:59:59.999Z");
-    assertEquals(c.endOf("month").date.toISOString(), "2024-06-30T23:59:59.999Z");
+
+    assertEquals(
+      c.endOf("year").date.toISOString(),
+      "2024-12-31T23:59:59.999Z",
+    );
+    assertEquals(
+      c.endOf("month").date.toISOString(),
+      "2024-06-30T23:59:59.999Z",
+    );
     assertEquals(c.endOf("day").date.toISOString(), "2024-06-15T23:59:59.999Z");
-    assertEquals(c.endOf("hour").date.toISOString(), "2024-06-15T12:59:59.999Z");
+    assertEquals(
+      c.endOf("hour").date.toISOString(),
+      "2024-06-15T12:59:59.999Z",
+    );
   });
 
   await t.step("set() sets specific units", () => {
     const c = chronal("2024-06-15T12:30:45Z");
-    const result = c.set({ year: 2025, month: 0, day: 1, hour: 0, minute: 0, second: 0, millisecond: 0 });
-    
+    const result = c.set({
+      year: 2025,
+      month: 0,
+      day: 1,
+      hour: 0,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+    });
+
     assertEquals(result.date.toISOString(), "2025-01-01T00:00:00.000Z");
     assertEquals(c.date.toISOString(), "2024-06-15T12:30:45.000Z");
   });
@@ -74,14 +103,14 @@ Deno.test("chronal - manipulation methods", async (t) => {
     const c = chronal("2024-06-15");
     const min = new Date("2024-06-10");
     const max = new Date("2024-06-20");
-    
+
     // Within bounds
     assertEquals(c.clamp(min, max).date.getUTCDate(), 15);
-    
+
     // Before min
     const early = chronal("2024-06-05");
     assertEquals(early.clamp(min, max).date.getUTCDate(), 10);
-    
+
     // After max
     const late = chronal("2024-06-25");
     assertEquals(late.clamp(min, max).date.getUTCDate(), 20);
@@ -91,7 +120,7 @@ Deno.test("chronal - manipulation methods", async (t) => {
 Deno.test("chronal - display methods", async (t) => {
   await t.step("format() formats date", () => {
     const c = chronal("2024-06-15T12:30:45Z");
-    
+
     assertEquals(c.format("YYYY-MM-DD"), "2024-06-15");
     assertEquals(c.format("DD/MM/YYYY HH:mm"), "15/06/2024 12:30");
     assertEquals(c.format("MMMM D, YYYY"), "June 15, 2024");
@@ -99,7 +128,7 @@ Deno.test("chronal - display methods", async (t) => {
 
   await t.step("format() supports locale", () => {
     const c = chronal("2024-06-15T12:30:45Z");
-    
+
     assertEquals(c.format("MMMM", { locale: "pt-BR" }), "junho");
     assertEquals(c.format("MMMM", { locale: "es-ES" }), "junio");
   });
@@ -107,14 +136,14 @@ Deno.test("chronal - display methods", async (t) => {
   await t.step("fromNow() returns relative time", () => {
     const yesterday = new Date(Date.now() - 86400000);
     const c = chronal(yesterday);
-    
+
     assertEquals(c.fromNow(), "yesterday");
   });
 
   await t.step("toNow() returns relative time", () => {
     const yesterday = new Date(Date.now() - 86400000);
     const c = chronal(yesterday);
-    
+
     assertEquals(c.toNow(), "yesterday");
   });
 });
@@ -123,7 +152,7 @@ Deno.test("chronal - query methods", async (t) => {
   await t.step("diff() calculates difference", () => {
     const c1 = chronal("2024-06-15");
     const c2 = chronal("2024-06-20");
-    
+
     assertEquals(c1.diff(c2, "days"), -5);
     assertEquals(c2.diff(c1, "days"), 5);
   });
@@ -131,7 +160,7 @@ Deno.test("chronal - query methods", async (t) => {
   await t.step("isAfter() checks if after", () => {
     const c1 = chronal("2024-06-15");
     const c2 = chronal("2024-06-20");
-    
+
     assertEquals(c1.isAfter(c2), false);
     assertEquals(c2.isAfter(c1), true);
   });
@@ -139,7 +168,7 @@ Deno.test("chronal - query methods", async (t) => {
   await t.step("isBefore() checks if before", () => {
     const c1 = chronal("2024-06-15");
     const c2 = chronal("2024-06-20");
-    
+
     assertEquals(c1.isBefore(c2), true);
     assertEquals(c2.isBefore(c1), false);
   });
@@ -148,9 +177,9 @@ Deno.test("chronal - query methods", async (t) => {
     const c = chronal("2024-06-15");
     const start = new Date("2024-06-10");
     const end = new Date("2024-06-20");
-    
+
     assertEquals(c.isBetween(start, end), true);
-    
+
     const early = chronal("2024-06-05");
     assertEquals(early.isBetween(start, end), false);
   });
@@ -159,7 +188,7 @@ Deno.test("chronal - query methods", async (t) => {
     const c1 = chronal("2024-06-15T12:00:00Z");
     const c2 = chronal("2024-06-15T12:00:00Z");
     const c3 = chronal("2024-06-15T12:00:01Z");
-    
+
     assertEquals(c1.isEqual(c2.date), true);
     assertEquals(c1.isEqual(c3.date), false);
   });
@@ -167,7 +196,7 @@ Deno.test("chronal - query methods", async (t) => {
   await t.step("isSame() checks same time unit", () => {
     const c1 = chronal("2024-06-15T12:00:00Z");
     const c2 = chronal("2024-06-20T15:30:00Z");
-    
+
     assertEquals(c1.isSame(c2.date, "year"), true);
     assertEquals(c1.isSame(c2.date, "month"), true);
     assertEquals(c1.isSame(c2.date, "day"), false);
@@ -176,7 +205,7 @@ Deno.test("chronal - query methods", async (t) => {
   await t.step("isToday() checks if today", () => {
     const today = chronal();
     const yesterday = chronal(new Date(Date.now() - 86400000));
-    
+
     assertEquals(today.isToday(), true);
     assertEquals(yesterday.isToday(), false);
   });
@@ -184,7 +213,7 @@ Deno.test("chronal - query methods", async (t) => {
   await t.step("isTomorrow() checks if tomorrow", () => {
     const tomorrow = chronal(new Date(Date.now() + 86400000));
     const today = chronal();
-    
+
     assertEquals(tomorrow.isTomorrow(), true);
     assertEquals(today.isTomorrow(), false);
   });
@@ -192,7 +221,7 @@ Deno.test("chronal - query methods", async (t) => {
   await t.step("isYesterday() checks if yesterday", () => {
     const yesterday = chronal(new Date(Date.now() - 86400000));
     const today = chronal();
-    
+
     assertEquals(yesterday.isYesterday(), true);
     assertEquals(today.isYesterday(), false);
   });
@@ -213,7 +242,7 @@ Deno.test("chronal - query methods", async (t) => {
 Deno.test("chronal - get methods", async (t) => {
   await t.step("get() retrieves unit values", () => {
     const c = chronal("2024-06-15T12:30:45Z");
-    
+
     assertEquals(c.get("year"), 2024);
     assertEquals(c.get("month"), 5); // 0-indexed
     assertEquals(c.get("day"), 15);
@@ -239,7 +268,7 @@ Deno.test("chronal - get methods", async (t) => {
   await t.step("week() returns week of year", () => {
     const c = chronal("2024-06-15");
     const week = c.week();
-    
+
     assertEquals(typeof week, "number");
     assertEquals(week > 0 && week <= 53, true);
   });
@@ -253,7 +282,7 @@ Deno.test("chronal - method chaining", async (t) => {
       .startOf("month")
       .add({ days: 5 })
       .format("YYYY-MM-DD");
-    
+
     assertEquals(result, "2024-07-06");
   });
 
@@ -263,7 +292,7 @@ Deno.test("chronal - method chaining", async (t) => {
       .sub({ hours: 2 })
       .set({ minute: 0, second: 0 })
       .format("YYYY-MM-DD HH:mm:ss");
-    
+
     assertEquals(result, "2024-06-20 10:00:00");
   });
 
@@ -272,7 +301,7 @@ Deno.test("chronal - method chaining", async (t) => {
     const modified = original
       .add({ months: 1 })
       .add({ days: 5 });
-    
+
     assertEquals(original.format("YYYY-MM-DD"), "2024-01-01");
     assertEquals(modified.format("YYYY-MM-DD"), "2024-02-06");
   });
@@ -287,7 +316,7 @@ Deno.test("chronal - edge cases", async (t) => {
   await t.step("handles month boundaries correctly", () => {
     const jan31 = chronal("2024-01-31");
     const result = jan31.add({ months: 1 });
-    
+
     // Should handle Feb 31 -> Mar 2/3 (since Feb has 29 days in 2024)
     assertEquals(result.get("month") >= 1, true);
   });
@@ -296,7 +325,7 @@ Deno.test("chronal - edge cases", async (t) => {
     const c1 = chronal("2024-06-15");
     const c2 = chronal("2024-06-20");
     const date = new Date("2024-06-20");
-    
+
     // Should work with both
     assertEquals(c1.diff(c2, "days"), c1.diff(date, "days"));
     assertEquals(c1.isAfter(c2.date), c1.isAfter(date));
@@ -305,7 +334,7 @@ Deno.test("chronal - edge cases", async (t) => {
   await t.step("handles timezone consistently (UTC)", () => {
     const c = chronal("2024-06-15T23:59:59Z");
     const result = c.add({ seconds: 2 });
-    
+
     assertEquals(result.format("YYYY-MM-DD"), "2024-06-16");
   });
 });
@@ -314,9 +343,9 @@ Deno.test("chronal - range method", async (t) => {
   await t.step("generates daily range", () => {
     const start = chronal("2024-01-01T00:00:00Z");
     const end = new Date("2024-01-05T00:00:00Z");
-    
+
     const result = start.range(end);
-    
+
     assertEquals(result.length, 5);
     assertEquals(result[0].date.toISOString(), "2024-01-01T00:00:00.000Z");
     assertEquals(result[4].date.toISOString(), "2024-01-05T00:00:00.000Z");
@@ -325,9 +354,9 @@ Deno.test("chronal - range method", async (t) => {
   await t.step("generates range with custom step", () => {
     const start = chronal("2024-01-01");
     const end = chronal("2024-01-31");
-    
+
     const result = start.range(end, { weeks: 1 });
-    
+
     assertEquals(result.length, 5);
     assertEquals(result[0].date.toISOString(), "2024-01-01T00:00:00.000Z");
     assertEquals(result[1].date.toISOString(), "2024-01-08T00:00:00.000Z");
@@ -336,9 +365,9 @@ Deno.test("chronal - range method", async (t) => {
   await t.step("works with Chronal end date", () => {
     const start = chronal("2024-01-01");
     const end = chronal("2024-01-10");
-    
+
     const result = start.range(end, { days: 3 });
-    
+
     assertEquals(result.length, 4);
     assertEquals(result[0].date.toISOString(), "2024-01-01T00:00:00.000Z");
     assertEquals(result[3].date.toISOString(), "2024-01-10T00:00:00.000Z");
@@ -347,9 +376,9 @@ Deno.test("chronal - range method", async (t) => {
   await t.step("returns array of Chronal instances", () => {
     const start = chronal("2024-01-01");
     const end = new Date("2024-01-03");
-    
+
     const result = start.range(end);
-    
+
     // All items should have Chronal methods
     assertEquals(typeof result[0].format, "function");
     assertEquals(typeof result[0].add, "function");

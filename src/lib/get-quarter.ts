@@ -1,14 +1,14 @@
 /**
  * Returns the quarter (1-4) of the year for the given date.
- * 
+ *
  * Q1: January-March
  * Q2: April-June
  * Q3: July-September
  * Q4: October-December
- * 
+ *
  * @param date - The date to get the quarter from
  * @returns The quarter number (1-4)
- * 
+ *
  * @example
  * ```typescript
  * getQuarter(new Date("2024-01-15")); // 1

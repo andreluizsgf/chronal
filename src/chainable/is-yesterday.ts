@@ -3,7 +3,7 @@ import type { Chronal } from "./chronal.ts";
 
 /**
  * Checks if this date is yesterday (in UTC).
- * 
+ *
  * @returns true if this date is yesterday
  * @example
  * ```typescript

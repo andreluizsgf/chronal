@@ -1,6 +1,6 @@
 /**
  * Checks if the first date is after the second date.
- * 
+ *
  * @param dateLeft - The date to compare.
  * @param dateRight - The date to compare against.
  * @returns True if dateLeft is after dateRight, false otherwise.
@@ -12,4 +12,4 @@
 
 export function isAfter(dateLeft: Date, dateRight: Date): boolean {
   return dateLeft.getTime() > dateRight.getTime();
-};
+}

@@ -3,7 +3,7 @@ import type { Chronal } from "./chronal.ts";
 
 /**
  * Checks if this date is between two other dates.
- * 
+ *
  * @param start - The start of the range (can be Date or Chronal)
  * @param end - The end of the range (can be Date or Chronal)
  * @param inclusivity - The inclusivity of the bounds (default: "[]")
@@ -21,10 +21,10 @@ import type { Chronal } from "./chronal.ts";
  * ```
  */
 export function isBetween(
-  this: Chronal, 
-  start: Date | Chronal, 
-  end: Date | Chronal, 
-  inclusivity: "[]" | "()" | "[)" | "(]" = "[]"
+  this: Chronal,
+  start: Date | Chronal,
+  end: Date | Chronal,
+  inclusivity: "[]" | "()" | "[)" | "(]" = "[]",
 ): boolean {
   const startDate = start instanceof Date ? start : start.date;
   const endDate = end instanceof Date ? end : end.date;

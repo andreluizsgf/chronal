@@ -12,7 +12,10 @@ Deno.test("isToday function - date is today at midnight", () => {
     now.getUTCFullYear(),
     now.getUTCMonth(),
     now.getUTCDate(),
-    0, 0, 0, 0
+    0,
+    0,
+    0,
+    0,
   ));
   assertEquals(isToday(midnight), true);
 });
@@ -23,7 +26,10 @@ Deno.test("isToday function - date is today at end of day", () => {
     now.getUTCFullYear(),
     now.getUTCMonth(),
     now.getUTCDate(),
-    23, 59, 59, 999
+    23,
+    59,
+    59,
+    999,
   ));
   assertEquals(isToday(endOfDay), true);
 });
@@ -46,7 +52,10 @@ Deno.test("isToday function - date is in different month", () => {
     now.getUTCFullYear(),
     now.getUTCMonth() + 1,
     now.getUTCDate(),
-    12, 0, 0, 0
+    12,
+    0,
+    0,
+    0,
   ));
   assertEquals(isToday(differentMonth), false);
 });
@@ -57,7 +66,10 @@ Deno.test("isToday function - date is in different year", () => {
     now.getUTCFullYear() + 1,
     now.getUTCMonth(),
     now.getUTCDate(),
-    12, 0, 0, 0
+    12,
+    0,
+    0,
+    0,
   ));
   assertEquals(isToday(differentYear), false);
 });

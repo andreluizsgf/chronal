@@ -15,9 +15,12 @@ Deno.writeTextFileSync("deno.json", JSON.stringify(denoConfig, null, 2) + "\n");
 
 // Create and push tag
 await new Deno.Command("git", { args: ["add", "deno.json"] }).output();
-await new Deno.Command("git", { args: ["commit", "-m", `chore: bump version to v${version}`] }).output();
+await new Deno.Command("git", {
+  args: ["commit", "-m", `chore: bump version to v${version}`],
+}).output();
 await new Deno.Command("git", { args: ["tag", `v${version}`] }).output();
 await new Deno.Command("git", { args: ["push", "origin", "main"] }).output();
-await new Deno.Command("git", { args: ["push", "origin", `v${version}`] }).output();
+await new Deno.Command("git", { args: ["push", "origin", `v${version}`] })
+  .output();
 
 console.log(`✅ Published v${version}`);

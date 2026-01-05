@@ -1,10 +1,10 @@
 import { endOf as _endOf } from "../lib/end-of.ts";
-import { chronal, type Chronal } from "./chronal.ts";
+import { type Chronal, chronal } from "./chronal.ts";
 import type { Unit } from "../types/unit.ts";
 
 /**
  * Returns the end of the specified time unit.
- * 
+ *
  * @param unit - The time unit ('year' | 'month' | 'day' | 'hour' | 'minute' | 'second')
  * @returns A new Chronal instance set to the end of the specified unit (last millisecond)
  * @example

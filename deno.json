@@ -6,7 +6,8 @@
   "exports": "./src/mod.ts",
   "tasks": {
     "test": "deno test --allow-read --allow-net --allow-env --unstable",
-    "publish": "deno run --allow-read --allow-write --allow-run scripts/publish.ts"
+    "publish": "deno run --allow-read --allow-write --allow-run scripts/publish.ts",
+    "check": "deno fmt src/**/*.ts* && deno lint && deno check \"src/**/*.ts*\""
   },
   "imports": {
     "@deno/dnt": "jsr:@deno/dnt@0.42.3",

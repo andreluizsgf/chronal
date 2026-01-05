@@ -3,7 +3,7 @@ import type { Chronal } from "./chronal.ts";
 
 /**
  * Returns the number of days in the month of this date.
- * 
+ *
  * @returns The number of days in the month (28-31)
  * @example
  * ```typescript

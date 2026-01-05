@@ -1,6 +1,6 @@
 /**
  * Checks if two dates are equal (same exact millisecond).
- * 
+ *
  * @param dateLeft - The first date to compare.
  * @param dateRight - The second date to compare.
  * @returns True if both dates represent the same point in time, false otherwise.

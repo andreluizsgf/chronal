@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { setDefaultLocale, DEFAULT_LOCALE } from "./set-default-locale.ts";
+import { DEFAULT_LOCALE, setDefaultLocale } from "./set-default-locale.ts";
 import { formatDate } from "./format-date.ts";
 import { months } from "./months.ts";
 import { weekdays } from "./weekdays.ts";
@@ -40,10 +40,10 @@ Deno.test("setDefaultLocale", async (t) => {
   await t.step("should allow overriding per function call", () => {
     setDefaultLocale("pt-BR");
     const date = new Date("2024-06-15T12:00:00Z");
-    
+
     // Default should be pt-BR
     assertEquals(formatDate(date, "MMMM"), "junho");
-    
+
     // But can override
     assertEquals(formatDate(date, "MMMM", { locale: "fr-FR" }), "juin");
     assertEquals(formatDate(date, "MMMM", { locale: "en-US" }), "June");

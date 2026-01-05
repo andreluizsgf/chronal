@@ -89,13 +89,13 @@ Deno.test("fromNow function - in 1 year", () => {
 Deno.test("fromNow function - locale support (Portuguese)", () => {
   const yesterday = new Date(Date.now() - 86400000);
   const tomorrow = new Date(Date.now() + 86400000);
-  
+
   assertEquals(fromNow(yesterday, "pt-BR"), "ontem");
   assertEquals(fromNow(tomorrow, "pt-BR"), "amanh\u00e3");
 });
 
 Deno.test("fromNow function - locale support (Spanish)", () => {
   const yesterday = new Date(Date.now() - 86400000);
-  
+
   assertEquals(fromNow(yesterday, "es-ES"), "ayer");
 });

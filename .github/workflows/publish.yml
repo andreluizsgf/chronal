@@ -3,45 +3,54 @@ name: Publish
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Deno Setup
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.6.3
+      - name: Run Tests
+        run: deno test
+
   publish-jsr:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
+      - uses: actions/checkout@v5
+      - name: Deno Setup
+        uses: denoland/setup-deno@v2
         with:
-          deno-version: v1.x
-
+          deno-version: v2.6.3
       - name: Publish to JSR
         run: deno publish
 
   publish-npm:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       id-token: write
+      contents: read
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Deno
-        uses: denoland/setup-deno@v1
+        uses: denoland/setup-deno@v2
         with:
-          deno-version: v1.x
+          deno-version: v2.6.3
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Extract version from tag
         id: version
@@ -54,5 +63,3 @@ jobs:
         run: |
           cd npm
           npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

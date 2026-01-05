@@ -4,7 +4,7 @@ import type { Chronal } from "./chronal.ts";
 /**
  * Returns a string representing the time from now to the date.
  * This is the inverse of fromNow() - it shows how long until/since a date from the perspective of looking forward to it.
- * 
+ *
  * @param locale - The locale to use for formatting (default: DEFAULT_LOCALE)
  * @returns A human-readable relative time string
  * @example

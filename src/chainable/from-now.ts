@@ -3,7 +3,7 @@ import type { Chronal } from "./chronal.ts";
 
 /**
  * Returns a string representing how long ago the date was from now.
- * 
+ *
  * @param locale - The locale to use for formatting (default: DEFAULT_LOCALE)
  * @returns A human-readable relative time string
  * @example

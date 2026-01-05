@@ -4,7 +4,7 @@ import type { Chronal } from "./chronal.ts";
 /**
  * Returns the week number of the year for this date (1-53).
  * Uses Sunday as the start of the week (US convention).
- * 
+ *
  * @returns The week number (1-53)
  * @example
  * ```typescript

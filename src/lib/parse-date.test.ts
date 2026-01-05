@@ -59,7 +59,7 @@ Deno.test("parseDate function - invalid date throws", () => {
   assertThrows(
     () => parseDate("not-a-date", "YYYY-MM-DD"),
     Error,
-    "Invalid date"
+    "Invalid date",
   );
 });
 
@@ -67,6 +67,6 @@ Deno.test("parseDate function - mismatched format throws", () => {
   assertThrows(
     () => parseDate("15/06/2024", "YYYY-MM-DD"),
     Error,
-    "Invalid date"
+    "Invalid date",
   );
 });

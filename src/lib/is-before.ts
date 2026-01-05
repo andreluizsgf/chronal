@@ -1,6 +1,6 @@
 /**
  * Checks if the first date is before the second date.
- * 
+ *
  * @param dateLeft - The date to compare.
  * @param dateRight - The date to compare against.
  * @returns True if dateLeft is before dateRight, false otherwise.

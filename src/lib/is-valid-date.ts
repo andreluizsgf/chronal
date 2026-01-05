@@ -1,9 +1,9 @@
 /**
  * Checks if a Date object is valid (not Invalid Date).
- * 
+ *
  * @param date - The date to check
  * @returns true if the date is valid
- * 
+ *
  * @example
  * ```typescript
  * isValidDate(new Date("2024-06-15")); // true

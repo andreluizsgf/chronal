@@ -2,7 +2,7 @@ import type { PluralUnit } from "../types/unit.ts";
 
 /**
  * Calculates the difference between two dates in the specified unit.
- * 
+ *
  * @param dateLeft - The first date.
  * @param dateRight - The second date to subtract from the first.
  * @param unit - The unit to express the difference in ('years' | 'months' | 'weeks' | 'days' | 'hours' | 'minutes' | 'seconds').
@@ -13,11 +13,15 @@ import type { PluralUnit } from "../types/unit.ts";
  * console.log(dateDiff(date1, date2, 'days')); // 5
  */
 
-export function dateDiff(dateLeft: Date, dateRight: Date, unit: PluralUnit): number {
+export function dateDiff(
+  dateLeft: Date,
+  dateRight: Date,
+  unit: PluralUnit,
+): number {
   const delta = dateLeft.getTime() - dateRight.getTime();
 
   switch (unit) {
-    case 'years': {
+    case "years": {
       const yearDiff = dateLeft.getUTCFullYear() - dateRight.getUTCFullYear();
       const adjustedDateRight = new Date(Date.UTC(
         dateRight.getUTCFullYear() + yearDiff,
@@ -26,14 +30,14 @@ export function dateDiff(dateLeft: Date, dateRight: Date, unit: PluralUnit): num
         dateRight.getUTCHours(),
         dateRight.getUTCMinutes(),
         dateRight.getUTCSeconds(),
-        dateRight.getUTCMilliseconds()
+        dateRight.getUTCMilliseconds(),
       ));
       if (adjustedDateRight > dateLeft) {
         return yearDiff - 1;
       }
       return yearDiff;
     }
-    case 'months': {
+    case "months": {
       const yearDiff = dateLeft.getUTCFullYear() - dateRight.getUTCFullYear();
       const monthDiff = dateLeft.getUTCMonth() - dateRight.getUTCMonth();
       let totalMonths = yearDiff * 12 + monthDiff;
@@ -45,22 +49,22 @@ export function dateDiff(dateLeft: Date, dateRight: Date, unit: PluralUnit): num
         dateRight.getUTCHours(),
         dateRight.getUTCMinutes(),
         dateRight.getUTCSeconds(),
-        dateRight.getUTCMilliseconds()
+        dateRight.getUTCMilliseconds(),
       ));
       if (adjustedDateRight > dateLeft) {
         totalMonths -= 1;
       }
       return totalMonths;
     }
-    case 'weeks':
+    case "weeks":
       return Math.floor(delta / 604800000); // 7 * 24 * 60 * 60 * 1000
-    case 'days':
+    case "days":
       return Math.floor(delta / 86400000); // 24 * 60 * 60 * 1000
-    case 'hours':
+    case "hours":
       return Math.floor(delta / 3600000); // 60 * 60 * 1000
-    case 'minutes':
+    case "minutes":
       return Math.floor(delta / 60000); // 60 * 1000
-    case 'seconds':
+    case "seconds":
       return Math.floor(delta / 1000);
     default:
       throw new Error(`Unsupported unit: ${unit}`);

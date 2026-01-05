@@ -1,6 +1,6 @@
 /**
  * Returns the earliest date from the given dates.
- * 
+ *
  * @param dates - One or more dates to compare.
  * @returns The minimum (earliest) date.
  * @throws Error if no dates are provided.

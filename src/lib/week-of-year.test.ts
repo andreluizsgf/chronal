@@ -46,7 +46,7 @@ Deno.test("weekOfYear function - consistent within same week", () => {
   const monday = new Date("2024-06-10");
   const tuesday = new Date("2024-06-11");
   const friday = new Date("2024-06-14");
-  
+
   const mondayWeek = weekOfYear(monday);
   assertEquals(weekOfYear(tuesday), mondayWeek);
   assertEquals(weekOfYear(friday), mondayWeek);

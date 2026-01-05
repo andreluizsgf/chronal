@@ -1,14 +1,14 @@
 /**
  * Checks if the year of the given date is a leap year.
- * 
+ *
  * A leap year is:
  * - Divisible by 4, except
  * - Not divisible by 100, unless
  * - Also divisible by 400
- * 
+ *
  * @param date - The date to check
  * @returns true if the year is a leap year
- * 
+ *
  * @example
  * ```typescript
  * isLeapYear(new Date("2024-01-01")); // true

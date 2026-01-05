@@ -33,4 +33,3 @@ export type { PluralUnit, Unit } from "./types/unit.ts";
 export { setDefaultLocale } from "./lib/set-default-locale.ts";
 export { chronal } from "./chainable/chronal.ts";
 export type { Chronal } from "./chainable/chronal.ts";
-

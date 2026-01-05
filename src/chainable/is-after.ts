@@ -3,7 +3,7 @@ import type { Chronal } from "./chronal.ts";
 
 /**
  * Checks if this date is after another date.
- * 
+ *
  * @param date - The date to compare against (can be Date or Chronal)
  * @returns True if this date is after the other date, false otherwise
  * @example

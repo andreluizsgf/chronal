@@ -3,7 +3,7 @@ import type { Chronal } from "./chronal.ts";
 
 /**
  * Checks if this date is valid (not Invalid Date).
- * 
+ *
  * @returns true if the date is valid
  * @example
  * ```typescript

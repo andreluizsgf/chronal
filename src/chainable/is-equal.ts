@@ -3,7 +3,7 @@ import type { Chronal } from "./chronal.ts";
 
 /**
  * Checks if this date is equal to another date (same exact millisecond).
- * 
+ *
  * @param date - The date to compare against (can be Date or Chronal)
  * @returns True if both dates represent the same point in time, false otherwise
  * @example

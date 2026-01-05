@@ -2,7 +2,7 @@ import type { Unit } from "../types/unit.ts";
 
 /**
  * Extracts a specific unit value from a date.
- * 
+ *
  * @param date - The date to extract from.
  * @param unit - The unit to extract ('year', 'month', 'day', 'hour', 'minute', 'second'). Note: 'week' is not supported.
  * @returns The numeric value of the specified unit.
@@ -14,19 +14,19 @@ import type { Unit } from "../types/unit.ts";
  * console.log(getUnit(date, 'day'));    // 15
  */
 
-export function getUnit(date: Date, unit: Exclude<Unit, 'week'>): number {
+export function getUnit(date: Date, unit: Exclude<Unit, "week">): number {
   switch (unit) {
-    case 'year':
+    case "year":
       return date.getUTCFullYear();
-    case 'month':
+    case "month":
       return date.getUTCMonth();
-    case 'day':
+    case "day":
       return date.getUTCDate();
-    case 'hour':
+    case "hour":
       return date.getUTCHours();
-    case 'minute':
+    case "minute":
       return date.getUTCMinutes();
-    case 'second':
+    case "second":
       return date.getUTCSeconds();
     default:
       throw new Error(`Unsupported unit: ${unit}`);

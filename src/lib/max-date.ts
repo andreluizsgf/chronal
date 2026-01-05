@@ -1,6 +1,6 @@
 /**
  * Returns the latest date from the given dates.
- * 
+ *
  * @param dates - One or more dates to compare.
  * @returns The maximum (latest) date.
  * @throws Error if no dates are provided.

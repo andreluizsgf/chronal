@@ -13,7 +13,7 @@ type SubOptions = {
 
 /**
  * Subtracts specified time units from the given date.
- * 
+ *
  * @param date - The original date.
  * @param opt - The time units to subtract.
  * @returns A new Date object with the specified time units subtracted.
@@ -26,14 +26,14 @@ type SubOptions = {
 export function subTime(date: Date, opt: SubOptions): Date {
   const out: SubOptions = {};
 
-  if (opt.years)        out.years        = -opt.years;
-  if (opt.months)       out.months       = -opt.months;
-  if (opt.weeks)        out.weeks        = -opt.weeks;
-  if (opt.days)         out.days         = -opt.days;
-  if (opt.hours)        out.hours        = -opt.hours;
-  if (opt.minutes)     out.minutes     = -opt.minutes;
-  if (opt.seconds)     out.seconds     = -opt.seconds;
-  if (opt.milliseconds)out.milliseconds= -opt.milliseconds;
+  if (opt.years) out.years = -opt.years;
+  if (opt.months) out.months = -opt.months;
+  if (opt.weeks) out.weeks = -opt.weeks;
+  if (opt.days) out.days = -opt.days;
+  if (opt.hours) out.hours = -opt.hours;
+  if (opt.minutes) out.minutes = -opt.minutes;
+  if (opt.seconds) out.seconds = -opt.seconds;
+  if (opt.milliseconds) out.milliseconds = -opt.milliseconds;
 
   return addTime(date, out);
 }

@@ -14,7 +14,8 @@ await build({
   package: {
     name: "chronal",
     version: Deno.args[0],
-    description: "A tiny and fast date utility library for modern JavaScript runtimes.",
+    description:
+      "A tiny and fast date utility library for modern JavaScript runtimes.",
     license: "MIT",
     repository: {
       type: "git",
@@ -39,7 +40,7 @@ await build({
       "esm",
       "deno",
       "bun",
-      "node"
+      "node",
     ],
   },
   postBuild() {

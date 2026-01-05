@@ -8,7 +8,7 @@ const daysCache = new Map<string, string[]>();
 
 /**
  * Returns an array of weekday names for the specified locale and format.
- * 
+ *
  * @param locale - The locale to use (default: 'en-US').
  * @param format - The format of weekday names: 'long', 'short', or 'narrow' (default: 'long').
  * @returns An array of 7 weekday names starting from Sunday.
@@ -20,7 +20,7 @@ const daysCache = new Map<string, string[]>();
 
 export function weekdays(
   format: "long" | "short" | "narrow" = "long",
-  opt: WeekdaysOptions = {}
+  opt: WeekdaysOptions = {},
 ): string[] {
   const locale = opt.locale ?? DEFAULT_LOCALE;
   const key = `${locale}|${format}`;
@@ -33,8 +33,9 @@ export function weekdays(
     timeZone: "UTC",
   });
 
-  const result = Array.from({ length: 7 }, (_, i) =>
-    fmt.format(new Date(Date.UTC(2017, 0, i + 1)))
+  const result = Array.from(
+    { length: 7 },
+    (_, i) => fmt.format(new Date(Date.UTC(2017, 0, i + 1))),
   );
 
   daysCache.set(key, result);

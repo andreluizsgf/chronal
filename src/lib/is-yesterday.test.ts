@@ -7,7 +7,10 @@ Deno.test("isYesterday function - date is yesterday", () => {
     now.getUTCFullYear(),
     now.getUTCMonth(),
     now.getUTCDate() - 1,
-    12, 0, 0, 0
+    12,
+    0,
+    0,
+    0,
   ));
   assertEquals(isYesterday(yesterday), true);
 });
@@ -18,7 +21,10 @@ Deno.test("isYesterday function - date is yesterday at midnight", () => {
     now.getUTCFullYear(),
     now.getUTCMonth(),
     now.getUTCDate() - 1,
-    0, 0, 0, 0
+    0,
+    0,
+    0,
+    0,
   ));
   assertEquals(isYesterday(yesterday), true);
 });
@@ -29,7 +35,10 @@ Deno.test("isYesterday function - date is yesterday at end of day", () => {
     now.getUTCFullYear(),
     now.getUTCMonth(),
     now.getUTCDate() - 1,
-    23, 59, 59, 999
+    23,
+    59,
+    59,
+    999,
   ));
   assertEquals(isYesterday(yesterday), true);
 });
@@ -45,7 +54,10 @@ Deno.test("isYesterday function - date is tomorrow", () => {
     now.getUTCFullYear(),
     now.getUTCMonth(),
     now.getUTCDate() + 1,
-    12, 0, 0, 0
+    12,
+    0,
+    0,
+    0,
   ));
   assertEquals(isYesterday(tomorrow), false);
 });
@@ -56,7 +68,10 @@ Deno.test("isYesterday function - date is 2 days ago", () => {
     now.getUTCFullYear(),
     now.getUTCMonth(),
     now.getUTCDate() - 2,
-    12, 0, 0, 0
+    12,
+    0,
+    0,
+    0,
   ));
   assertEquals(isYesterday(twoDaysAgo), false);
 });
@@ -66,7 +81,7 @@ Deno.test("isYesterday function - handles month boundary", () => {
   const july1 = new Date(Date.UTC(2024, 6, 1, 12, 0, 0, 0));
   // June 30 (previous day)
   const june30 = new Date(Date.UTC(2024, 5, 30, 12, 0, 0, 0));
-  
+
   // Calculate days difference
   const daysDiff = Math.floor((july1.getTime() - june30.getTime()) / 86400000);
   assertEquals(daysDiff, 1); // Verify they are 1 day apart

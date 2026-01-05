@@ -1,9 +1,9 @@
 /**
  * Checks if a date is today (in UTC).
- * 
+ *
  * @param date - The date to check
  * @returns true if the date is today
- * 
+ *
  * @example
  * ```typescript
  * isToday(new Date()); // true
@@ -13,6 +13,6 @@
 export function isToday(date: Date): boolean {
   const now = new Date();
   return date.getUTCFullYear() === now.getUTCFullYear() &&
-         date.getUTCMonth() === now.getUTCMonth() &&
-         date.getUTCDate() === now.getUTCDate();
+    date.getUTCMonth() === now.getUTCMonth() &&
+    date.getUTCDate() === now.getUTCDate();
 }

@@ -3,12 +3,12 @@ import type { Chronal } from "./chronal.ts";
 
 /**
  * Checks if the year of this date is a leap year.
- * 
+ *
  * A leap year is:
  * - Divisible by 4, except
  * - Not divisible by 100, unless
  * - Also divisible by 400
- * 
+ *
  * @returns true if the year is a leap year
  * @example
  * ```typescript

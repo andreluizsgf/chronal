@@ -1,6 +1,7 @@
 # Chronal
 
-A tiny, fast, and modern date utility library for JavaScript/TypeScript with zero dependencies.
+A tiny, fast, and modern date utility library for JavaScript/TypeScript with
+zero dependencies.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -8,8 +9,10 @@ A tiny, fast, and modern date utility library for JavaScript/TypeScript with zer
 
 - 🪶 **Lightweight** - Zero dependencies, minimal bundle size
 - 🌍 **i18n Support** - Locale-aware formatting with `Intl` API
-- ⏰ **UTC First** - All operations work in UTC by default, avoiding timezone pitfalls
-- 🎯 **Two APIs** - Choose between tree-shakeable functions or chainable object API
+- ⏰ **UTC First** - All operations work in UTC by default, avoiding timezone
+  pitfalls
+- 🎯 **Two APIs** - Choose between tree-shakeable functions or chainable object
+  API
 - 📦 **Tree-shakeable** - Import only what you need
 - 🦕 **Deno Native** - Built for Deno, works everywhere
 - ✅ **Fully Tested** - Comprehensive test coverage
@@ -46,7 +49,7 @@ A tiny, fast, and modern date utility library for JavaScript/TypeScript with zer
 ### Deno
 
 ```typescript
-import { format, add, sub } from "jsr:@chronal/core";
+import { add, format, sub } from "jsr:@chronal/core";
 ```
 
 ### Node.js / npm
@@ -56,7 +59,7 @@ npm install chronal
 ```
 
 ```javascript
-import { formatDate, addTime, subTime } from "chronal";
+import { addTime, formatDate, subTime } from "chronal";
 ```
 
 ## Quick Start
@@ -68,15 +71,15 @@ Chronal offers **two ways** to work with dates:
 Perfect for minimal bundle size - import only what you need:
 
 ```typescript
-import { 
-  formatDate, 
-  parseDate, 
-  addTime, 
-  subTime, 
-  startOf, 
+import {
+  addTime,
   endOf,
+  formatDate,
+  fromNow,
   isToday,
-  fromNow 
+  parseDate,
+  startOf,
+  subTime,
 } from "chronal";
 
 const date = new Date("2024-06-15T14:35:22Z");
@@ -142,11 +145,12 @@ chronal("2024-06-15").daysInMonth(); // 30
 // Generate date ranges
 chronal("2024-01-01")
   .range(new Date("2024-01-31"), { weeks: 1 })
-  .map(c => c.format("YYYY-MM-DD"));
+  .map((c) => c.format("YYYY-MM-DD"));
 // ["2024-01-01", "2024-01-08", "2024-01-15", "2024-01-22", "2024-01-29"]
 ```
 
 **Choose what fits your needs:**
+
 - Use **functional API** for maximum tree-shaking (smaller bundles)
 - Use **chainable API** for better DX and readable code
 - Mix both styles in the same project!
@@ -158,12 +162,13 @@ chronal("2024-01-01")
 Set the default locale for all date formatting operations.
 
 **Parameters:**
+
 - `locale` (string) - The locale code (e.g., 'en-US', 'pt-BR', 'fr-FR')
 
 **Example:**
 
 ```typescript
-import { setDefaultLocale, formatDate, months } from "chronal";
+import { formatDate, months, setDefaultLocale } from "chronal";
 
 // Default is 'en-US'
 formatDate(new Date("2024-06-15"), "MMMM"); // 'June'
@@ -188,7 +193,9 @@ The `chronal` object provides a chainable API for convenient date manipulation.
 Creates a Chronal instance with chainable methods.
 
 **Parameters:**
-- `date` (Date | string | number, optional) - Initial date (defaults to current date)
+
+- `date` (Date | string | number, optional) - Initial date (defaults to current
+  date)
 
 **Returns:** Chronal instance
 
@@ -196,33 +203,33 @@ Creates a Chronal instance with chainable methods.
 
 All chainable methods correspond to functional API functions:
 
-| Chainable Method | Functional API | Description |
-|-----------------|----------------|-------------|
-| `.add(options)` | `addTime(date, options)` | Add time units |
-| `.subtract(options)` | `subTime(date, options)` | Subtract time units |
-| `.startOf(unit)` | `startOf(date, unit)` | Start of time unit |
-| `.endOf(unit)` | `endOf(date, unit)` | End of time unit |
-| `.set(options)` | `setUnit(date, options)` | Set specific units |
-| `.clamp(min, max)` | `clampDate(date, min, max)` | Clamp between dates |
-| `.format(pattern, opts?)` | `formatDate(date, pattern, opts?)` | Format date |
-| `.fromNow(locale?)` | `fromNow(date, locale?)` | Relative time from now |
-| `.toNow(locale?)` | `toNow(date, locale?)` | Relative time to now |
-| `.diff(date, unit)` | `dateDiff(dateLeft, dateRight, unit)` | Difference between dates |
-| `.isAfter(date)` | `isAfter(date1, date2)` | Is after date |
-| `.isBefore(date)` | `isBefore(date1, date2)` | Is before date |
-| `.isBetween(start, end)` | `isBetween(date, start, end)` | Is between dates |
-| `.isEqual(date)` | `isEqual(date1, date2)` | Is equal to date |
-| `.isSame(date, unit)` | `isSame(date1, date2, unit)` | Is same time unit |
-| `.isToday()` | `isToday(date)` | Is today |
-| `.isTomorrow()` | `isTomorrow(date)` | Is tomorrow |
-| `.isYesterday()` | `isYesterday(date)` | Is yesterday |
-| `.isLeapYear()` | `isLeapYear(date)` | Is leap year |
-| `.isValid()` | `isValidDate(date)` | Is valid date |
-| `.get(unit)` | `getUnit(date, unit)` | Get specific unit value |
-| `.quarter()` | `getQuarter(date)` | Get quarter (1-4) |
-| `.daysInMonth()` | `daysInMonth(date)` | Days in month |
-| `.week()` | `weekOfYear(date)` | Week of year |
-| `.range(end, step?)` | `dateRange(start, end, step?)` | Generate date array |
+| Chainable Method          | Functional API                        | Description              |
+| ------------------------- | ------------------------------------- | ------------------------ |
+| `.add(options)`           | `addTime(date, options)`              | Add time units           |
+| `.subtract(options)`      | `subTime(date, options)`              | Subtract time units      |
+| `.startOf(unit)`          | `startOf(date, unit)`                 | Start of time unit       |
+| `.endOf(unit)`            | `endOf(date, unit)`                   | End of time unit         |
+| `.set(options)`           | `setUnit(date, options)`              | Set specific units       |
+| `.clamp(min, max)`        | `clampDate(date, min, max)`           | Clamp between dates      |
+| `.format(pattern, opts?)` | `formatDate(date, pattern, opts?)`    | Format date              |
+| `.fromNow(locale?)`       | `fromNow(date, locale?)`              | Relative time from now   |
+| `.toNow(locale?)`         | `toNow(date, locale?)`                | Relative time to now     |
+| `.diff(date, unit)`       | `dateDiff(dateLeft, dateRight, unit)` | Difference between dates |
+| `.isAfter(date)`          | `isAfter(date1, date2)`               | Is after date            |
+| `.isBefore(date)`         | `isBefore(date1, date2)`              | Is before date           |
+| `.isBetween(start, end)`  | `isBetween(date, start, end)`         | Is between dates         |
+| `.isEqual(date)`          | `isEqual(date1, date2)`               | Is equal to date         |
+| `.isSame(date, unit)`     | `isSame(date1, date2, unit)`          | Is same time unit        |
+| `.isToday()`              | `isToday(date)`                       | Is today                 |
+| `.isTomorrow()`           | `isTomorrow(date)`                    | Is tomorrow              |
+| `.isYesterday()`          | `isYesterday(date)`                   | Is yesterday             |
+| `.isLeapYear()`           | `isLeapYear(date)`                    | Is leap year             |
+| `.isValid()`              | `isValidDate(date)`                   | Is valid date            |
+| `.get(unit)`              | `getUnit(date, unit)`                 | Get specific unit value  |
+| `.quarter()`              | `getQuarter(date)`                    | Get quarter (1-4)        |
+| `.daysInMonth()`          | `daysInMonth(date)`                   | Days in month            |
+| `.week()`                 | `weekOfYear(date)`                    | Week of year             |
+| `.range(end, step?)`      | `dateRange(start, end, step?)`        | Generate date array      |
 
 **Example:**
 
@@ -260,6 +267,7 @@ console.log(modified.format("MM")); // "02"
 Formats a date into a string using the specified format pattern.
 
 **Parameters:**
+
 - `date` (Date) - The date to format
 - `formatString` (string) - Format pattern with tokens
 - `options` (object, optional)
@@ -268,25 +276,24 @@ Formats a date into a string using the specified format pattern.
 
 **Format Tokens:**
 
-| Token | Output | Description |
-|-------|--------|-------------|
-| `YYYY` | 2024 | 4-digit year |
-| `YY` | 24 | 2-digit year |
-| `MMMM` | June | Full month name |
-| `MMM` | Jun | Short month name |
-| `MM` | 06 | 2-digit month |
-| `M` | 6 | Month number |
-| `DD` | 05 | 2-digit day |
-| `D` | 5 | Day of month |
-| `HH` | 14 | 2-digit hour (24h) |
-| `H` | 14 | Hour (24h) |
-| `mm` | 35 | 2-digit minute |
-| `m` | 35 | Minute |
-| `ss` | 22 | 2-digit second |
-| `s` | 22 | Second |
+| Token  | Output | Description        |
+| ------ | ------ | ------------------ |
+| `YYYY` | 2024   | 4-digit year       |
+| `YY`   | 24     | 2-digit year       |
+| `MMMM` | June   | Full month name    |
+| `MMM`  | Jun    | Short month name   |
+| `MM`   | 06     | 2-digit month      |
+| `M`    | 6      | Month number       |
+| `DD`   | 05     | 2-digit day        |
+| `D`    | 5      | Day of month       |
+| `HH`   | 14     | 2-digit hour (24h) |
+| `H`    | 14     | Hour (24h)         |
+| `mm`   | 35     | 2-digit minute     |
+| `m`    | 35     | Minute             |
+| `ss`   | 22     | 2-digit second     |
+| `s`    | 22     | Second             |
 
-**Literals:**
-Use square brackets to escape literals: `[at]` → "at"
+**Literals:** Use square brackets to escape literals: `[at]` → "at"
 
 **Examples:**
 
@@ -309,12 +316,15 @@ formatDate(date, "MMMM D, YYYY", { locale: "pt-BR" }); // 'junho 15, 2024'
 Parses a date string into a Date object using an optional format pattern.
 
 **Parameters:**
+
 - `dateString` (string) - The date string to parse
-- `format` (string, optional) - Format pattern (e.g., "YYYY-MM-DD", "DD/MM/YYYY")
+- `format` (string, optional) - Format pattern (e.g., "YYYY-MM-DD",
+  "DD/MM/YYYY")
 
 **Returns:** Date object
 
 **Supported Tokens:**
+
 - `YYYY` - 4-digit year
 - `MM` - 2-digit month
 - `DD` - 2-digit day
@@ -341,6 +351,7 @@ parseDate("06/15/2024", "MM/DD/YYYY");
 Adds specified time units to a date.
 
 **Parameters:**
+
 - `date` (Date) - The original date
 - `options` (object) - Time units to add
   - `years` (number)
@@ -384,8 +395,10 @@ subTime(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles month overflo
 Extracts a specific unit from a date.
 
 **Parameters:**
+
 - `date` (Date) - The date to extract from
-- `unit` ('year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond')
+- `unit` ('year' | 'month' | 'day' | 'hour' | 'minute' | 'second' |
+  'millisecond')
 
 **Returns:** Number
 
@@ -405,8 +418,10 @@ getUnit(date, "hour"); // 14
 Sets a specific unit of a date to a new value, returning a new Date object.
 
 **Parameters:**
+
 - `date` (Date) - The date to modify
-- `unit` ('year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond')
+- `unit` ('year' | 'month' | 'day' | 'hour' | 'minute' | 'second' |
+  'millisecond')
 - `value` (number) - The new value
 
 **Returns:** New Date object
@@ -428,6 +443,7 @@ setUnit(date, "day", 20); // 2024-06-20T14:35:22Z
 Returns the start of the specified time unit.
 
 **Parameters:**
+
 - `date` (Date) - The original date
 - `unit` ('year' | 'month' | 'day' | 'hour' | 'minute' | 'second')
 
@@ -494,6 +510,7 @@ isEqual(date1, date2); // true
 Checks if two dates are in the same time unit.
 
 **Parameters:**
+
 - `dateLeft` (Date)
 - `dateRight` (Date)
 - `unit` ('year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second')
@@ -511,6 +528,7 @@ isSame(date1, date2, "hour"); // false (different hours)
 Checks if a date is between two other dates.
 
 **Parameters:**
+
 - `date` (Date) - The date to check
 - `start` (Date) - Start of range
 - `end` (Date) - End of range
@@ -622,6 +640,7 @@ minDate(date1, date2, date3); // 2024-01-10T12:00:00.000Z
 Finds the date in an array that is closest to the target date.
 
 **Parameters:**
+
 - `target` (Date) - The target date to compare against
 - `dates` (Date[]) - Array of dates to search
 
@@ -643,6 +662,7 @@ closestTo(target, dates); // Returns date for June 14
 Clamps a date between minimum and maximum bounds.
 
 **Parameters:**
+
 - `date` (Date) - The date to clamp
 - `min` (Date) - Minimum allowed date
 - `max` (Date) - Maximum allowed date
@@ -663,6 +683,7 @@ clampDate(new Date("2024-07-15"), min, max); // June 30 (clamped to max)
 Generates an array of dates between start and end dates with a specified step.
 
 **Parameters:**
+
 - `start` (Date) - The start date (inclusive)
 - `end` (Date) - The end date (inclusive)
 - `step` (object, optional) - Step increment (default: `{ days: 1 }`)
@@ -709,13 +730,13 @@ dateRange(start, new Date("2024-01-10"), { days: 3 });
 dateRange(
   new Date("2024-01-01T09:00:00Z"),
   new Date("2024-01-01T17:00:00Z"),
-  { hours: 2 }
+  { hours: 2 },
 );
 // [09:00, 11:00, 13:00, 15:00, 17:00]
-
 ```
 
-**Note:** Month boundaries are handled intelligently. For example, starting on Jan 31 with monthly steps will yield Feb 29 (leap year), Mar 31, Apr 30, etc.
+**Note:** Month boundaries are handled intelligently. For example, starting on
+Jan 31 with monthly steps will yield Feb 29 (leap year), Mar 31, Apr 30, etc.
 
 ### Date Difference
 
@@ -724,9 +745,11 @@ dateRange(
 Calculates the difference between two dates in the specified unit.
 
 **Parameters:**
+
 - `dateLeft` (Date)
 - `dateRight` (Date)
-- `unit` ('years' | 'months' | 'weeks' | 'days' | 'hours' | 'minutes' | 'seconds')
+- `unit` ('years' | 'months' | 'weeks' | 'days' | 'hours' | 'minutes' |
+  'seconds')
 
 **Returns:** Number (can be negative)
 
@@ -783,7 +806,8 @@ getQuarter(new Date("2024-10-15")); // 4 (Q4: Oct-Dec)
 
 #### `weekOfYear(date)`
 
-Returns the week number of the year (1-53). Uses Sunday as the start of the week.
+Returns the week number of the year (1-53). Uses Sunday as the start of the
+week.
 
 ```typescript
 weekOfYear(new Date("2024-01-01")); // 1
@@ -798,6 +822,7 @@ weekOfYear(new Date("2024-12-31")); // 53
 Returns an array of month names for the specified locale.
 
 **Parameters:**
+
 - `locale` (string, optional) - Default: 'en-US'
 - `format` ('long' | 'short' | 'narrow', optional) - Default: 'long'
 
@@ -822,6 +847,7 @@ weekdays("pt-BR", "long"); // ['domingo', 'segunda-feira', 'terça-feira', ...]
 ## Performance
 
 Key optimizations:
+
 - Format string caching (no repeated regex parsing)
 - Fast UTC path (avoids expensive Intl.DateTimeFormat for UTC)
 - Optimized padding functions
@@ -830,12 +856,13 @@ Key optimizations:
 - Short-circuit comparisons in isSame
 - Efficient week and quarter calculations
 
-
 ## Why Chronal?
 
-Chronal offers a modern approach to date manipulation with a focus on simplicity and performance:
+Chronal offers a modern approach to date manipulation with a focus on simplicity
+and performance:
 
-- **Two APIs in one** - Choose functional for tree-shaking or chainable for convenience
+- **Two APIs in one** - Choose functional for tree-shaking or chainable for
+  convenience
 - **Performance-focused** - Optimized for common operations like formatting
 - **Zero dependencies** - Built on native JavaScript APIs
 - **UTC-first** - Reduces timezone-related bugs by defaulting to UTC
@@ -845,20 +872,24 @@ Chronal offers a modern approach to date manipulation with a focus on simplicity
 ### Bundle Size Comparison
 
 **Functional API (tree-shakeable):**
+
 ```typescript
-import { formatDate, addTime } from "chronal";
+import { addTime, formatDate } from "chronal";
 // Bundle: ~2-3KB (only imported functions)
 ```
 
 **Chainable API:**
+
 ```typescript
 import { chronal } from "chronal";
 // Bundle: ~25-30KB (all methods included)
 ```
 
-**Recommendation:** Use functional API for libraries and performance-critical apps, chainable API for application code where DX matters more.
+**Recommendation:** Use functional API for libraries and performance-critical
+apps, chainable API for application code where DX matters more.
 
-Chronal works well alongside other date libraries. Choose the tool that best fits your project's needs.
+Chronal works well alongside other date libraries. Choose the tool that best
+fits your project's needs.
 
 ## Design Principles
 
@@ -872,6 +903,7 @@ Chronal works well alongside other date libraries. Choose the tool that best fit
 ## Browser Support
 
 Chronal works in all modern browsers and JavaScript runtimes that support:
+
 - ES6+ features
 - `Intl.DateTimeFormat` API
 - Native Date object

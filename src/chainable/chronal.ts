@@ -31,7 +31,7 @@ import { dateRange } from "./date-range.ts";
 export type Chronal = {
   /** The underlying Date object */
   date: Date;
-  
+
   // Manipulation
   /** Adds time units to this date */
   add: typeof add;
@@ -45,7 +45,7 @@ export type Chronal = {
   set: typeof setUnit;
   /** Clamps date between min and max bounds */
   clamp: typeof clamp;
-  
+
   // Display
   /** Formats the date as a string */
   format: typeof format;
@@ -53,7 +53,7 @@ export type Chronal = {
   fromNow: typeof fromNow;
   /** Returns relative time to now (e.g., "in 5 minutes") */
   toNow: typeof toNow;
-  
+
   // Query
   /** Calculates difference between dates */
   diff: typeof diff;
@@ -77,7 +77,7 @@ export type Chronal = {
   isLeapYear: typeof isLeapYear;
   /** Checks if date is valid */
   isValid: typeof isValid;
-  
+
   // Get
   /** Gets a specific date unit value */
   get: typeof getUnit;
@@ -87,7 +87,7 @@ export type Chronal = {
   daysInMonth: typeof daysInMonth;
   /** Gets the week number of the year */
   week: typeof weekOfYear;
-  
+
   // Utilities
   /** Generates an array of dates between this date and end date */
   range: typeof dateRange;
@@ -96,21 +96,21 @@ export type Chronal = {
 /**
  * Creates a Chronal object with chainable date manipulation methods.
  * All methods return new instances, preserving immutability.
- * 
+ *
  * @param date - Optional Date, string, or timestamp. Defaults to current date/time
  * @returns A Chronal object with the date and chainable methods
- * 
+ *
  * @example
  * ```typescript
  * // Create from current time
  * const now = chronal();
- * 
+ *
  * // Create from Date
  * const c = chronal(new Date('2024-06-15'));
- * 
+ *
  * // Create from string
  * const c2 = chronal('2024-06-15T12:00:00Z');
- * 
+ *
  * // Chain operations
  * chronal('2024-01-15')
  *   .add({ months: 2, days: 10 })
@@ -120,88 +120,88 @@ export type Chronal = {
  */
 export const chronal = (date?: Date | string | number): Chronal => {
   const d = date ? new Date(date) : new Date();
-  
+
   return {
     date: d,
     // Manipulation
-    add: function(opt) {
+    add: function (opt) {
       return add.call(this, opt);
     },
-    sub: function(opt) {
+    sub: function (opt) {
       return sub.call(this, opt);
     },
-    startOf: function(unit) {
+    startOf: function (unit) {
       return startOf.call(this, unit);
     },
-    endOf: function(unit) {
+    endOf: function (unit) {
       return endOf.call(this, unit);
     },
-    set: function(opt) {
+    set: function (opt) {
       return setUnit.call(this, opt);
     },
-    clamp: function(min, max) {
+    clamp: function (min, max) {
       return clamp.call(this, min, max);
     },
     // Display
-    format: function(fmt, options) {
+    format: function (fmt, options) {
       return format.call(this, fmt, options);
     },
-    fromNow: function(locale) {
+    fromNow: function (locale) {
       return fromNow.call(this, locale);
     },
-    toNow: function(locale) {
+    toNow: function (locale) {
       return toNow.call(this, locale);
     },
     // Query
-    diff: function(date, unit) {
+    diff: function (date, unit) {
       return diff.call(this, date, unit);
     },
-    isAfter: function(date) {
+    isAfter: function (date) {
       return isAfter.call(this, date);
     },
-    isBefore: function(date) {
+    isBefore: function (date) {
       return isBefore.call(this, date);
     },
-    isBetween: function(start, end, inclusivity) {
+    isBetween: function (start, end, inclusivity) {
       return isBetween.call(this, start, end, inclusivity);
     },
-    isEqual: function(date) {
+    isEqual: function (date) {
       return isEqual.call(this, date);
     },
-    isSame: function(date, unit) {
+    isSame: function (date, unit) {
       return isSame.call(this, date, unit);
     },
-    isToday: function() {
+    isToday: function () {
       return isToday.call(this);
     },
-    isTomorrow: function() {
+    isTomorrow: function () {
       return isTomorrow.call(this);
     },
-    isYesterday: function() {
+    isYesterday: function () {
       return isYesterday.call(this);
     },
-    isLeapYear: function() {
+    isLeapYear: function () {
       return isLeapYear.call(this);
     },
-    isValid: function() {
+    isValid: function () {
       return isValid.call(this);
     },
     // Get
-    get: function(unit) {
+    get: function (unit) {
       return getUnit.call(this, unit);
     },
-    quarter: function() {
+    quarter: function () {
       return getQuarter.call(this);
     },
-    daysInMonth: function() {
+    daysInMonth: function () {
       return daysInMonth.call(this);
     },
-    week: function() {
+    week: function () {
       return weekOfYear.call(this);
     },
     // Utilities
-    range: function(end, step) {
+    range: function (end, step) {
       return dateRange.call(this, end, step);
-    }
+    },
   };
 };
