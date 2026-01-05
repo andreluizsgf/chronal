@@ -1,5 +1,6 @@
 import { getDTF } from "../core/dtf.ts";
 import type { Unit } from "../types/unit.ts";
+import { config } from "./config.ts";
 
 type StartOfOptions = {
   tz?: string;
@@ -26,7 +27,7 @@ type StartOfOptions = {
  */
 
 export function startOf(date: Date, unit: Unit, opt: StartOfOptions = {}): Date {
-  const timezone = opt.tz || "UTC";
+  const timezone = opt.tz || config.timezone;
   const time = new Date(date.getTime());
 
   if (timezone === "UTC") {
