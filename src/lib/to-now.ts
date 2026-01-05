@@ -1,11 +1,11 @@
-import { DEFAULT_LOCALE } from "./set-default-locale.ts";
+import { config } from "./config.ts";
 
 /**
  * Returns a string representing the time from now to the date.
  * This is the inverse of fromNow() - it shows how long until/since a date from the perspective of looking forward to it.
  *
  * @param date - The date to compare with now
- * @param locale - The locale to use for formatting (default: DEFAULT_LOCALE)
+ * @param locale - The locale to use for formatting (default: config.locale)
  * @returns A human-readable relative time string
  *
  * @example
@@ -19,7 +19,7 @@ import { DEFAULT_LOCALE } from "./set-default-locale.ts";
  * toNow(twoHoursAgo, "es-ES"); // "hace 2 horas"
  * ```
  */
-export function toNow(date: Date, locale: string = DEFAULT_LOCALE): string {
+export function toNow(date: Date, locale: string = config.locale): string {
   const now = Date.now();
   const diff = date.getTime() - now;
   const absDiff = Math.abs(diff);

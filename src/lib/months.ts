@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE } from "./set-default-locale.ts";
+import { config } from "./config.ts";
 
 type MonthsOptions = {
   tz?: string;
@@ -23,7 +23,7 @@ export function months(
   format: "long" | "short" | "narrow" = "long",
   opt: MonthsOptions = {},
 ): string[] {
-  const locale = opt.locale ?? DEFAULT_LOCALE;
+  const locale = opt.locale ?? config.locale;
   const key = `${locale}|${format}`;
 
   const cached = monthsCache.get(key);

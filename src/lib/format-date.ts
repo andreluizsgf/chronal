@@ -1,6 +1,6 @@
 import { getDTF } from "../core/dtf.ts";
-import { DEFAULT_LOCALE } from "./set-default-locale.ts";
 import { months } from "./months.ts";
+import { config } from "./config.ts";
 
 type FormatOptions = {
   tz?: string;
@@ -227,8 +227,8 @@ export function formatDate(
   fmt: string,
   options: FormatOptions = {},
 ): string {
-  const locale = options.locale ?? DEFAULT_LOCALE;
-  const tz = options.tz ?? "UTC";
+  const locale = options.locale ?? config.locale;
+  const tz = options.tz ?? config.timezone;
 
   // Get compiled format (cached)
   const compiled = compileFormat(fmt);

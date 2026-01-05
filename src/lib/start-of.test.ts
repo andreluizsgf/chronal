@@ -41,3 +41,28 @@ Deno.test("startOf does not mutate original date", () => {
     "Original date should not be mutated",
   );
 });
+
+Deno.test("startOf with timezone", () => {
+  // Test with America/Sao_Paulo (GMT-3)
+  const date = new Date("2024-06-15T14:35:22.500Z");
+
+  // Start of day in Sao Paulo (00:00 local = 03:00 UTC)
+  let result = startOf(date, "day", { tz: "America/Sao_Paulo" });
+  assertEquals(result.toISOString(), "2024-06-15T03:00:00.000Z");
+
+  // Start of hour in Sao Paulo
+  result = startOf(date, "hour", { tz: "America/Sao_Paulo" });
+  assertEquals(result.toISOString(), "2024-06-15T14:00:00.000Z");
+
+  // Test with Europe/London (GMT+1 in summer)
+  const summerDate = new Date("2024-06-15T14:35:22.500Z");
+  result = startOf(summerDate, "day", { tz: "Europe/London" });
+  // June 15 is BST (British Summer Time, UTC+1)
+  // So 00:00 London time = 23:00 previous day UTC
+  assertEquals(result.toISOString(), "2024-06-14T23:00:00.000Z");
+
+  // Test with Asia/Tokyo (GMT+9)
+  result = startOf(date, "day", { tz: "Asia/Tokyo" });
+  // 00:00 Tokyo = 15:00 previous day UTC
+  assertEquals(result.toISOString(), "2024-06-14T15:00:00.000Z");
+});

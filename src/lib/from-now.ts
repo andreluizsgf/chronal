@@ -1,10 +1,10 @@
-import { DEFAULT_LOCALE } from "./set-default-locale.ts";
+import { config } from "./config.ts";
 
 /**
  * Returns a string representing how long ago the date was from now.
  *
  * @param date - The date to compare with now
- * @param locale - The locale to use for formatting (default: DEFAULT_LOCALE)
+ * @param locale - The locale to use for formatting (default: en-US)
  * @returns A human-readable relative time string
  *
  * @example
@@ -18,7 +18,7 @@ import { DEFAULT_LOCALE } from "./set-default-locale.ts";
  * fromNow(inTwoHours, "es-ES"); // "dentro de 2 horas"
  * ```
  */
-export function fromNow(date: Date, locale: string = DEFAULT_LOCALE): string {
+export function fromNow(date: Date, locale: string = config.locale): string {
   const now = Date.now();
   const diff = now - date.getTime();
   const absDiff = Math.abs(diff);

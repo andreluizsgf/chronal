@@ -157,26 +157,30 @@ chronal("2024-01-01")
 
 ## Configuration
 
-### `setDefaultLocale(locale)`
+### `setConfig(config)`
 
-Set the default locale for all date formatting operations.
+Set the default configuration for all date operations.
 
 **Parameters:**
-
-- `locale` (string) - The locale code (e.g., 'en-US', 'pt-BR', 'fr-FR')
+- `config` (object) - Configuration object with optional properties:
+  - `locale` (string) - The locale code (e.g., 'en-US', 'pt-BR', 'fr-FR')
+  - `timezone` (string) - The default IANA timezone (e.g., 'UTC', 'America/Sao_Paulo')
 
 **Example:**
 
 ```typescript
-import { formatDate, months, setDefaultLocale } from "chronal";
+import { formatDate, months, setConfig } from "chronal";
 
-// Default is 'en-US'
+// Default is 'en-US' and 'UTC'
 formatDate(new Date("2024-06-15"), "MMMM"); // 'June'
 
 // Change default locale
-setDefaultLocale("pt-BR");
+setConfig({ locale: "pt-BR" });
 formatDate(new Date("2024-06-15"), "MMMM"); // 'junho'
 months(); // ['janeiro', 'fevereiro', 'março', ...]
+
+// Change default timezone
+setConfig({ timezone: "America/Sao_Paulo" });
 
 // You can still override per call
 formatDate(new Date("2024-06-15"), "MMMM", { locale: "fr-FR" }); // 'juin'

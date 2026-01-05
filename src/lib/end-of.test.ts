@@ -51,3 +51,27 @@ Deno.test("endOf does not mutate original date", () => {
     "Original date should not be mutated",
   );
 });
+
+Deno.test("endOf with timezone", () => {
+  // Test with America/Sao_Paulo (GMT-3)
+  const date = new Date("2024-06-15T14:35:22.500Z");
+
+  // End of day in Sao Paulo (23:59:59.999 local = 02:59:59.999 next day UTC)
+  let result = endOf(date, "day", { tz: "America/Sao_Paulo" });
+  assertEquals(result.toISOString(), "2024-06-16T02:59:59.999Z");
+
+  // End of hour in Sao Paulo
+  result = endOf(date, "hour", { tz: "America/Sao_Paulo" });
+  assertEquals(result.toISOString(), "2024-06-15T14:59:59.999Z");
+
+  // Test with Europe/London (GMT+1 in summer)
+  const summerDate = new Date("2024-06-15T14:35:22.500Z");
+  result = endOf(summerDate, "day", { tz: "Europe/London" });
+  // June 15 23:59:59.999 London time = June 15 22:59:59.999 UTC
+  assertEquals(result.toISOString(), "2024-06-15T22:59:59.999Z");
+
+  // Test with Asia/Tokyo (GMT+9)
+  result = endOf(date, "day", { tz: "Asia/Tokyo" });
+  // 23:59:59.999 Tokyo = 14:59:59.999 same day UTC
+  assertEquals(result.toISOString(), "2024-06-15T14:59:59.999Z");
+});

@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE } from "./set-default-locale.ts";
+import { config } from "./config.ts";
 
 type WeekdaysOptions = {
   locale?: string;
@@ -22,7 +22,7 @@ export function weekdays(
   format: "long" | "short" | "narrow" = "long",
   opt: WeekdaysOptions = {},
 ): string[] {
-  const locale = opt.locale ?? DEFAULT_LOCALE;
+  const locale = opt.locale ?? config.locale;
   const key = `${locale}|${format}`;
 
   const cached = daysCache.get(key);
