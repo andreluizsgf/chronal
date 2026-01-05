@@ -7,7 +7,7 @@ Deno.test("toNow function - just now (under 1 minute)", () => {
 });
 
 Deno.test("toNow function - in 1 minute", () => {
-  const date = new Date(Date.now() + 60000); // 1 minute from now
+  const date = new Date(Date.now() + 90000); // 90 seconds from now (safe middle of 1-minute range)
   assertEquals(toNow(date), "in 1 minute");
 });
 
@@ -17,7 +17,7 @@ Deno.test("toNow function - in 5 minutes", () => {
 });
 
 Deno.test("toNow function - in 1 hour", () => {
-  const date = new Date(Date.now() + 3600000); // 1 hour from now
+  const date = new Date(Date.now() + 5400000); // 90 minutes from now (safe middle of 1-hour range)
   assertEquals(toNow(date), "in 1 hour");
 });
 
@@ -27,7 +27,7 @@ Deno.test("toNow function - in 3 hours", () => {
 });
 
 Deno.test("toNow function - in 1 day", () => {
-  const date = new Date(Date.now() + 86400000); // 1 day from now
+  const date = new Date(Date.now() + 129600000); // 36 hours from now (safe middle of 1-day range)
   assertEquals(toNow(date), "tomorrow");
 });
 
@@ -57,7 +57,7 @@ Deno.test("toNow function - in 2 years", () => {
 });
 
 Deno.test("toNow function - 1 minute ago", () => {
-  const date = new Date(Date.now() - 60000); // 1 minute ago
+  const date = new Date(Date.now() - 90000); // 90 seconds ago (safe middle of 1-minute range)
   assertEquals(toNow(date), "1 minute ago");
 });
 
@@ -67,12 +67,12 @@ Deno.test("toNow function - 5 minutes ago", () => {
 });
 
 Deno.test("toNow function - 1 hour ago", () => {
-  const date = new Date(Date.now() - 3600000); // 1 hour ago
+  const date = new Date(Date.now() - 5400000); // 90 minutes ago (safe middle of 1-hour range)
   assertEquals(toNow(date), "1 hour ago");
 });
 
 Deno.test("toNow function - 1 day ago", () => {
-  const date = new Date(Date.now() - 86400000); // 1 day ago
+  const date = new Date(Date.now() - 129600000); // 36 hours ago (safe middle of 1-day range)
   assertEquals(toNow(date), "yesterday");
 });
 
@@ -87,15 +87,15 @@ Deno.test("toNow function - 1 year ago", () => {
 });
 
 Deno.test("toNow function - locale support (Portuguese)", () => {
-  const yesterday = new Date(Date.now() - 86400000);
-  const tomorrow = new Date(Date.now() + 86400000);
+  const yesterday = new Date(Date.now() - 129600000); // 36 hours ago
+  const tomorrow = new Date(Date.now() + 129600000); // 36 hours from now
 
   assertEquals(toNow(yesterday, "pt-BR"), "ontem");
-  assertEquals(toNow(tomorrow, "pt-BR"), "amanh\u00e3");
+  assertEquals(toNow(tomorrow, "pt-BR"), "amanhã");
 });
 
 Deno.test("toNow function - locale support (French)", () => {
-  const yesterday = new Date(Date.now() - 86400000);
+  const yesterday = new Date(Date.now() - 129600000); // 36 hours ago
 
   assertEquals(toNow(yesterday, "fr-FR"), "hier");
 });

@@ -7,7 +7,7 @@ Deno.test("fromNow function - just now (under 1 minute)", () => {
 });
 
 Deno.test("fromNow function - 1 minute ago", () => {
-  const date = new Date(Date.now() - 60000); // 1 minute ago
+  const date = new Date(Date.now() - 90000); // 90 seconds ago (safe middle of 1-minute range)
   assertEquals(fromNow(date), "1 minute ago");
 });
 
@@ -17,7 +17,7 @@ Deno.test("fromNow function - 5 minutes ago", () => {
 });
 
 Deno.test("fromNow function - 1 hour ago", () => {
-  const date = new Date(Date.now() - 3600000); // 1 hour ago
+  const date = new Date(Date.now() - 5400000); // 90 minutes ago (safe middle of 1-hour range)
   assertEquals(fromNow(date), "1 hour ago");
 });
 
@@ -27,7 +27,7 @@ Deno.test("fromNow function - 3 hours ago", () => {
 });
 
 Deno.test("fromNow function - 1 day ago", () => {
-  const date = new Date(Date.now() - 86400000); // 1 day ago
+  const date = new Date(Date.now() - 129600000); // 36 hours ago (safe middle of 1-day range)
   assertEquals(fromNow(date), "yesterday");
 });
 
@@ -57,7 +57,7 @@ Deno.test("fromNow function - 2 years ago", () => {
 });
 
 Deno.test("fromNow function - in 1 minute", () => {
-  const date = new Date(Date.now() + 60000); // 1 minute from now
+  const date = new Date(Date.now() + 90000); // 90 seconds from now (safe middle of 1-minute range)
   assertEquals(fromNow(date), "in 1 minute");
 });
 
@@ -67,12 +67,12 @@ Deno.test("fromNow function - in 5 minutes", () => {
 });
 
 Deno.test("fromNow function - in 1 hour", () => {
-  const date = new Date(Date.now() + 3600000); // 1 hour from now
+  const date = new Date(Date.now() + 5400000); // 90 minutes from now (safe middle of 1-hour range)
   assertEquals(fromNow(date), "in 1 hour");
 });
 
 Deno.test("fromNow function - in 1 day", () => {
-  const date = new Date(Date.now() + 86400000); // 1 day from now
+  const date = new Date(Date.now() + 129600000); // 36 hours from now (safe middle of 1-day range)
   assertEquals(fromNow(date), "tomorrow");
 });
 
@@ -87,15 +87,15 @@ Deno.test("fromNow function - in 1 year", () => {
 });
 
 Deno.test("fromNow function - locale support (Portuguese)", () => {
-  const yesterday = new Date(Date.now() - 86400000);
-  const tomorrow = new Date(Date.now() + 86400000);
+  const yesterday = new Date(Date.now() - 129600000); // 36 hours ago
+  const tomorrow = new Date(Date.now() + 129600000); // 36 hours from now
 
   assertEquals(fromNow(yesterday, "pt-BR"), "ontem");
-  assertEquals(fromNow(tomorrow, "pt-BR"), "amanh\u00e3");
+  assertEquals(fromNow(tomorrow, "pt-BR"), "amanhã");
 });
 
 Deno.test("fromNow function - locale support (Spanish)", () => {
-  const yesterday = new Date(Date.now() - 86400000);
+  const yesterday = new Date(Date.now() - 129600000); // 36 hours ago
 
   assertEquals(fromNow(yesterday, "es-ES"), "ayer");
 });

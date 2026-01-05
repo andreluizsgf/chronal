@@ -5,7 +5,7 @@
   "license": "MIT",
   "exports": "./src/mod.ts",
   "tasks": {
-    "test": "deno test --allow-read --allow-net --allow-env --unstable",
+    "test": "deno test src/**/*.test.ts* --allow-read --allow-net --allow-env --unstable",
     "publish": "deno run --allow-read --allow-write --allow-run scripts/publish.ts",
     "check": "deno fmt src/**/*.ts* && deno lint && deno check \"src/**/*.ts*\""
   },
