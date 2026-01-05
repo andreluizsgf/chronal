@@ -23,6 +23,7 @@ import { daysInMonth } from "./days-in-month.ts";
 import { weekOfYear } from "./week-of-year.ts";
 import { clamp } from "./clamp.ts";
 import { dateRange } from "./date-range.ts";
+import { parseDate } from "../lib/parse-date.ts";
 
 /**
  * Chronal object that wraps a Date and provides chainable date manipulation methods.
@@ -108,7 +109,7 @@ export type Chronal = {
  * // Create from Date
  * const c = chronal(new Date('2024-06-15'));
  *
- * // Create from string
+ * // Create from string (respects config.timezone)
  * const c2 = chronal('2024-06-15T12:00:00Z');
  *
  * // Chain operations
@@ -118,8 +119,17 @@ export type Chronal = {
  *   .format('YYYY-MM-DD'); // '2024-03-25'
  * ```
  */
-export const chronal = (date?: Date | string | number): Chronal => {
-  const d = date ? new Date(date) : new Date();
+export const chronal = (date?: Date | string | number | null): Chronal => {
+  let d: Date;
+
+  if (date === null || date === undefined) {
+    d = new Date();
+  } else if (typeof date === "string") {
+    // Parse string with timezone awareness from config
+    d = parseDate(date);
+  } else {
+    d = new Date(date);
+  }
 
   return {
     date: d,
