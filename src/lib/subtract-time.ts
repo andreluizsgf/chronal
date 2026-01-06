@@ -23,7 +23,7 @@ type SubOptions = {
  * console.log(newDate.toISOString()); // '2023-02-28T12:00:00.000Z'
  */
 
-export function subtract(date: Date, opt: SubOptions): Date {
+export function subtractTime(date: Date, opt: SubOptions): Date {
   const out: SubOptions = {};
 
   if (opt.years) out.years = -opt.years;

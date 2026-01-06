@@ -10,6 +10,7 @@
  * - Platform: browser (most common use case)
  */
 
+// deno-lint-ignore no-import-prefix
 import { build } from "npm:esbuild@0.20.0";
 
 const files = [

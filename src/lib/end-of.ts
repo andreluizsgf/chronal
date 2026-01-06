@@ -4,7 +4,7 @@ import { startOf } from "./start-of.ts";
 
 type EndOfOptions = {
   tz?: string;
-}
+};
 /**
  * Returns the end of the specified time unit for the given date.
  *
@@ -17,7 +17,7 @@ type EndOfOptions = {
  * const date = new Date('2024-06-15T14:35:22.500Z');
  * const endOfDay = endOf(date, 'day');
  * console.log(endOfDay.toISOString()); // '2024-06-15T23:59:59.999Z'
- * 
+ *
  * @example
  * // With timezone
  * const date = new Date('2024-06-15T14:35:22.500Z');
@@ -72,17 +72,6 @@ export function endOf(date: Date, unit: Unit, opt: EndOfOptions = {}): Date {
 
     return time;
   } else {
-    // Timezone-aware: get start of next unit and subtract 1ms
-    const unitMap: Record<Unit, Unit> = {
-      "second": "second",
-      "minute": "minute",
-      "hour": "hour",
-      "day": "day",
-      "week": "week",
-      "month": "month",
-      "year": "year",
-    };
-
     // Get the start of the current unit
     const start = startOf(date, unit, { tz: timezone });
 

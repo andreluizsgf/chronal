@@ -126,7 +126,9 @@ type ChronalFactory = {
   config: typeof setChronalConfig;
 };
 
-export const chronal: ChronalFactory = (date?: Date | string | number | null): Chronal => {
+export const chronal: ChronalFactory = (
+  date?: Date | string | number | null,
+): Chronal => {
   let d: Date;
 
   if (date === null || date === undefined) {

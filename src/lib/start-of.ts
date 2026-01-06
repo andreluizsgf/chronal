@@ -4,7 +4,7 @@ import { config } from "./config.ts";
 
 type StartOfOptions = {
   tz?: string;
-}
+};
 
 /**
  * Returns the start of the specified time unit for the given date.
@@ -18,7 +18,7 @@ type StartOfOptions = {
  * const date = new Date('2024-06-15T14:35:22.500Z');
  * const startOfDay = startOf(date, 'day');
  * console.log(startOfDay.toISOString()); // '2024-06-15T00:00:00.000Z'
- * 
+ *
  * @example
  * // With timezone
  * const date = new Date('2024-06-15T14:35:22.500Z');
@@ -26,7 +26,11 @@ type StartOfOptions = {
  * console.log(startOfDay.toISOString()); // '2024-06-15T03:00:00.000Z' (00:00 in Sao Paulo)
  */
 
-export function startOf(date: Date, unit: Unit, opt: StartOfOptions = {}): Date {
+export function startOf(
+  date: Date,
+  unit: Unit,
+  opt: StartOfOptions = {},
+): Date {
   const timezone = opt.tz || config.timezone;
   const time = new Date(date.getTime());
 
@@ -130,8 +134,12 @@ export function startOf(date: Date, unit: Unit, opt: StartOfOptions = {}): Date 
 
     // Convert local time to UTC
     // We need to find the UTC timestamp that represents this local time
-    const targetStr = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}T${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:${String(second).padStart(2, "0")}`;
-    
+    const targetStr = `${year}-${String(month).padStart(2, "0")}-${
+      String(day).padStart(2, "0")
+    }T${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:${
+      String(second).padStart(2, "0")
+    }`;
+
     // Binary search for the correct UTC time
     // We use a rough estimate to start the search window
     const testDate = new Date(targetStr);
@@ -143,24 +151,38 @@ export function startOf(date: Date, unit: Unit, opt: StartOfOptions = {}): Date 
       const mid = Math.floor((low + high) / 2);
       const midDate = new Date(mid);
       const midParts = formatter.formatToParts(midDate);
-      
-      const midYear = parseInt(midParts.find(p => p.type === "year")?.value || "0");
-      const midMonth = parseInt(midParts.find(p => p.type === "month")?.value || "0");
-      const midDay = parseInt(midParts.find(p => p.type === "day")?.value || "0");
-      const midHour = parseInt(midParts.find(p => p.type === "hour")?.value || "0");
-      const midMinute = parseInt(midParts.find(p => p.type === "minute")?.value || "0");
-      const midSecond = parseInt(midParts.find(p => p.type === "second")?.value || "0");
-      
-      const midTime = midYear * 1e10 + midMonth * 1e8 + midDay * 1e6 + midHour * 1e4 + midMinute * 100 + midSecond;
-      const targetTime = year * 1e10 + month * 1e8 + day * 1e6 + hour * 1e4 + minute * 100 + second;
-      
+
+      const midYear = parseInt(
+        midParts.find((p) => p.type === "year")?.value || "0",
+      );
+      const midMonth = parseInt(
+        midParts.find((p) => p.type === "month")?.value || "0",
+      );
+      const midDay = parseInt(
+        midParts.find((p) => p.type === "day")?.value || "0",
+      );
+      const midHour = parseInt(
+        midParts.find((p) => p.type === "hour")?.value || "0",
+      );
+      const midMinute = parseInt(
+        midParts.find((p) => p.type === "minute")?.value || "0",
+      );
+      const midSecond = parseInt(
+        midParts.find((p) => p.type === "second")?.value || "0",
+      );
+
+      const midTime = midYear * 1e10 + midMonth * 1e8 + midDay * 1e6 +
+        midHour * 1e4 + midMinute * 100 + midSecond;
+      const targetTime = year * 1e10 + month * 1e8 + day * 1e6 + hour * 1e4 +
+        minute * 100 + second;
+
       if (midTime < targetTime) {
         low = mid;
       } else {
         high = mid;
       }
     }
-    
+
     time.setTime(high);
     time.setUTCMilliseconds(0);
   }

@@ -15,7 +15,11 @@ import { config } from "../lib/config.ts";
  * c.endOf('day', { tz: 'America/Sao_Paulo' }); // '2024-06-16T02:59:59.999Z'
  * ```
  */
-export function endOf(this: Chronal, unit: Parameters<typeof _endOf>[1], opt?: Parameters<typeof _endOf>[2]): Chronal {
+export function endOf(
+  this: Chronal,
+  unit: Parameters<typeof _endOf>[1],
+  opt?: Parameters<typeof _endOf>[2],
+): Chronal {
   const options = opt || {};
   if (!options.tz) {
     options.tz = config.timezone;

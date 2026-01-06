@@ -9,7 +9,7 @@ type Config = {
 export const config: Config = {
   locale: DEFAULT_LOCALE,
   timezone: DEFAULT_TZ,
-}
+};
 
 export function setChronalConfig(c: Partial<Config>) {
   if (c.locale) {

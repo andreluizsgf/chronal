@@ -1,4 +1,4 @@
-import { subtract as _subtract } from "../lib/subtract.ts";
+import { subtractTime as _subtract } from "../lib/subtract-time.ts";
 import { type Chronal, chronal } from "./chronal.ts";
 
 /**
