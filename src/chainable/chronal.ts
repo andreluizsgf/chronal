@@ -22,7 +22,7 @@ import { getQuarter } from "./get-quarter.ts";
 import { daysInMonth } from "./days-in-month.ts";
 import { weekOfYear } from "./week-of-year.ts";
 import { clamp } from "./clamp.ts";
-import { dateRange } from "./date-range.ts";
+import { until } from "./dates-until.ts";
 import { parseDate } from "../lib/parse-date.ts";
 import { setChronalConfig } from "../lib/config.ts";
 
@@ -92,7 +92,7 @@ export type Chronal = {
 
   // Utilities
   /** Generates an array of dates between this date and end date */
-  range: typeof dateRange;
+  until: typeof until;
 };
 
 /**
@@ -217,8 +217,8 @@ export const chronal: ChronalFactory = (date?: Date | string | number | null): C
       return weekOfYear.call(this);
     },
     // Utilities
-    range: function (end, step) {
-      return dateRange.call(this, end, step);
+    until: function (end, step) {
+      return until.call(this, end, step);
     },
   };
 };

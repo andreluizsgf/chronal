@@ -1,4 +1,4 @@
-import { dateRange as _dateRange } from "../lib/date-range.ts";
+import { datesUntil as _datesUntil } from "../lib/dates-until.ts";
 import { type Chronal, chronal } from "./chronal.ts";
 
 /**
@@ -13,19 +13,19 @@ import { type Chronal, chronal } from "./chronal.ts";
  * const start = chronal("2024-01-01");
  * const end = new Date("2024-01-05");
  *
- * start.range(end); // Array of 5 Chronal objects (Jan 1-5)
- * start.range(end, { days: 2 }); // Array of 3 Chronal objects (Jan 1, 3, 5)
+ * start.until(end); // Array of 5 Chronal objects (Jan 1-5)
+ * start.until(end, { days: 2 }); // Array of 3 Chronal objects (Jan 1, 3, 5)
  *
  * // Weekly range
- * chronal("2024-01-01").range(new Date("2024-01-31"), { weeks: 1 });
+ * chronal("2024-01-01").until(new Date("2024-01-31"), { weeks: 1 });
  * ```
  */
-export function dateRange(
+export function until(
   this: Chronal,
   end: Date | Chronal,
-  step?: Parameters<typeof _dateRange>[2],
+  step?: Parameters<typeof _datesUntil>[2],
 ): Chronal[] {
   const endDate = end instanceof Date ? end : end.date;
-  const dates = _dateRange(this.date, endDate, step);
+  const dates = _datesUntil(this.date, endDate, step);
   return dates.map((date) => chronal(date));
 }

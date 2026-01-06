@@ -22,16 +22,16 @@ type RangeStep = {
  * const start = new Date("2024-01-01");
  * const end = new Date("2024-01-05");
  *
- * dateRange(start, end); // Array of 5 dates (Jan 1-5)
- * dateRange(start, end, { days: 2 }); // Array of 3 dates (Jan 1, 3, 5)
+ * datesUntil(start, end); // Array of 5 dates (Jan 1-5)
+ * datesUntil(start, end, { days: 2 }); // Array of 3 dates (Jan 1, 3, 5)
  *
  * // Weekly range
  * const weekStart = new Date("2024-01-01");
  * const weekEnd = new Date("2024-01-31");
- * dateRange(weekStart, weekEnd, { weeks: 1 }); // Array of 5 dates (every Monday)
+ * datesUntil(weekStart, weekEnd, { weeks: 1 }); // Array of 5 dates (every Monday)
  * ```
  */
-export function dateRange(
+export function datesUntil(
   start: Date,
   end: Date,
   step: RangeStep = { days: 1 },
