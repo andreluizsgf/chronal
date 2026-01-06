@@ -19,11 +19,11 @@ type SubOptions = {
  * @returns A new Date object with the specified time units subtracted.
  * @example
  * const date = new Date('2024-03-31T12:00:00Z');
- * const newDate = subTime(date, { years: 1, months: 1 });
+ * const newDate = subtract(date, { years: 1, months: 1 });
  * console.log(newDate.toISOString()); // '2023-02-28T12:00:00.000Z'
  */
 
-export function subTime(date: Date, opt: SubOptions): Date {
+export function subtract(date: Date, opt: SubOptions): Date {
   const out: SubOptions = {};
 
   if (opt.years) out.years = -opt.years;

@@ -36,9 +36,9 @@ Deno.test("chronal - manipulation methods", async (t) => {
     assertEquals(c.date.toISOString(), "2024-06-15T12:00:00.000Z");
   });
 
-  await t.step("sub() subtracts time units", () => {
+  await t.step("subtract() subtracts time units", () => {
     const c = chronal("2024-06-15T12:00:00Z");
-    const result = c.sub({ months: 1, days: 5 });
+    const result = c.subtract({ months: 1, days: 5 });
 
     assertEquals(result.date.toISOString(), "2024-05-10T12:00:00.000Z");
     assertEquals(c.date.toISOString(), "2024-06-15T12:00:00.000Z");
@@ -289,7 +289,7 @@ Deno.test("chronal - method chaining", async (t) => {
   await t.step("chains multiple operations", () => {
     const result = chronal("2024-06-15T12:30:45Z")
       .add({ days: 5 })
-      .sub({ hours: 2 })
+      .subtract({ hours: 2 })
       .set({ minute: 0, second: 0 })
       .format("YYYY-MM-DD HH:mm:ss");
 

@@ -1,5 +1,5 @@
 export { addTime } from "./lib/add-time.ts";
-export { subTime } from "./lib/sub-time.ts";
+export { subtract } from "./lib/subtract.ts";
 export { getUnit } from "./lib/get-unit.ts";
 export { setUnit } from "./lib/set-unit.ts";
 export { months } from "./lib/months.ts";
@@ -30,6 +30,6 @@ export { fromNow } from "./lib/from-now.ts";
 export { toNow } from "./lib/to-now.ts";
 export { dateRange } from "./lib/date-range.ts";
 export type { PluralUnit, Unit } from "./types/unit.ts";
-export { setConfig } from "./lib/config.ts";
+export { setChronalConfig } from "./lib/config.ts";
 export { chronal } from "./chainable/chronal.ts";
 export type { Chronal } from "./chainable/chronal.ts";

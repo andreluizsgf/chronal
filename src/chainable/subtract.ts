@@ -1,4 +1,4 @@
-import { subTime as _subTime } from "../lib/sub-time.ts";
+import { subtract as _subtract } from "../lib/subtract.ts";
 import { type Chronal, chronal } from "./chronal.ts";
 
 /**
@@ -9,13 +9,13 @@ import { type Chronal, chronal } from "./chronal.ts";
  * @example
  * ```typescript
  * const c = chronal('2024-03-31T12:00:00Z');
- * c.sub({ years: 1, months: 1 }); // '2023-02-28T12:00:00.000Z'
+ * c.subtract({ years: 1, months: 1 }); // '2023-02-28T12:00:00.000Z'
  * ```
  */
-export function sub(
+export function subtract(
   this: Chronal,
-  opt: Parameters<typeof _subTime>[1],
+  opt: Parameters<typeof _subtract>[1],
 ): Chronal {
-  const newDate = _subTime(this.date, opt);
+  const newDate = _subtract(this.date, opt);
   return chronal(newDate);
 }

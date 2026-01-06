@@ -1,5 +1,5 @@
 import { add } from "./add.ts";
-import { sub } from "./sub-time.ts";
+import { subtract } from "./subtract.ts";
 import { format } from "./format.ts";
 import { startOf } from "./start-of.ts";
 import { endOf } from "./end-of.ts";
@@ -24,6 +24,7 @@ import { weekOfYear } from "./week-of-year.ts";
 import { clamp } from "./clamp.ts";
 import { dateRange } from "./date-range.ts";
 import { parseDate } from "../lib/parse-date.ts";
+import { setChronalConfig } from "../lib/config.ts";
 
 /**
  * Chronal object that wraps a Date and provides chainable date manipulation methods.
@@ -37,7 +38,7 @@ export type Chronal = {
   /** Adds time units to this date */
   add: typeof add;
   /** Subtracts time units from this date */
-  sub: typeof sub;
+  subtract: typeof subtract;
   /** Returns the start of a time unit */
   startOf: typeof startOf;
   /** Returns the end of a time unit */
@@ -119,7 +120,13 @@ export type Chronal = {
  *   .format('YYYY-MM-DD'); // '2024-03-25'
  * ```
  */
-export const chronal = (date?: Date | string | number | null): Chronal => {
+
+type ChronalFactory = {
+  (date?: Date | string | number | null): Chronal;
+  config: typeof setChronalConfig;
+};
+
+export const chronal: ChronalFactory = (date?: Date | string | number | null): Chronal => {
   let d: Date;
 
   if (date === null || date === undefined) {
@@ -137,8 +144,8 @@ export const chronal = (date?: Date | string | number | null): Chronal => {
     add: function (opt) {
       return add.call(this, opt);
     },
-    sub: function (opt) {
-      return sub.call(this, opt);
+    subtract: function (opt) {
+      return subtract.call(this, opt);
     },
     startOf: function (unit) {
       return startOf.call(this, unit);
@@ -215,3 +222,5 @@ export const chronal = (date?: Date | string | number | null): Chronal => {
     },
   };
 };
+
+chronal.config = setChronalConfig;

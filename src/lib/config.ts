@@ -11,7 +11,7 @@ export const config: Config = {
   timezone: DEFAULT_TZ,
 }
 
-export function setConfig(c: Partial<Config>) {
+export function setChronalConfig(c: Partial<Config>) {
   if (c.locale) {
     config.locale = c.locale;
   }

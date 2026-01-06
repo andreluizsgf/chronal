@@ -59,7 +59,7 @@ npm install chronal
 ```
 
 ```javascript
-import { addTime, formatDate, subTime } from "chronal";
+import { addTime, formatDate, subtract } from "chronal";
 ```
 
 ## Quick Start
@@ -79,7 +79,7 @@ import {
   isToday,
   parseDate,
   startOf,
-  subTime,
+  subtract,
 } from "chronal";
 
 const date = new Date("2024-06-15T14:35:22Z");
@@ -94,7 +94,7 @@ parseDate("15/06/2024", "DD/MM/YYYY"); // Date object for June 15, 2024
 
 // Add/subtract time
 addTime(date, { days: 5, hours: 2 }); // 2024-06-20T16:35:22Z
-subTime(date, { months: 1, days: 10 }); // 2024-05-05T14:35:22Z
+subtract(date, { months: 1, days: 10 }); // 2024-05-05T14:35:22Z
 
 // Start/End of period
 startOf(date, "month"); // 2024-06-01T00:00:00.000Z
@@ -129,7 +129,7 @@ console.log(date); // "2024-07-01"
 // All methods available
 const result = chronal("2024-01-15")
   .add({ days: 10 })
-  .sub({ hours: 2 })
+  .subtract({ hours: 2 })
   .format("MMMM DD, YYYY"); // "January 25, 2024"
 
 // Query methods
@@ -157,7 +157,7 @@ chronal("2024-01-01")
 
 ## Configuration
 
-### `setConfig(config)`
+### `setChronalConfig(config)`
 
 Set the default configuration for all date operations.
 
@@ -169,18 +169,18 @@ Set the default configuration for all date operations.
 **Example:**
 
 ```typescript
-import { formatDate, months, setConfig } from "chronal";
+import { formatDate, months, setChronalConfig } from "chronal";
 
 // Default is 'en-US' and 'UTC'
 formatDate(new Date("2024-06-15"), "MMMM"); // 'June'
 
 // Change default locale
-setConfig({ locale: "pt-BR" });
+setChronalConfig({ locale: "pt-BR" });
 formatDate(new Date("2024-06-15"), "MMMM"); // 'junho'
 months(); // ['janeiro', 'fevereiro', 'março', ...]
 
 // Change default timezone
-setConfig({ timezone: "America/Sao_Paulo" });
+setChronalConfig({ timezone: "America/Sao_Paulo" });
 
 // You can still override per call
 formatDate(new Date("2024-06-15"), "MMMM", { locale: "fr-FR" }); // 'juin'
@@ -210,7 +210,7 @@ All chainable methods correspond to functional API functions:
 | Chainable Method          | Functional API                        | Description              |
 | ------------------------- | ------------------------------------- | ------------------------ |
 | `.add(options)`           | `addTime(date, options)`              | Add time units           |
-| `.subtract(options)`      | `subTime(date, options)`              | Subtract time units      |
+| `.subtract(options)`      | `subtract(date, options)`             | Subtract time units      |
 | `.startOf(unit)`          | `startOf(date, unit)`                 | Start of time unit       |
 | `.endOf(unit)`            | `endOf(date, unit)`                   | End of time unit         |
 | `.set(options)`           | `setUnit(date, options)`              | Set specific units       |
@@ -379,7 +379,7 @@ addTime(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles leap year)
 addTime(date, { years: 1, months: 2, days: 3 }); // 2025-04-03T12:00:00.000Z
 ```
 
-#### `subTime(date, options)`
+#### `subtract(date, options)`
 
 Subtracts specified time units from a date.
 
@@ -390,8 +390,8 @@ Subtracts specified time units from a date.
 ```typescript
 const date = new Date("2024-03-31T12:00:00Z");
 
-subTime(date, { days: 5 }); // 2024-03-26T12:00:00.000Z
-subTime(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles month overflow)
+subtract(date, { days: 5 }); // 2024-03-26T12:00:00.000Z
+subtract(date, { months: 1 }); // 2024-02-29T12:00:00.000Z (handles month overflow)
 ```
 
 #### `getUnit(date, unit)`
