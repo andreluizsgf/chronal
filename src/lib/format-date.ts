@@ -1,5 +1,6 @@
 import { getDTF } from "../core/dtf.ts";
 import { months } from "./months.ts";
+import { weekdays } from "./weekdays.ts";
 import { config } from "./config.ts";
 
 type FormatOptions = {
@@ -11,6 +12,7 @@ type Parts = {
   year: number;
   month: number;
   day: number;
+  dayOfWeek: number;
   hour: number;
   minute: number;
   second: number;
@@ -32,6 +34,8 @@ const tokenMap: Record<string, TokenResolver> = {
 
   D: (p) => String(p.day),
   DD: (p) => pad2(p.day),
+  ddd: (p, l) => weekdays("short", { locale: l })[p.dayOfWeek],
+  dddd: (p, l) => weekdays("long", { locale: l })[p.dayOfWeek],
 
   H: (p) => String(p.hour),
   HH: (p) => pad2(p.hour),
@@ -43,7 +47,7 @@ const tokenMap: Record<string, TokenResolver> = {
   ss: (p) => pad2(p.second),
 };
 
-const tokenRegex = /YYYY|MMMM|MMM|YY|MM|M|DD|D|HH|H|mm|m|ss|s/g;
+const tokenRegex = /YYYY|MMMM|MMM|YY|MM|M|dddd|ddd|DD|D|HH|H|mm|m|ss|s/g;
 
 // Cache parsed format strings to avoid repeated regex operations
 type CompiledFormat = {
@@ -162,6 +166,7 @@ function getUTCParts(date: Date): Parts {
     year: date.getUTCFullYear(),
     month: date.getUTCMonth() + 1,
     day: date.getUTCDate(),
+    dayOfWeek: date.getUTCDay(),
     hour: date.getUTCHours(),
     minute: date.getUTCMinutes(),
     second: date.getUTCSeconds(),
@@ -176,6 +181,7 @@ function getPartsWithTZ(date: Date, locale: string, tz: string): Parts {
     year: 0,
     month: 0,
     day: 0,
+    dayOfWeek: new Date(date).getDay(),
     hour: 0,
     minute: 0,
     second: 0,

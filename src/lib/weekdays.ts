@@ -35,7 +35,7 @@ export function weekdays(
 
   const result = Array.from(
     { length: 7 },
-    (_, i) => fmt.format(new Date(Date.UTC(2017, 0, i + 1))),
+    (_, i) => fmt.format(new Date(Date.UTC(2017, 0, i + 1))).replace(/\.$/, ""),
   );
 
   daysCache.set(key, result);
