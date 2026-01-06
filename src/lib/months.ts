@@ -36,7 +36,7 @@ export function months(
 
   const result = Array.from(
     { length: 12 },
-    (_, i) => fmt.format(new Date(Date.UTC(2024, i, 1))),
+    (_, i) => fmt.format(new Date(Date.UTC(2024, i, 1))).replace(/\.$/, ""),
   );
 
   monthsCache.set(key, result);
