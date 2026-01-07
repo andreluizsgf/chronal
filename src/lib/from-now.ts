@@ -27,14 +27,17 @@ export function fromNow(date: Date, locale: string = config.locale): string {
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
   const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
 
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
-
+  // Use auto for "now", always for everything else
   if (seconds < 60) {
+    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
     return rtf.format(0, "second");
   }
+
+  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "always" });
 
   if (minutes < 60) {
     return rtf.format(diff < 0 ? minutes : -minutes, "minute");
@@ -44,8 +47,12 @@ export function fromNow(date: Date, locale: string = config.locale): string {
     return rtf.format(diff < 0 ? hours : -hours, "hour");
   }
 
-  if (days < 30) {
+  if (days < 7) {
     return rtf.format(diff < 0 ? days : -days, "day");
+  }
+
+  if (days < 30) {
+    return rtf.format(diff < 0 ? weeks : -weeks, "week");
   }
 
   if (months < 12) {
