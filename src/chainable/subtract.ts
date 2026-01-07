@@ -17,5 +17,5 @@ export function subtract(
   opt: Parameters<typeof _subtract>[1],
 ): Chronal {
   const newDate = _subtract(this.date, opt);
-  return chronal(newDate);
+  return chronal(newDate, { tz: this.timezone });
 }

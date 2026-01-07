@@ -126,6 +126,12 @@ const date = chronal("2024-06-15T14:35:22Z")
 
 console.log(date); // "2024-07-01"
 
+// Create with timezone - all operations use this timezone by default
+const spDate = chronal("2024-06-15T14:30:00", { tz: "America/Sao_Paulo" });
+spDate.format("YYYY-MM-DD HH:mm"); // Uses São Paulo time
+spDate.startOf("day"); // Start of day in São Paulo
+spDate.add({ days: 1 }); // Timezone is preserved
+
 // All methods available
 const result = chronal("2024-01-15")
   .add({ days: 10 })
@@ -135,7 +141,7 @@ const result = chronal("2024-01-15")
 // Query methods
 chronal("2024-06-15").isLeapYear(); // true
 chronal().isToday(); // true
-chronal("2024-01-01").fromNow(); // "last year"
+chronal("2024-01-01").fromNow(); // "1 year ago"
 
 // Get values
 chronal("2024-06-15").get("month"); // 5 (0-indexed)
@@ -169,7 +175,7 @@ Set the default configuration for all date operations.
 **Example:**
 
 ```typescript
-import { formatDate, months, setChronalConfig } from "chronal";
+import { formatDate, months, setChronalConfig, chronal } from "chronal";
 
 // Default is 'en-US' and 'UTC'
 formatDate(new Date("2024-06-15"), "MMMM"); // 'June'
@@ -186,22 +192,71 @@ setChronalConfig({ timezone: "America/Sao_Paulo" });
 formatDate(new Date("2024-06-15"), "MMMM", { locale: "fr-FR" }); // 'juin'
 ```
 
+### Per-Instance Timezone (Chainable API)
+
+When using the chainable API, you can set a timezone for a specific instance. This timezone will be used for all operations on that instance:
+
+```typescript
+import { chronal } from "chronal";
+
+// Create instance with timezone
+const spDate = chronal("2024-06-15T14:30:00", { tz: "America/Sao_Paulo" });
+
+// All operations use the instance timezone
+spDate.format("YYYY-MM-DD HH:mm"); // Uses São Paulo time (UTC-3)
+spDate.startOf("day"); // Start of day in São Paulo
+spDate.endOf("month"); // End of month in São Paulo
+
+// Timezone is preserved across operations
+const nextDay = spDate.add({ days: 1 });
+nextDay.timezone; // "America/Sao_Paulo"
+
+// Override timezone for specific operation
+spDate.format("HH:mm", { tz: "UTC" }); // Use UTC instead
+
+// Generated dates preserve timezone
+const dates = spDate.until(new Date("2024-06-20"));
+dates[0].timezone; // "America/Sao_Paulo"
+```
+
+**Benefits:**
+- ✅ Set timezone once, use everywhere in the chain
+- ✅ Prevents accidental timezone mixing
+- ✅ Clean API - no need to pass timezone to every method
+- ✅ Can still override per method when needed
+
 ## API Reference
 
 ### Chainable Object API
 
 The `chronal` object provides a chainable API for convenient date manipulation.
 
-#### `chronal(date?)`
+#### `chronal(date?, options?)`
 
 Creates a Chronal instance with chainable methods.
 
 **Parameters:**
 
-- `date` (Date | string | number, optional) - Initial date (defaults to current
-  date)
+- `date` (Date | string | number, optional) - Initial date (defaults to current date)
+- `options` (object, optional) - Configuration options:
+  - `tz` (string) - IANA timezone for this instance (e.g., 'America/Sao_Paulo')
 
-**Returns:** Chronal instance
+**Returns:** Chronal instance with optional timezone
+
+**Examples:**
+
+```typescript
+// Create with current time
+const now = chronal();
+
+// Create from string
+const date = chronal("2024-06-15");
+
+// Create with timezone - all operations will use this timezone
+const spDate = chronal("2024-06-15", { tz: "America/Sao_Paulo" });
+spDate.format("YYYY-MM-DD HH:mm"); // Uses São Paulo time
+spDate.startOf("day").timezone; // "America/Sao_Paulo" (preserved)
+```
 
 **API Reference:**
 

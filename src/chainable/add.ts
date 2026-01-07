@@ -17,5 +17,5 @@ export function add(
   opt: Parameters<typeof _addTime>[1],
 ): Chronal {
   const newDate = _addTime(this.date, opt);
-  return chronal(newDate);
+  return chronal(newDate, { tz: this.timezone });
 }

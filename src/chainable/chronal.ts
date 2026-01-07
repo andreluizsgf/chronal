@@ -33,6 +33,8 @@ import { setChronalConfig } from "../lib/config.ts";
 export type Chronal = {
   /** The underlying Date object */
   date: Date;
+  /** The timezone for this instance (optional, defaults to config.timezone) */
+  timezone?: string;
 
   // Manipulation
   /** Adds time units to this date */
@@ -100,6 +102,7 @@ export type Chronal = {
  * All methods return new instances, preserving immutability.
  *
  * @param date - Optional Date, string, or timestamp. Defaults to current date/time
+ * @param options - Optional configuration including timezone
  * @returns A Chronal object with the date and chainable methods
  *
  * @example
@@ -113,6 +116,9 @@ export type Chronal = {
  * // Create from string (respects config.timezone)
  * const c2 = chronal('2024-06-15T12:00:00Z');
  *
+ * // Create with specific timezone
+ * const c3 = chronal('2024-06-15', { tz: 'America/Sao_Paulo' });
+ *
  * // Chain operations
  * chronal('2024-01-15')
  *   .add({ months: 2, days: 10 })
@@ -121,27 +127,34 @@ export type Chronal = {
  * ```
  */
 
+type ChronalOptions = {
+  tz?: string;
+};
+
 type ChronalFactory = {
-  (date?: Date | string | number | null): Chronal;
+  (date?: Date | string | number | null, options?: ChronalOptions): Chronal;
   config: typeof setChronalConfig;
 };
 
 export const chronal: ChronalFactory = (
   date?: Date | string | number | null,
+  options?: ChronalOptions,
 ): Chronal => {
   let d: Date;
+  const timezone = options?.tz;
 
   if (date === null || date === undefined) {
     d = new Date();
   } else if (typeof date === "string") {
-    // Parse string with timezone awareness from config
-    d = parseDate(date);
+    // Parse string with timezone awareness from options or config
+    d = parseDate(date, { tz: timezone });
   } else {
     d = new Date(date);
   }
 
   return {
     date: d,
+    timezone,
     // Manipulation
     add: function (opt) {
       return add.call(this, opt);

@@ -27,5 +27,5 @@ export function until(
 ): Chronal[] {
   const endDate = end instanceof Date ? end : end.date;
   const dates = _datesUntil(this.date, endDate, step);
-  return dates.map((date) => chronal(date));
+  return dates.map((date) => chronal(date, { tz: this.timezone }));
 }

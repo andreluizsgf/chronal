@@ -21,5 +21,8 @@ export function format(
   fmt: Parameters<typeof formatDate>[1],
   options: Parameters<typeof formatDate>[2] = {},
 ): string {
+  if (!options.tz) {
+    options.tz = this.timezone;
+  }
   return formatDate(this.date, fmt, options);
 }

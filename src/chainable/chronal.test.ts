@@ -385,3 +385,73 @@ Deno.test("chronal - until method", async (t) => {
     assertEquals(result[0].format("YYYY-MM-DD"), "2024-01-01");
   });
 });
+
+Deno.test("chronal - timezone handling", async (t) => {
+  await t.step("stores timezone in instance", () => {
+    const c = chronal("2024-06-15T14:30:00", { tz: "America/Sao_Paulo" });
+    assertEquals(c.timezone, "America/Sao_Paulo");
+  });
+
+  await t.step("preserves timezone across manipulation methods", () => {
+    const c = chronal("2024-06-15T14:30:00", { tz: "America/Sao_Paulo" });
+
+    assertEquals(c.add({ days: 1 }).timezone, "America/Sao_Paulo");
+    assertEquals(c.subtract({ hours: 2 }).timezone, "America/Sao_Paulo");
+    assertEquals(c.startOf("day").timezone, "America/Sao_Paulo");
+    assertEquals(c.endOf("month").timezone, "America/Sao_Paulo");
+    assertEquals(c.set({ hour: 10 }).timezone, "America/Sao_Paulo");
+
+    const min = new Date("2024-06-01");
+    const max = new Date("2024-06-30");
+    assertEquals(c.clamp(min, max).timezone, "America/Sao_Paulo");
+  });
+
+  await t.step("uses instance timezone for formatting", () => {
+    const c = chronal("2024-06-15T17:30:00Z", { tz: "America/Sao_Paulo" });
+
+    // São Paulo is UTC-3, so 17:30 UTC = 14:30 local
+    const formatted = c.format("YYYY-MM-DD HH:mm:ss");
+    assertEquals(formatted, "2024-06-15 14:30:00");
+  });
+
+  await t.step("uses instance timezone for startOf/endOf", () => {
+    const c = chronal("2024-06-15T03:30:00Z", { tz: "America/Sao_Paulo" });
+
+    // 03:30 UTC = 00:30 São Paulo (still June 15)
+    // Start of day in São Paulo = midnight São Paulo = 03:00 UTC
+    const startOfDay = c.startOf("day");
+    assertEquals(startOfDay.date.toISOString(), "2024-06-15T03:00:00.000Z");
+    assertEquals(startOfDay.timezone, "America/Sao_Paulo");
+  });
+
+  await t.step("allows timezone override per method call", () => {
+    const c = chronal("2024-06-15T14:30:00Z", { tz: "America/Sao_Paulo" });
+
+    // Format with instance timezone (São Paulo, UTC-3)
+    assertEquals(c.format("YYYY-MM-DD HH:mm"), "2024-06-15 11:30");
+
+    // Format with UTC override
+    assertEquals(c.format("YYYY-MM-DD HH:mm", { tz: "UTC" }), "2024-06-15 14:30");
+  });
+
+  await t.step("preserves timezone in until() generated dates", () => {
+    const start = chronal("2024-01-01", { tz: "America/Sao_Paulo" });
+    const end = new Date("2024-01-05");
+
+    const result = start.until(end);
+
+    // All generated dates should have São Paulo timezone
+    assertEquals(result.length, 4); // Jan 1-4 (end is Jan 5 00:00 UTC, but start times are 03:00 UTC)
+    assertEquals(result[0].timezone, "America/Sao_Paulo");
+    assertEquals(result[1].timezone, "America/Sao_Paulo");
+    assertEquals(result[3].timezone, "America/Sao_Paulo");
+  });
+
+  await t.step("works without timezone (uses config default)", () => {
+    const c = chronal("2024-06-15T14:30:00Z");
+
+    assertEquals(c.timezone, undefined);
+    // Should use config.timezone (default: UTC)
+    assertEquals(c.format("YYYY-MM-DD HH:mm"), "2024-06-15 14:30");
+  });
+});

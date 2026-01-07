@@ -22,8 +22,8 @@ export function startOf(
 ): Chronal {
   const options = opt || {};
   if (!options.tz) {
-    options.tz = config.timezone;
+    options.tz = this.timezone || config.timezone;
   }
   const newDate = _startOf(this.date, unit, options);
-  return chronal(newDate);
+  return chronal(newDate, { tz: this.timezone });
 }

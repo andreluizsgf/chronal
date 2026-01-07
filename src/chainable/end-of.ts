@@ -22,8 +22,8 @@ export function endOf(
 ): Chronal {
   const options = opt || {};
   if (!options.tz) {
-    options.tz = config.timezone;
+    options.tz = this.timezone || config.timezone;
   }
   const newDate = _endOf(this.date, unit, options);
-  return chronal(newDate);
+  return chronal(newDate, { tz: this.timezone });
 }

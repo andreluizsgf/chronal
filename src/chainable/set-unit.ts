@@ -17,5 +17,5 @@ export function setUnit(
   opt: Parameters<typeof _setUnit>[1],
 ): Chronal {
   const newDate = _setUnit(this.date, opt);
-  return chronal(newDate);
+  return chronal(newDate, { tz: this.timezone });
 }

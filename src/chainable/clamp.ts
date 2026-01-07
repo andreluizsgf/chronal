@@ -24,5 +24,5 @@ export function clamp(
   const minDate = min instanceof Date ? min : min.date;
   const maxDate = max instanceof Date ? max : max.date;
   const newDate = clampDate(this.date, minDate, maxDate);
-  return chronal(newDate);
+  return chronal(newDate, { tz: this.timezone });
 }
