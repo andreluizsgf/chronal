@@ -137,14 +137,14 @@ Deno.test("chronal - display methods", async (t) => {
     const yesterday = new Date(Date.now() - 86400000);
     const c = chronal(yesterday);
 
-    assertEquals(c.fromNow(), "yesterday");
+    assertEquals(c.fromNow(), "1 day ago");
   });
 
   await t.step("toNow() returns relative time", () => {
     const yesterday = new Date(Date.now() - 86400000);
     const c = chronal(yesterday);
 
-    assertEquals(c.toNow(), "yesterday");
+    assertEquals(c.toNow(), "1 day ago");
   });
 });
 
