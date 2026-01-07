@@ -38,8 +38,11 @@ export function parseDate(
       throw new Error("Invalid date");
     }
 
-    // If timezone is not UTC, interpret the date string as local time in that timezone
-    if (timezone !== "UTC") {
+    // If the string has explicit timezone (Z or offset like +03:00), respect it
+    // Only apply config.timezone for date strings without timezone info
+    const hasExplicitTimezone = /Z|[+-]\d{2}:\d{2}$/.test(dateString);
+    
+    if (!hasExplicitTimezone && timezone !== "UTC") {
       return parseDateInTimezone(date, timezone);
     }
 

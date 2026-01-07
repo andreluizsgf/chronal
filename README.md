@@ -324,8 +324,27 @@ Parses a date string into a Date object using an optional format pattern.
 - `dateString` (string) - The date string to parse
 - `format` (string, optional) - Format pattern (e.g., "YYYY-MM-DD",
   "DD/MM/YYYY")
+- `options` (object, optional) - Parsing options
+  - `tz` (string) - IANA timezone (e.g., 'America/Sao_Paulo')
 
 **Returns:** Date object
+
+**Timezone Behavior:**
+
+When parsing date strings, `parseDate` follows these rules:
+
+1. **Explicit timezone** (e.g., `Z` or `+03:00`) - Always respected, ignores `config.timezone`
+2. **No timezone** - Uses `config.timezone` or the `tz` option to interpret the string as local time in that timezone
+
+```typescript
+// With explicit UTC marker (Z) - always UTC
+parseDate("2026-01-12T02:59:59.999Z"); // UTC time, ignores config
+
+// Without timezone - uses config.timezone
+setChronalConfig({ timezone: "America/Sao_Paulo" });
+parseDate("2026-01-12T02:59:59.999"); // Interpreted as São Paulo time
+parseDate("2026-01-12"); // Midnight in São Paulo
+```
 
 **Supported Tokens:**
 
@@ -346,6 +365,9 @@ parseDate("2024-06-15"); // Date object
 parseDate("15/06/2024", "DD/MM/YYYY");
 parseDate("2024-06-15 14:30:00", "YYYY-MM-DD HH:mm:ss");
 parseDate("06/15/2024", "MM/DD/YYYY");
+
+// With timezone
+parseDate("2024-06-15", { tz: "America/Sao_Paulo" }); // Parse as São Paulo time
 ```
 
 ### Manipulation
