@@ -1,3 +1,4 @@
+import { getRTF } from "../core/rtf.ts";
 import { config } from "./config.ts";
 
 /**
@@ -33,11 +34,10 @@ export function fromNow(date: Date, locale: string = config.locale): string {
 
   // Use auto for "now", always for everything else
   if (seconds < 60) {
-    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "auto" });
-    return rtf.format(0, "second");
+    return getRTF(locale, "auto").format(0, "second");
   }
 
-  const rtf = new Intl.RelativeTimeFormat(locale, { numeric: "always" });
+  const rtf = getRTF(locale, "always");
 
   if (minutes < 60) {
     return rtf.format(diff < 0 ? minutes : -minutes, "minute");

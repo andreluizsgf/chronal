@@ -77,7 +77,7 @@ Deno.test("fromNow function - in 1 day", () => {
 });
 
 Deno.test("fromNow function - in 1 month", () => {
-  const date = new Date(Date.now() + 2592000000); // ~30 days from now
+  const date = new Date(Date.now() + 3024000000); // 35 days from now (safe middle of 1-month range)
   assertEquals(fromNow(date), "in 1 month");
 });
 
