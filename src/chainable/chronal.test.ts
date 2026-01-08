@@ -431,7 +431,10 @@ Deno.test("chronal - timezone handling", async (t) => {
     assertEquals(c.format("YYYY-MM-DD HH:mm"), "2024-06-15 11:30");
 
     // Format with UTC override
-    assertEquals(c.format("YYYY-MM-DD HH:mm", { tz: "UTC" }), "2024-06-15 14:30");
+    assertEquals(
+      c.format("YYYY-MM-DD HH:mm", { tz: "UTC" }),
+      "2024-06-15 14:30",
+    );
   });
 
   await t.step("preserves timezone in until() generated dates", () => {

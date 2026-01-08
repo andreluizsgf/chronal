@@ -3,7 +3,10 @@
   "version": "0.0.14",
   "description": "A tiny and fast date utility library for modern JavaScript runtimes.",
   "license": "MIT",
-  "exports": "./src/mod.ts",
+  "exports": {
+    ".": "./src/mod.ts",
+    "./chainable": "./src/chainable.ts"
+  },
   "tasks": {
     "test": "deno test src/**/*.test.ts* --allow-read --allow-net --allow-env --unstable",
     "publish": "deno run --allow-read --allow-write --allow-run scripts/publish.ts",
