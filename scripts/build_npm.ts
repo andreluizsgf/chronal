@@ -4,7 +4,13 @@ import { build, emptyDir } from "@deno/dnt";
 await emptyDir("./npm");
 
 await build({
-  entryPoints: ["./src/mod.ts", "./src/chainable.ts"],
+  entryPoints: [
+    "./src/mod.ts",
+    {
+      name: "./chainable",
+      path: "./src/chainable.ts",
+    },
+  ],
   outDir: "./npm",
   shims: {
     deno: true,
