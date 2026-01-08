@@ -458,3 +458,69 @@ Deno.test("chronal - timezone handling", async (t) => {
     assertEquals(c.format("YYYY-MM-DD HH:mm"), "2024-06-15 14:30");
   });
 });
+
+Deno.test("chronal - comparison methods with branches", async (t) => {
+  await t.step("isSame() with false result", () => {
+    const c = chronal("2024-06-15T12:00:00Z");
+    const other = new Date("2024-06-16T12:00:00Z");
+    assertEquals(c.isSame(other, "day"), false);
+  });
+
+  await t.step("isAfter() with false result", () => {
+    const c = chronal("2024-06-15T12:00:00Z");
+    const other = new Date("2024-06-16T12:00:00Z");
+    assertEquals(c.isAfter(other), false);
+  });
+
+  await t.step("isBefore() with false result", () => {
+    const c = chronal("2024-06-16T12:00:00Z");
+    const other = new Date("2024-06-15T12:00:00Z");
+    assertEquals(c.isBefore(other), false);
+  });
+
+  await t.step("isEqual() with false result", () => {
+    const c = chronal("2024-06-15T12:00:00Z");
+    const other = new Date("2024-06-15T12:00:01Z");
+    assertEquals(c.isEqual(other), false);
+  });
+
+  await t.step("isBetween() with false result", () => {
+    const c = chronal("2024-06-20T12:00:00Z");
+    const start = new Date("2024-06-15T12:00:00Z");
+    const end = new Date("2024-06-18T12:00:00Z");
+    assertEquals(c.isBetween(start, end), false);
+  });
+
+  await t.step("isBetween() with inclusive bounds", () => {
+    const c = chronal("2024-06-15T12:00:00Z");
+    const start = new Date("2024-06-15T12:00:00Z");
+    const end = new Date("2024-06-18T12:00:00Z");
+    assertEquals(c.isBetween(start, end, "[]"), true);
+  });
+});
+
+Deno.test("chronal - clamp with false conditions", async (t) => {
+  await t.step("clamp() when date is within bounds", () => {
+    const c = chronal("2024-06-15T12:00:00Z");
+    const min = new Date("2024-06-10T12:00:00Z");
+    const max = new Date("2024-06-20T12:00:00Z");
+    const result = c.clamp(min, max);
+    assertEquals(result.date.toISOString(), "2024-06-15T12:00:00.000Z");
+  });
+
+  await t.step("clamp() when date is before min", () => {
+    const c = chronal("2024-06-05T12:00:00Z");
+    const min = new Date("2024-06-10T12:00:00Z");
+    const max = new Date("2024-06-20T12:00:00Z");
+    const result = c.clamp(min, max);
+    assertEquals(result.date.toISOString(), "2024-06-10T12:00:00.000Z");
+  });
+
+  await t.step("clamp() when date is after max", () => {
+    const c = chronal("2024-06-25T12:00:00Z");
+    const min = new Date("2024-06-10T12:00:00Z");
+    const max = new Date("2024-06-20T12:00:00Z");
+    const result = c.clamp(min, max);
+    assertEquals(result.date.toISOString(), "2024-06-20T12:00:00.000Z");
+  });
+});

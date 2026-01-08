@@ -9,6 +9,7 @@
   },
   "tasks": {
     "test": "deno test src/**/*.test.ts* --allow-read --allow-net --allow-env --unstable",
+    "coverage": "deno test --coverage=coverage src/**/*.test.ts --allow-read --allow-net --allow-env --unstable && deno coverage coverage --lcov --output=coverage.lcov",
     "publish": "deno run --allow-read --allow-write --allow-run scripts/publish.ts",
     "check": "deno fmt src/**/*.ts* && deno lint && deno check \"src/**/*.ts*\""
   },

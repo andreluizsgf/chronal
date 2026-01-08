@@ -1,3 +1,5 @@
+import { chronal } from "./chainable/chronal.ts";
+
 export { addTime } from "./lib/add-time.ts";
 export { subtractTime } from "./lib/subtract-time.ts";
 export { getUnit } from "./lib/get-unit.ts";

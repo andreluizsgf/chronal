@@ -3,7 +3,19 @@
 A tiny, fast, and modern date utility library for JavaScript/TypeScript with
 zero dependencies.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+<p align="center">
+    <a href="https://bundlephobia.com/package/chronal"><img
+            src="https://img.shields.io/bundlephobia/minzip/chronal?style=flat-square&color=%2345cc11"
+            alt="Gzip Size"></a>
+    <a href="https://www.npmjs.com/package/chronal"><img src="https://img.shields.io/npm/v/chronal.svg?style=flat-square&colorB=51C838"
+                                                       alt="NPM Version"></a>
+    <a href="https://jsr.io/@chronal/core"><img src="https://img.shields.io/jsr/v/@chronal/core?style=flat-square&color=F7DF1E"
+                                                       alt="JSR Version"></a>
+    <a href="https://github.com/andreluizsgf/chronal/actions/workflows/coverage.yml"><img
+            src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/andreluizsgf/chronal/main/.github/badges/coverage.json&style=flat-square" alt="Coverage"></a>
+    <a href="https://github.com/andreluizsgf/chronal/blob/main/LICENSE"><img
+            src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="License"></a>
+</p>
 
 ## Features
 
@@ -49,7 +61,11 @@ zero dependencies.
 ### Deno
 
 ```typescript
-import { add, format, sub } from "jsr:@chronal/core";
+// Functional API (tree-shakeable)
+import { addTime, formatDate, subtractTime } from "jsr:@chronal/core";
+
+// Chainable API
+import { chronal } from "jsr:@chronal/core/chainable";
 ```
 
 ### Node.js / npm
@@ -59,8 +75,19 @@ npm install chronal
 ```
 
 ```javascript
-import { addTime, formatDate, subtract } from "chronal";
+// Functional API (tree-shakeable)
+import { addTime, formatDate, subtractTime } from "chronal";
+
+// Chainable API
+import { chronal } from "chronal/chainable";
 ```
+
+## Bundle Size
+
+- **Functional API (tree-shakeable)**: ~2.3 KB gzipped for typical imports (5 functions)
+- **Chainable API**: ~4.8 KB gzipped (includes all functionality)
+
+Choose the functional API for libraries and performance-critical code, or the chainable API for better developer experience in applications.
 
 ## Quick Start
 
@@ -68,7 +95,7 @@ Chronal offers **two ways** to work with dates:
 
 ### 1. Functional API (Tree-shakeable)
 
-Perfect for minimal bundle size - import only what you need:
+Perfect for minimal bundle size (~2.3 KB gzipped) - import only what you need:
 
 ```typescript
 import {
@@ -113,10 +140,10 @@ datesUntil(new Date("2024-01-01"), new Date("2024-01-05"));
 
 ### 2. Chainable API
 
-Perfect for developer experience with convenient method chaining:
+Perfect for developer experience with convenient method chaining (~4.8 KB gzipped):
 
 ```typescript
-import { chronal } from "chronal";
+import { chronal } from "chronal/chainable";
 
 // Create and chain operations
 const date = chronal("2024-06-15T14:35:22Z")

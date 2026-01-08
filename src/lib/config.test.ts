@@ -84,3 +84,29 @@ Deno.test("setChronalConfig", async (t) => {
   // Restore original locale
   setChronalConfig({ locale: originalLocale });
 });
+
+Deno.test("setChronalConfig - timezone configuration", async (t) => {
+  const originalTimezone = config.timezone;
+
+  await t.step("should change the default timezone", () => {
+    setChronalConfig({ timezone: "America/New_York" });
+    assertEquals(config.timezone, "America/New_York");
+  });
+
+  await t.step("should allow setting both locale and timezone", () => {
+    setChronalConfig({ locale: "pt-BR", timezone: "America/Sao_Paulo" });
+    assertEquals(config.locale, "pt-BR");
+    assertEquals(config.timezone, "America/Sao_Paulo");
+  });
+
+  await t.step("should handle empty config object", () => {
+    const beforeLocale = config.locale;
+    const beforeTz = config.timezone;
+    setChronalConfig({});
+    assertEquals(config.locale, beforeLocale);
+    assertEquals(config.timezone, beforeTz);
+  });
+
+  // Restore original timezone
+  setChronalConfig({ timezone: originalTimezone });
+});

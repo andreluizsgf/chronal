@@ -76,3 +76,44 @@ Deno.test("isSame function - edge case same exact time", () => {
   assertEquals(isSame(date1, date2, "minute"), true);
   assertEquals(isSame(date1, date2, "second"), true);
 });
+
+Deno.test("isSame function - different years in other comparisons", () => {
+  const date1 = new Date("2024-06-15T14:30:15Z");
+  const date2 = new Date("2023-06-15T14:30:15Z");
+
+  assertEquals(isSame(date1, date2, "day"), false);
+  assertEquals(isSame(date1, date2, "hour"), false);
+  assertEquals(isSame(date1, date2, "minute"), false);
+  assertEquals(isSame(date1, date2, "second"), false);
+});
+
+Deno.test("isSame function - different months in hour/minute/second comparison", () => {
+  const date1 = new Date("2024-06-15T14:30:15Z");
+  const date2 = new Date("2024-07-15T14:30:15Z");
+
+  assertEquals(isSame(date1, date2, "hour"), false);
+  assertEquals(isSame(date1, date2, "minute"), false);
+  assertEquals(isSame(date1, date2, "second"), false);
+});
+
+Deno.test("isSame function - different days in minute/second comparison", () => {
+  const date1 = new Date("2024-06-15T14:30:15Z");
+  const date2 = new Date("2024-06-16T14:30:15Z");
+
+  assertEquals(isSame(date1, date2, "minute"), false);
+  assertEquals(isSame(date1, date2, "second"), false);
+});
+
+Deno.test("isSame function - different hours in second comparison", () => {
+  const date1 = new Date("2024-06-15T14:30:15Z");
+  const date2 = new Date("2024-06-15T15:30:15Z");
+
+  assertEquals(isSame(date1, date2, "second"), false);
+});
+
+Deno.test("isSame function - different minutes in second comparison", () => {
+  const date1 = new Date("2024-06-15T14:30:15Z");
+  const date2 = new Date("2024-06-15T14:31:15Z");
+
+  assertEquals(isSame(date1, date2, "second"), false);
+});
