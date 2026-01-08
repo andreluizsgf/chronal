@@ -12,7 +12,7 @@ zero dependencies.
     <a href="https://jsr.io/@chronal/core"><img src="https://img.shields.io/jsr/v/@chronal/core?style=flat-square&color=F7DF1E"
                                                        alt="JSR Version"></a>
     <a href="https://github.com/andreluizsgf/chronal/actions/workflows/coverage.yml"><img
-            src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/andreluizsgf/chronal/main/.github/badges/coverage.json&style=flat-square" alt="Coverage"></a>
+            src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/andreluizsgf/chronal/refs/heads/main/.github/badges/coverage.json&style=flat-square" alt="Coverage"></a>
     <a href="https://github.com/andreluizsgf/chronal/blob/main/LICENSE"><img
             src="https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square" alt="License"></a>
 </p>
