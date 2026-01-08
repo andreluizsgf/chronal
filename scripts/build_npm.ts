@@ -4,7 +4,7 @@ import { build, emptyDir } from "@deno/dnt";
 await emptyDir("./npm");
 
 await build({
-  entryPoints: ["./src/mod.ts"],
+  entryPoints: ["./src/mod.ts", "./src/chainable.ts"],
   outDir: "./npm",
   shims: {
     deno: true,
@@ -42,6 +42,17 @@ await build({
       "bun",
       "node",
     ],
+    sideEffects: false,
+    exports: {
+      ".": {
+        import: "./esm/mod.js",
+        require: "./script/mod.js",
+      },
+      "./chainable": {
+        import: "./esm/chainable.js",
+        require: "./script/chainable.js",
+      },
+    },
   },
   postBuild() {
     // steps to run after building and before running the tests

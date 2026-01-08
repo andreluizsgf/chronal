@@ -31,5 +31,3 @@ export { toNow } from "./lib/to-now.ts";
 export { datesUntil } from "./lib/dates-until.ts";
 export type { PluralUnit, Unit } from "./types/unit.ts";
 export { setChronalConfig } from "./lib/config.ts";
-export { chronal } from "./chainable/chronal.ts";
-export type { Chronal } from "./chainable/chronal.ts";

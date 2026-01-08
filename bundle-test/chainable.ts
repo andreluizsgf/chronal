@@ -1,5 +1,5 @@
 // Test file: importing the chainable API
-import { chronal } from "../src/mod.ts";
+import { chronal } from "../src/chainable.ts";
 
 const date = chronal("2024-06-15T14:35:22Z");
 
