@@ -505,19 +505,22 @@ Extracts a specific unit from a date.
 **Parameters:**
 
 - `date` (Date) - The date to extract from
-- `unit` ('year' | 'month' | 'day' | 'hour' | 'minute' | 'second' |
-  'millisecond')
+- `unit` ('year' | 'month' | 'date' | 'day' | 'hour' | 'minute' | 'second')
+  - Note: `'week'` is not supported
+  - `'date'` returns the day of the month (1-31)
+  - `'day'` returns the day of the week (0-6, where 0 is Sunday)
 
 **Returns:** Number
 
 **Examples:**
 
 ```typescript
-const date = new Date("2024-06-15T14:35:22.500Z");
+const date = new Date("2024-06-15T14:35:22.500Z"); // This is a Saturday
 
 getUnit(date, "year"); // 2024
 getUnit(date, "month"); // 5 (0-indexed, June)
-getUnit(date, "day"); // 15
+getUnit(date, "date"); // 15 (day of month)
+getUnit(date, "day"); // 6 (day of week: Saturday)
 getUnit(date, "hour"); // 14
 ```
 

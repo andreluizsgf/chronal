@@ -17,15 +17,27 @@ Deno.test("getUnit function - month", () => {
   assertEquals(getUnit(date3, "month"), 5);
 });
 
-Deno.test("getUnit function - day", () => {
+Deno.test("getUnit function - date", () => {
   const date1 = new Date("2024-03-01T12:34:56Z");
-  assertEquals(getUnit(date1, "day"), 1);
+  assertEquals(getUnit(date1, "date"), 1);
 
   const date2 = new Date("2024-03-15T12:34:56Z");
-  assertEquals(getUnit(date2, "day"), 15);
+  assertEquals(getUnit(date2, "date"), 15);
 
   const date3 = new Date("2024-03-31T12:34:56Z");
-  assertEquals(getUnit(date3, "day"), 31);
+  assertEquals(getUnit(date3, "date"), 31);
+});
+
+Deno.test("getUnit function - day", () => {
+  const date1 = new Date("2024-03-01T12:34:56Z");
+
+  assertEquals(getUnit(date1, "day"), 5);
+
+  const date2 = new Date("2024-03-15T12:34:56Z");
+  assertEquals(getUnit(date2, "day"), 5);
+
+  const date3 = new Date("2024-03-31T12:34:56Z");
+  assertEquals(getUnit(date3, "day"), 0);
 });
 
 Deno.test("getUnit function - hour", () => {
@@ -65,7 +77,7 @@ Deno.test("getUnit function - leap year February", () => {
   const date = new Date("2024-02-29T12:34:56Z");
   assertEquals(getUnit(date, "year"), 2024);
   assertEquals(getUnit(date, "month"), 1);
-  assertEquals(getUnit(date, "day"), 29);
+  assertEquals(getUnit(date, "day"), 4);
 });
 
 Deno.test("getUnit function - all units from same date", () => {
@@ -73,7 +85,8 @@ Deno.test("getUnit function - all units from same date", () => {
 
   assertEquals(getUnit(date, "year"), 2024);
   assertEquals(getUnit(date, "month"), 2);
-  assertEquals(getUnit(date, "day"), 15);
+  assertEquals(getUnit(date, "date"), 15);
+  assertEquals(getUnit(date, "day"), 5);
   assertEquals(getUnit(date, "hour"), 12);
   assertEquals(getUnit(date, "minute"), 34);
   assertEquals(getUnit(date, "second"), 56);
@@ -95,7 +108,8 @@ Deno.test("getUnit function - edge case end of year", () => {
 
   assertEquals(getUnit(date, "year"), 2024);
   assertEquals(getUnit(date, "month"), 11);
-  assertEquals(getUnit(date, "day"), 31);
+  assertEquals(getUnit(date, "day"), 2);
+  assertEquals(getUnit(date, "date"), 31);
   assertEquals(getUnit(date, "hour"), 23);
   assertEquals(getUnit(date, "minute"), 59);
   assertEquals(getUnit(date, "second"), 59);
