@@ -245,7 +245,8 @@ Deno.test("chronal - get methods", async (t) => {
 
     assertEquals(c.get("year"), 2024);
     assertEquals(c.get("month"), 5); // 0-indexed
-    assertEquals(c.get("day"), 15);
+    assertEquals(c.get("date"), 15);
+    assertEquals(c.get("day"), 6);
     assertEquals(c.get("hour"), 12);
     assertEquals(c.get("minute"), 30);
     assertEquals(c.get("second"), 45);
