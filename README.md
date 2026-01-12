@@ -362,37 +362,42 @@ Formats a date into a string using the specified format pattern.
 
 **Format Tokens:**
 
-| Token  | Output | Description        |
-| ------ | ------ | ------------------ |
-| `YYYY` | 2024   | 4-digit year       |
-| `YY`   | 24     | 2-digit year       |
-| `MMMM` | June   | Full month name    |
-| `MMM`  | Jun    | Short month name   |
-| `MM`   | 06     | 2-digit month      |
-| `M`    | 6      | Month number       |
-| `DD`   | 05     | 2-digit day        |
-| `D`    | 5      | Day of month       |
-| `HH`   | 14     | 2-digit hour (24h) |
-| `H`    | 14     | Hour (24h)         |
-| `mm`   | 35     | 2-digit minute     |
-| `m`    | 35     | Minute             |
-| `ss`   | 22     | 2-digit second     |
-| `s`    | 22     | Second             |
+| Token  | Output    | Description             |
+| ------ | --------- | ----------------------- |
+| `YYYY` | 2024      | 4-digit year            |
+| `YY`   | 24        | 2-digit year            |
+| `MMMM` | June      | Full month name         |
+| `MMM`  | Jun       | Short month name        |
+| `MM`   | 06        | 2-digit month           |
+| `M`    | 6         | Month number            |
+| `DD`   | 05        | 2-digit day             |
+| `D`    | 5         | Day of month            |
+| `dddd` | Saturday  | Full weekday name       |
+| `ddd`  | Sat       | Short weekday name      |
+| `HH`   | 14        | 2-digit hour (24h)      |
+| `H`    | 14        | Hour (24h)              |
+| `mm`   | 35        | 2-digit minute          |
+| `m`    | 35        | Minute                  |
+| `ss`   | 22        | 2-digit second          |
+| `s`    | 22        | Second                  |
 
 **Literals:** Use square brackets to escape literals: `[at]` → "at"
 
 **Examples:**
 
 ```typescript
-const date = new Date("2024-06-15T14:35:22Z");
+const date = new Date("2024-06-15T14:35:22Z"); // This is a Saturday
 
-format(date, "YYYY-MM-DD"); // '2024-06-15'
-format(date, "DD/MM/YYYY HH:mm"); // '15/06/2024 14:35'
-format(date, "MMMM D, YYYY"); // 'June 15, 2024'
-format(date, "YYYY-MM-DD [at] HH:mm"); // '2024-06-15 at 14:35'
+formatDate(date, "YYYY-MM-DD"); // '2024-06-15'
+formatDate(date, "DD/MM/YYYY HH:mm"); // '15/06/2024 14:35'
+formatDate(date, "MMMM D, YYYY"); // 'June 15, 2024'
+formatDate(date, "dddd, MMMM D, YYYY"); // 'Saturday, June 15, 2024'
+formatDate(date, "ddd, MMM D"); // 'Sat, Jun 15'
+formatDate(date, "YYYY-MM-DD [at] HH:mm"); // '2024-06-15 at 14:35'
 
 // With locale
-formatDate(date, "MMMM D, YYYY", { locale: "pt-BR" }); // 'junho 15, 2024'
+formatDate(date, "dddd, MMMM D, YYYY", { locale: "pt-BR" }); // 'sábado, junho 15, 2024'
+formatDate(date, "ddd, D [de] MMM", { locale: "es-ES" }); // 'sáb, 15 de jun'
 ```
 
 ### Parsing
