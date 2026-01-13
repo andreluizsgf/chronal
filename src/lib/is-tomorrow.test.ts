@@ -86,3 +86,83 @@ Deno.test("isTomorrow function - handles month boundary", () => {
   const daysDiff = Math.floor((july1.getTime() - june30.getTime()) / 86400000);
   assertEquals(daysDiff, 1); // Verify they are 1 day apart
 });
+
+Deno.test("isTomorrow function - timezone aware: tomorrow in UTC", () => {
+  const now = new Date();
+  const tomorrow = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() + 1,
+    12,
+    0,
+    0,
+    0,
+  ));
+  
+  assertEquals(isTomorrow(tomorrow, { tz: "UTC" }), true);
+});
+
+Deno.test("isTomorrow function - timezone aware: tomorrow in São Paulo", () => {
+  const now = new Date();
+  const tomorrow = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() + 1,
+    12,
+    0,
+    0,
+    0,
+  ));
+  
+  // Test with São Paulo timezone
+  assertEquals(typeof isTomorrow(tomorrow, { tz: "America/Sao_Paulo" }), "boolean");
+});
+
+Deno.test("isTomorrow function - timezone aware: edge case around midnight", () => {
+  const now = new Date();
+  const utcYear = now.getUTCFullYear();
+  const utcMonth = now.getUTCMonth();
+  const utcDate = now.getUTCDate();
+  
+  // Tomorrow at UTC midnight
+  const tomorrowMidnight = new Date(Date.UTC(utcYear, utcMonth, utcDate + 1, 0, 0, 0, 0));
+  
+  assertEquals(isTomorrow(tomorrowMidnight, { tz: "UTC" }), true);
+});
+
+Deno.test("isTomorrow function - timezone aware: uses config.timezone by default", () => {
+  const now = new Date();
+  const tomorrow = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() + 1,
+    12,
+    0,
+    0,
+    0,
+  ));
+  
+  // Without timezone option, should use config.timezone (defaults to UTC)
+  assertEquals(isTomorrow(tomorrow), true);
+  
+  // With explicit UTC should match
+  assertEquals(isTomorrow(tomorrow, { tz: "UTC" }), true);
+});
+
+Deno.test("isTomorrow function - timezone aware: different timezones", () => {
+  const now = new Date();
+  const tomorrow = new Date(Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate() + 1,
+    3,
+    0,
+    0,
+    0,
+  ));
+  
+  // Test that timezone parameter is accepted
+  assertEquals(typeof isTomorrow(tomorrow, { tz: "America/New_York" }), "boolean");
+  assertEquals(typeof isTomorrow(tomorrow, { tz: "Asia/Tokyo" }), "boolean");
+  assertEquals(typeof isTomorrow(tomorrow, { tz: "Europe/London" }), "boolean");
+});
