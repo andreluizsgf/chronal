@@ -24,7 +24,7 @@ type IsTodayOptions = {
  */
 export function isToday(date: Date, options: IsTodayOptions = {}): boolean {
   const timezone = options.tz || config.timezone;
-  const now = new Date('2026-01-13T02:30:00.000Z');
+  const now = new Date();
 
   if (timezone === "UTC") {
     return date.getUTCFullYear() === now.getUTCFullYear() &&
