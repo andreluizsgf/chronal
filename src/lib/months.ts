@@ -24,7 +24,7 @@ export function months(
   opt: MonthsOptions = {},
 ): string[] {
   const locale = opt.locale ?? config.locale;
-  const key = `${locale}|${format}`;
+  const key = locale + "|" + format;
 
   const cached = monthsCache.get(key);
   if (cached) return cached;

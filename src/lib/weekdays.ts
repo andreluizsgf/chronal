@@ -23,7 +23,7 @@ export function weekdays(
   opt: WeekdaysOptions = {},
 ): string[] {
   const locale = opt.locale ?? config.locale;
-  const key = `${locale}|${format}`;
+  const key = locale + "|" + format;
 
   const cached = daysCache.get(key);
   if (cached) return cached;

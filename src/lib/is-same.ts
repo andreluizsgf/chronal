@@ -19,9 +19,8 @@ export function isSame(dateLeft: Date, dateRight: Date, unit: Unit): boolean {
     case "year":
       return dateLeft.getUTCFullYear() === dateRight.getUTCFullYear();
     case "month": {
-      const yl = dateLeft.getUTCFullYear();
-      const yr = dateRight.getUTCFullYear();
-      return yl === yr && dateLeft.getUTCMonth() === dateRight.getUTCMonth();
+      return dateLeft.getUTCFullYear() === dateRight.getUTCFullYear() &&
+        dateLeft.getUTCMonth() === dateRight.getUTCMonth();
     }
     case "week": {
       // Calculate week start by getting days since Sunday
@@ -47,23 +46,15 @@ export function isSame(dateLeft: Date, dateRight: Date, unit: Unit): boolean {
       return weekStartLeft === weekStartRight;
     }
     case "day": {
-      const yl = dateLeft.getUTCFullYear();
-      const yr = dateRight.getUTCFullYear();
-      if (yl !== yr) return false;
-      const ml = dateLeft.getUTCMonth();
-      const mr = dateRight.getUTCMonth();
-      return ml === mr && dateLeft.getUTCDate() === dateRight.getUTCDate();
+      return dateLeft.getUTCFullYear() === dateRight.getUTCFullYear() &&
+        dateLeft.getUTCMonth() === dateRight.getUTCMonth() &&
+        dateLeft.getUTCDate() === dateRight.getUTCDate();
     }
     case "hour": {
-      const yl = dateLeft.getUTCFullYear();
-      const yr = dateRight.getUTCFullYear();
-      if (yl !== yr) return false;
-      const ml = dateLeft.getUTCMonth();
-      const mr = dateRight.getUTCMonth();
-      if (ml !== mr) return false;
-      const dl = dateLeft.getUTCDate();
-      const dr = dateRight.getUTCDate();
-      return dl === dr && dateLeft.getUTCHours() === dateRight.getUTCHours();
+      return dateLeft.getUTCFullYear() === dateRight.getUTCFullYear() &&
+        dateLeft.getUTCMonth() === dateRight.getUTCMonth() &&
+        dateLeft.getUTCDate() === dateRight.getUTCDate() &&
+        dateLeft.getUTCHours() === dateRight.getUTCHours();
     }
     case "minute": {
       const yl = dateLeft.getUTCFullYear();

@@ -152,90 +152,37 @@ export const chronal: ChronalFactory = (
     d = new Date(date);
   }
 
-  return {
+  const instance = {
     date: d,
     timezone,
-    // Manipulation
-    add: function (opt) {
-      return add.call(this, opt);
-    },
-    subtract: function (opt) {
-      return subtract.call(this, opt);
-    },
-    startOf: function (unit) {
-      return startOf.call(this, unit);
-    },
-    endOf: function (unit) {
-      return endOf.call(this, unit);
-    },
-    set: function (opt) {
-      return setUnit.call(this, opt);
-    },
-    clamp: function (min, max) {
-      return clamp.call(this, min, max);
-    },
-    // Display
-    format: function (fmt, options) {
-      return format.call(this, fmt, options);
-    },
-    fromNow: function (locale) {
-      return fromNow.call(this, locale);
-    },
-    toNow: function (locale) {
-      return toNow.call(this, locale);
-    },
-    // Query
-    diff: function (date, unit) {
-      return diff.call(this, date, unit);
-    },
-    isAfter: function (date) {
-      return isAfter.call(this, date);
-    },
-    isBefore: function (date) {
-      return isBefore.call(this, date);
-    },
-    isBetween: function (start, end, inclusivity) {
-      return isBetween.call(this, start, end, inclusivity);
-    },
-    isEqual: function (date) {
-      return isEqual.call(this, date);
-    },
-    isSame: function (date, unit) {
-      return isSame.call(this, date, unit);
-    },
-    isToday: function () {
-      return isToday.call(this);
-    },
-    isTomorrow: function () {
-      return isTomorrow.call(this);
-    },
-    isYesterday: function () {
-      return isYesterday.call(this);
-    },
-    isLeapYear: function () {
-      return isLeapYear.call(this);
-    },
-    isValid: function () {
-      return isValid.call(this);
-    },
-    // Get
-    get: function (unit) {
-      return getUnit.call(this, unit);
-    },
-    quarter: function () {
-      return getQuarter.call(this);
-    },
-    daysInMonth: function () {
-      return daysInMonth.call(this);
-    },
-    week: function () {
-      return weekOfYear.call(this);
-    },
-    // Utilities
-    until: function (end, step) {
-      return until.call(this, end, step);
-    },
+    add,
+    subtract,
+    startOf,
+    endOf,
+    set: setUnit,
+    clamp,
+    format,
+    fromNow,
+    toNow,
+    diff,
+    isAfter,
+    isBefore,
+    isBetween,
+    isEqual,
+    isSame,
+    isToday,
+    isTomorrow,
+    isYesterday,
+    isLeapYear,
+    isValid,
+    get: getUnit,
+    quarter: getQuarter,
+    daysInMonth,
+    week: weekOfYear,
+    until,
   };
+  
+  return instance;
 };
 
 chronal.config = setChronalConfig;

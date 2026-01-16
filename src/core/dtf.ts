@@ -1,7 +1,7 @@
 const dtfCache = new Map<string, Intl.DateTimeFormat>();
 
 export function getDTF(locale: string, tz: string) {
-  const key = `${locale}|${tz}`;
+  const key = locale + "|" + tz;
   let dtf = dtfCache.get(key);
   if (!dtf) {
     dtf = new Intl.DateTimeFormat(locale, {

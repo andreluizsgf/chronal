@@ -24,16 +24,14 @@ type SubOptions = {
  */
 
 export function subtractTime(date: Date, opt: SubOptions): Date {
-  const out: SubOptions = {};
-
-  if (opt.years) out.years = -opt.years;
-  if (opt.months) out.months = -opt.months;
-  if (opt.weeks) out.weeks = -opt.weeks;
-  if (opt.days) out.days = -opt.days;
-  if (opt.hours) out.hours = -opt.hours;
-  if (opt.minutes) out.minutes = -opt.minutes;
-  if (opt.seconds) out.seconds = -opt.seconds;
-  if (opt.milliseconds) out.milliseconds = -opt.milliseconds;
-
-  return addTime(date, out);
+  return addTime(date, {
+    years: opt.years ? -opt.years : undefined,
+    months: opt.months ? -opt.months : undefined,
+    weeks: opt.weeks ? -opt.weeks : undefined,
+    days: opt.days ? -opt.days : undefined,
+    hours: opt.hours ? -opt.hours : undefined,
+    minutes: opt.minutes ? -opt.minutes : undefined,
+    seconds: opt.seconds ? -opt.seconds : undefined,
+    milliseconds: opt.milliseconds ? -opt.milliseconds : undefined,
+  });
 }

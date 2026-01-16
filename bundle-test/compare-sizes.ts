@@ -14,8 +14,8 @@
 import { build } from "npm:esbuild@0.20.0";
 
 const files = [
-  { name: "Functional API (5 functions)", input: "./bundle-test/functional.ts" },
-  { name: "Chainable API (all methods)", input: "./bundle-test/chainable.ts" },
+  { name: "Functional API (5 functions)", input: "./functional.ts" },
+  { name: "Chainable API (all methods)", input: "./chainable.ts" },
 ];
 
 console.log("Comparing bundle sizes...\n");

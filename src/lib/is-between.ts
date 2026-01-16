@@ -33,8 +33,7 @@ export function isBetween(
   const endTime = end.getTime();
 
   // Handle reversed bounds
-  const min = startTime < endTime ? startTime : endTime;
-  const max = startTime < endTime ? endTime : startTime;
+  const [min, max] = startTime < endTime ? [startTime, endTime] : [endTime, startTime];
 
   switch (inclusivity) {
     case "[]":

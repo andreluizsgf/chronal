@@ -13,16 +13,8 @@
  * ```
  */
 export function daysInMonth(date: Date): number {
-  // Get the first day of next month, then go back one day
-  // This gives us the last day of the current month
+  // Create date for day 0 of next month, which gives last day of current month
   const year = date.getUTCFullYear();
   const month = date.getUTCMonth();
-
-  // Create date for first day of next month at midnight
-  const nextMonth = new Date(Date.UTC(year, month + 1, 1));
-  // Go back one millisecond to get end of current month
-  nextMonth.setUTCMilliseconds(-1);
-
-  // Return the date which is the day of month
-  return nextMonth.getUTCDate();
+  return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
 }

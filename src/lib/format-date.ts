@@ -50,10 +50,7 @@ const tokenMap: Record<string, TokenResolver> = {
 const tokenRegex = /YYYY|MMMM|MMM|YY|MM|M|dddd|ddd|DD|D|HH|H|mm|m|ss|s/g;
 
 // Cache parsed format strings to avoid repeated regex operations
-type CompiledFormat = {
-  hasLiterals: boolean;
-  parts: Array<{ type: "token" | "literal"; value: string }>;
-};
+type CompiledFormat = Array<{ type: "token" | "literal"; value: string }>;
 
 const formatCache = new Map<string, CompiledFormat>();
 
@@ -61,10 +58,9 @@ function compileFormat(fmt: string): CompiledFormat {
   const cached = formatCache.get(fmt);
   if (cached) return cached;
 
-  const hasLiterals = fmt.includes("[");
-  const parts: Array<{ type: "token" | "literal"; value: string }> = [];
+  const parts: CompiledFormat = [];
 
-  if (!hasLiterals) {
+  if (!fmt.includes("[")) {
     // Fast path: no literals, just parse tokens
     let lastIndex = 0;
     tokenRegex.lastIndex = 0;
@@ -155,9 +151,8 @@ function compileFormat(fmt: string): CompiledFormat {
     }
   }
 
-  const compiled = { hasLiterals, parts };
-  formatCache.set(fmt, compiled);
-  return compiled;
+  formatCache.set(fmt, parts);
+  return parts;
 }
 
 // Fast UTC date parts extraction
@@ -244,12 +239,8 @@ export function formatDate(
 
   // Build result string from compiled parts
   let result = "";
-  for (const part of compiled.parts) {
-    if (part.type === "literal") {
-      result += part.value;
-    } else {
-      result += tokenMap[part.value](p, locale);
-    }
+  for (const part of compiled) {
+    result += part.type === "literal" ? part.value : tokenMap[part.value](p, locale);
   }
 
   return result;
