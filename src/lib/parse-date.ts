@@ -98,20 +98,21 @@ export function parseDate(
     throw new Error("Invalid date");
   }
 
-  // Extract values in order
-  const getValue = (token: string): number => {
-    const index = tokenOrder.indexOf(token);
-    return index !== -1 ? parseInt(match[index + 1], 10) : 0;
+  // Extract values in order - cache indices for efficiency
+  const getIdx = (t: string) => tokenOrder.indexOf(t);
+  const getVal = (t: string) => {
+    const i = getIdx(t);
+    return i !== -1 ? parseInt(match[i + 1], 10) : 0;
   };
 
   // Create date (months are 0-indexed)
   const date = new Date(Date.UTC(
-    getValue("YYYY") || 1970,
-    (getValue("MM") || 1) - 1,
-    getValue("DD") || 1,
-    getValue("HH"),
-    getValue("mm"),
-    getValue("ss"),
+    getVal("YYYY") || 1970,
+    (getVal("MM") || 1) - 1,
+    getVal("DD") || 1,
+    getVal("HH"),
+    getVal("mm"),
+    getVal("ss"),
   ));
 
   if (isNaN(date.getTime())) {

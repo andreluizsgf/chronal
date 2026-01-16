@@ -20,37 +20,32 @@ type Parts = {
 
 type TokenResolver = (p: Parts, locale: string) => string;
 
-// Pre-compute pad functions to avoid repeated padStart calls
-const pad2 = (n: number) => n < 10 ? "0" + n : String(n);
+// Inline pad function - smaller minified output
+const pad2 = (n: number) => (n < 10 ? "0" + n : "" + n);
 
 const tokenMap: Record<string, TokenResolver> = {
-  YYYY: (p) => String(p.year),
-  YY: (p) => String(p.year).slice(-2),
-
-  M: (p) => String(p.month),
+  YYYY: (p) => "" + p.year,
+  YY: (p) => ("" + p.year).slice(-2),
+  M: (p) => "" + p.month,
   MM: (p) => pad2(p.month),
   MMM: (p, l) => months("short", { locale: l })[p.month - 1],
   MMMM: (p, l) => months("long", { locale: l })[p.month - 1],
-
-  D: (p) => String(p.day),
+  D: (p) => "" + p.day,
   DD: (p) => pad2(p.day),
   ddd: (p, l) => weekdays("short", { locale: l })[p.dayOfWeek],
   dddd: (p, l) => weekdays("long", { locale: l })[p.dayOfWeek],
-
-  H: (p) => String(p.hour),
+  H: (p) => "" + p.hour,
   HH: (p) => pad2(p.hour),
-
-  m: (p) => String(p.minute),
+  m: (p) => "" + p.minute,
   mm: (p) => pad2(p.minute),
-
-  s: (p) => String(p.second),
+  s: (p) => "" + p.second,
   ss: (p) => pad2(p.second),
 };
 
 const tokenRegex = /YYYY|MMMM|MMM|YY|MM|M|dddd|ddd|DD|D|HH|H|mm|m|ss|s/g;
 
-// Cache parsed format strings to avoid repeated regex operations
-type CompiledFormat = Array<{ type: "token" | "literal"; value: string }>;
+// Cache parsed format strings - store functions/strings directly
+type CompiledFormat = Array<string | TokenResolver>;
 
 const formatCache = new Map<string, CompiledFormat>();
 
@@ -59,96 +54,44 @@ function compileFormat(fmt: string): CompiledFormat {
   if (cached) return cached;
 
   const parts: CompiledFormat = [];
+  
+  // Handle escaped literals by replacing them first
+  let processed = fmt;
+  const literals: string[] = [];
+  
+  // Extract literals [text] and replace with placeholders
+  if (fmt.includes("[")) {
+    processed = fmt.replace(/\[([^\]]+)\]/g, (_, text) => {
+      const idx = literals.length;
+      literals.push(text);
+      return `\x00${idx}\x00`; // Use null bytes as placeholder
+    });
+  }
 
-  if (!fmt.includes("[")) {
-    // Fast path: no literals, just parse tokens
-    let lastIndex = 0;
-    tokenRegex.lastIndex = 0;
-    let match;
+  let lastIndex = 0;
+  tokenRegex.lastIndex = 0;
+  let match;
 
-    while ((match = tokenRegex.exec(fmt)) !== null) {
-      if (match.index > lastIndex) {
-        parts.push({
-          type: "literal",
-          value: fmt.slice(lastIndex, match.index),
-        });
+  while ((match = tokenRegex.exec(processed)) !== null) {
+    if (match.index > lastIndex) {
+      // Add literal segment (restoring escaped literals)
+      let literal = processed.slice(lastIndex, match.index);
+      if (literals.length) {
+        literal = literal.replace(/\x00(\d+)\x00/g, (_, idx) => literals[+idx]);
       }
-      parts.push({ type: "token", value: match[0] });
-      lastIndex = match.index + match[0].length;
+      parts.push(literal);
     }
+    // Add token resolver function
+    parts.push(tokenMap[match[0]]);
+    lastIndex = match.index + match[0].length;
+  }
 
-    if (lastIndex < fmt.length) {
-      parts.push({ type: "literal", value: fmt.slice(lastIndex) });
+  if (lastIndex < processed.length) {
+    let literal = processed.slice(lastIndex);
+    if (literals.length) {
+      literal = literal.replace(/\x00(\d+)\x00/g, (_, idx) => literals[+idx]);
     }
-  } else {
-    // Slow path: handle escaped literals
-    let i = 0;
-    let currentLiteral = "";
-    let inBracket = false;
-
-    while (i < fmt.length) {
-      if (fmt[i] === "[" && !inBracket) {
-        if (currentLiteral) {
-          // Process current literal for tokens
-          let lastIndex = 0;
-          tokenRegex.lastIndex = 0;
-          let match;
-
-          while ((match = tokenRegex.exec(currentLiteral)) !== null) {
-            if (match.index > lastIndex) {
-              parts.push({
-                type: "literal",
-                value: currentLiteral.slice(lastIndex, match.index),
-              });
-            }
-            parts.push({ type: "token", value: match[0] });
-            lastIndex = match.index + match[0].length;
-          }
-
-          if (lastIndex < currentLiteral.length) {
-            parts.push({
-              type: "literal",
-              value: currentLiteral.slice(lastIndex),
-            });
-          }
-          currentLiteral = "";
-        }
-        inBracket = true;
-        i++;
-      } else if (fmt[i] === "]" && inBracket) {
-        // Escaped literal content - add as-is
-        if (currentLiteral) {
-          parts.push({ type: "literal", value: currentLiteral });
-          currentLiteral = "";
-        }
-        inBracket = false;
-        i++;
-      } else {
-        currentLiteral += fmt[i];
-        i++;
-      }
-    }
-
-    if (currentLiteral) {
-      let lastIndex = 0;
-      tokenRegex.lastIndex = 0;
-      let match;
-
-      while ((match = tokenRegex.exec(currentLiteral)) !== null) {
-        if (match.index > lastIndex) {
-          parts.push({
-            type: "literal",
-            value: currentLiteral.slice(lastIndex, match.index),
-          });
-        }
-        parts.push({ type: "token", value: match[0] });
-        lastIndex = match.index + match[0].length;
-      }
-
-      if (lastIndex < currentLiteral.length) {
-        parts.push({ type: "literal", value: currentLiteral.slice(lastIndex) });
-      }
-    }
+    parts.push(literal);
   }
 
   formatCache.set(fmt, parts);
@@ -171,37 +114,25 @@ function getUTCParts(date: Date): Parts {
 // Fallback for non-UTC timezones
 function getPartsWithTZ(date: Date, locale: string, tz: string): Parts {
   const partsRaw = getDTF(locale, tz).formatToParts(date);
-
   const p: Parts = {
     year: 0,
     month: 0,
     day: 0,
-    dayOfWeek: new Date(date).getDay(),
+    dayOfWeek: date.getDay(),
     hour: 0,
     minute: 0,
     second: 0,
   };
 
   for (const part of partsRaw) {
+    const val = +part.value;
     switch (part.type) {
-      case "year":
-        p.year = +part.value;
-        break;
-      case "month":
-        p.month = +part.value;
-        break;
-      case "day":
-        p.day = +part.value;
-        break;
-      case "hour":
-        p.hour = +part.value;
-        break;
-      case "minute":
-        p.minute = +part.value;
-        break;
-      case "second":
-        p.second = +part.value;
-        break;
+      case "year": p.year = val; break;
+      case "month": p.month = val; break;
+      case "day": p.day = val; break;
+      case "hour": p.hour = val; break;
+      case "minute": p.minute = val; break;
+      case "second": p.second = val; break;
     }
   }
 
@@ -231,16 +162,12 @@ export function formatDate(
   const locale = options.locale ?? config.locale;
   const tz = options.tz ?? config.timezone;
 
-  // Get compiled format (cached)
   const compiled = compileFormat(fmt);
-
-  // Fast path for UTC
   const p = tz === "UTC" ? getUTCParts(date) : getPartsWithTZ(date, locale, tz);
 
-  // Build result string from compiled parts
   let result = "";
   for (const part of compiled) {
-    result += part.type === "literal" ? part.value : tokenMap[part.value](p, locale);
+    result += typeof part === "string" ? part : part(p, locale);
   }
 
   return result;

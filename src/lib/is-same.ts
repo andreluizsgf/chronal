@@ -57,36 +57,18 @@ export function isSame(dateLeft: Date, dateRight: Date, unit: Unit): boolean {
         dateLeft.getUTCHours() === dateRight.getUTCHours();
     }
     case "minute": {
-      const yl = dateLeft.getUTCFullYear();
-      const yr = dateRight.getUTCFullYear();
-      if (yl !== yr) return false;
-      const ml = dateLeft.getUTCMonth();
-      const mr = dateRight.getUTCMonth();
-      if (ml !== mr) return false;
-      const dl = dateLeft.getUTCDate();
-      const dr = dateRight.getUTCDate();
-      if (dl !== dr) return false;
-      const hl = dateLeft.getUTCHours();
-      const hr = dateRight.getUTCHours();
-      return hl === hr &&
+      return dateLeft.getUTCFullYear() === dateRight.getUTCFullYear() &&
+        dateLeft.getUTCMonth() === dateRight.getUTCMonth() &&
+        dateLeft.getUTCDate() === dateRight.getUTCDate() &&
+        dateLeft.getUTCHours() === dateRight.getUTCHours() &&
         dateLeft.getUTCMinutes() === dateRight.getUTCMinutes();
     }
     case "second": {
-      const yl = dateLeft.getUTCFullYear();
-      const yr = dateRight.getUTCFullYear();
-      if (yl !== yr) return false;
-      const ml = dateLeft.getUTCMonth();
-      const mr = dateRight.getUTCMonth();
-      if (ml !== mr) return false;
-      const dl = dateLeft.getUTCDate();
-      const dr = dateRight.getUTCDate();
-      if (dl !== dr) return false;
-      const hl = dateLeft.getUTCHours();
-      const hr = dateRight.getUTCHours();
-      if (hl !== hr) return false;
-      const minl = dateLeft.getUTCMinutes();
-      const minr = dateRight.getUTCMinutes();
-      return minl === minr &&
+      return dateLeft.getUTCFullYear() === dateRight.getUTCFullYear() &&
+        dateLeft.getUTCMonth() === dateRight.getUTCMonth() &&
+        dateLeft.getUTCDate() === dateRight.getUTCDate() &&
+        dateLeft.getUTCHours() === dateRight.getUTCHours() &&
+        dateLeft.getUTCMinutes() === dateRight.getUTCMinutes() &&
         dateLeft.getUTCSeconds() === dateRight.getUTCSeconds();
     }
     default:

@@ -28,9 +28,8 @@ export function addTime(date: Date, opt: AddOptions): Date {
   if (opt.years || opt.months) {
     const years = opt.years ?? 0;
     const months = opt.months ?? 0;
-
     const year = d.getUTCFullYear();
-    const month = d.getUTCMonth(); // 0-based
+    const month = d.getUTCMonth();
     const day = d.getUTCDate();
 
     // target year/month (allow overflow, normalize manually)
@@ -39,11 +38,7 @@ export function addTime(date: Date, opt: AddOptions): Date {
     targetMonth = ((targetMonth % 12) + 12) % 12;
 
     // last valid day of target month
-    const lastDayOfTargetMonth = new Date(
-      Date.UTC(targetYear, targetMonth + 1, 0),
-    ).getUTCDate();
-
-    const safeDay = Math.min(day, lastDayOfTargetMonth);
+    const safeDay = Math.min(day, new Date(Date.UTC(targetYear, targetMonth + 1, 0)).getUTCDate());
 
     d = new Date(Date.UTC(
       targetYear,
