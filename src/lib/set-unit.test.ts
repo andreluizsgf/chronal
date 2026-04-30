@@ -64,12 +64,30 @@ Deno.test("setUnit function - doesn't mutate original", () => {
   assertEquals(date.getTime(), originalTime);
 });
 
-Deno.test("setUnit function - set month handles boundaries", () => {
+Deno.test("setUnit function - set month handles boundaries (no day)", () => {
   const date = new Date("2024-01-31T12:00:00Z");
-  const result = setUnit(date, { month: 1 }); // February (0-indexed)
+  const result = setUnit(date, { month: 1 }); // February (0-indexed), no day specified
 
-  // February 31 doesn't exist, should adjust to March
-  assertEquals(result.getUTCMonth() >= 1, true);
+  // February 31 doesn't exist, overflows to March
+  assertEquals(result.getUTCMonth(), 2); // March
+});
+
+Deno.test("setUnit function - set year+month+day avoids month overflow", () => {
+  // Bug: April 30 + setMonth(1) overflows to March 2, then setDay(1) = March 1
+  const date = new Date("2026-04-30T00:00:00Z");
+  const result = setUnit(date, { year: 2026, month: 1, day: 1 });
+
+  assertEquals(result.getUTCFullYear(), 2026);
+  assertEquals(result.getUTCMonth(), 1); // February
+  assertEquals(result.getUTCDate(), 1);
+});
+
+Deno.test("setUnit function - set month+day avoids overflow on month-end dates", () => {
+  const date = new Date("2024-03-31T00:00:00Z");
+  const result = setUnit(date, { month: 1, day: 15 }); // February 15
+
+  assertEquals(result.getUTCMonth(), 1); // February
+  assertEquals(result.getUTCDate(), 15);
 });
 
 Deno.test("setUnit function - set to zero values", () => {

@@ -1,3 +1,5 @@
+import { chronal } from "@chronal/core/chainable";
+
 /**
  * Sets specific units of a date to new values, returning a new Date object.
  * Does not mutate the original date.
@@ -32,6 +34,7 @@ export function setUnit(
 ): Date {
   const result = new Date(date.getTime());
 
+  if (opt.day !== undefined) result.setUTCDate(1);
   if (opt.year !== undefined) result.setUTCFullYear(opt.year);
   if (opt.month !== undefined) result.setUTCMonth(opt.month);
   if (opt.day !== undefined) result.setUTCDate(opt.day);
