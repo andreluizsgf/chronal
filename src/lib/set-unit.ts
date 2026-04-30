@@ -1,5 +1,3 @@
-import { chronal } from "@chronal/core/chainable";
-
 /**
  * Sets specific units of a date to new values, returning a new Date object.
  * Does not mutate the original date.
