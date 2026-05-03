@@ -42,16 +42,14 @@ export function isYesterday(date: Date, options: IsYesterdayOptions = {}): boole
   // Timezone-aware comparison
   const formatter = getDTF("en-US", timezone);
 
-  const nowParts = formatter.formatToParts(now);
   const getPartValue = (parts: Intl.DateTimeFormatPart[], type: string) =>
     parts.find((p) => p.type === type)?.value || "0";
 
-  const nowYear = parseInt(getPartValue(nowParts, "year"), 10);
-  const nowMonth = parseInt(getPartValue(nowParts, "month"), 10);
-  const nowDay = parseInt(getPartValue(nowParts, "day"), 10);
-
-  // Calculate yesterday in the target timezone
-  const yesterdayDate = new Date(Date.UTC(nowYear, nowMonth - 1, nowDay - 1));
+  // -24h from now always lands in yesterday for any fixed-offset timezone.
+  // Date.UTC(localYear, localMonth-1, localDay-1) was wrong: it creates UTC
+  // midnight from local date parts, which represents the previous evening in
+  // timezones behind UTC (e.g. UTC-3 São Paulo).
+  const yesterdayDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
   const yesterdayParts = formatter.formatToParts(yesterdayDate);
 
   const yesterdayYear = getPartValue(yesterdayParts, "year");

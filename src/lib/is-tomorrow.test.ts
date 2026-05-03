@@ -113,9 +113,24 @@ Deno.test("isTomorrow function - timezone aware: tomorrow in São Paulo", () => 
     0,
     0,
   ));
-  
+
   // Test with São Paulo timezone
   assertEquals(typeof isTomorrow(tomorrow, { tz: "America/Sao_Paulo" }), "boolean");
+});
+
+Deno.test("isTomorrow - regression: São Paulo timezone correctly identified", () => {
+  // now+24h always lands in tomorrow for any fixed-offset timezone.
+  // Old bug used Date.UTC(localYear, localMonth-1, localDay+1) which creates
+  // UTC midnight from SP parts — formatted back in SP this showed the wrong day
+  // when UTC hour was 0-2 (SP is still previous day in those hours).
+  const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  assertEquals(isTomorrow(tomorrow, { tz: "America/Sao_Paulo" }), true);
+
+  const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000);
+  assertEquals(isTomorrow(yesterday, { tz: "America/Sao_Paulo" }), false);
+
+  const twoDaysAhead = new Date(Date.now() + 48 * 60 * 60 * 1000);
+  assertEquals(isTomorrow(twoDaysAhead, { tz: "America/Sao_Paulo" }), false);
 });
 
 Deno.test("isTomorrow function - timezone aware: edge case around midnight", () => {
