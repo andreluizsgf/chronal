@@ -118,7 +118,7 @@ function getPartsWithTZ(date: Date, locale: string, tz: string): Parts {
     year: 0,
     month: 0,
     day: 0,
-    dayOfWeek: date.getDay(),
+    dayOfWeek: 0,
     hour: 0,
     minute: 0,
     second: 0,
@@ -135,6 +135,9 @@ function getPartsWithTZ(date: Date, locale: string, tz: string): Parts {
       case "second": p.second = val; break;
     }
   }
+
+  // Derive dayOfWeek from the TZ-adjusted date components, not OS local time
+  p.dayOfWeek = new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay();
 
   return p;
 }
